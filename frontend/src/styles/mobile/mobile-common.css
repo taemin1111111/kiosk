@@ -1,0 +1,27 @@
+/* ========== 모바일 공통 - Figma 360×690 스테이지 ========== */
+
+.figma360-stage {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow: hidden;
+  background: transparent;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  box-sizing: border-box;
+}
+
+.figma360-scale {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 360px;
+  height: 690px;
+  background: #fff;
+  transform: translate(-50%, -50%) scale(var(--figma360-scale, 1));
+}
+
+.figma360-scale--signup {
+  height: 690px;
+}

@@ -1,0 +1,212 @@
+/* ========== 모바일 비밀번호 변경 (changepw) - Figma 1152-6570 ========== */
+
+.changepw {
+  position: relative;
+  width: 360px;
+  height: 690px;
+  background: #fff;
+  overflow: hidden;
+}
+
+.changepw__title {
+  position: absolute;
+  left: 16px;
+  top: 72px;
+  width: 328px;
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: normal;
+  color: #131313;
+}
+
+.changepw__subtitle {
+  position: absolute;
+  left: 16px;
+  top: 108px;
+  width: 328px;
+  margin: 0;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 20px;
+  color: rgba(19, 19, 19, 0.8);
+}
+
+.changepw__subtitle--second {
+  top: 128px;
+}
+
+.changepw__error {
+  position: absolute;
+  left: 16px;
+  top: 166px;
+  width: 328px;
+  margin: 0;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 14px;
+  color: #e53935;
+}
+
+.changepw__caption {
+  position: absolute;
+  margin: 0;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: normal;
+  color: rgba(19, 19, 19, 0.6);
+}
+
+.changepw__caption--password { left: 16px; top: 180px; width: 328px; height: 14px; }
+.changepw__caption--confirm   { left: 16px; top: 242px; width: 328px; height: 14px; }
+
+.changepw__label {
+  position: absolute;
+  margin: 0;
+  width: 328px;
+  height: 17px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: normal;
+  color: rgba(19, 19, 19, 0.8);
+}
+
+.changepw__label--password { left: 16px; top: 202px; }
+.changepw__label--confirm   { left: 16px; top: 264px; }
+
+.changepw__input {
+  position: absolute;
+  width: 328px;
+  height: 17px;
+  padding: 0;
+  margin: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: normal;
+  color: #131313;
+  caret-color: #131313;
+}
+
+.changepw__input--password { left: 16px; top: 202px; }
+.changepw__input--confirm   { left: 16px; top: 264px; }
+
+.changepw__line {
+  position: absolute;
+  width: 328px;
+  height: 2px;
+  display: block;
+}
+
+.changepw__line--password { left: 16px; top: 227px; }
+.changepw__line--confirm   { left: 16px; top: 289px; }
+
+.changepw__hit {
+  position: absolute;
+  left: 16px;
+  width: 328px;
+  height: 52px;
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: text;
+}
+
+.changepw__hit--password { top: 188px; }
+.changepw__hit--confirm   { top: 250px; }
+
+.changepw__button {
+  position: absolute;
+  left: 16px;
+  top: 616px;
+  width: 328px;
+  height: 46px;
+  background: rgba(19, 19, 19, 0.1);
+  border-radius: 4px;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+}
+
+.changepw__button--active { background: #ffc21c; }
+
+.changepw__buttonText {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: auto;
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: normal;
+  color: #131313;
+  white-space: nowrap;
+}
+
+.changepw__modalBackdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 10;
+}
+
+.changepw__modal {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 280px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  z-index: 11;
+  overflow: hidden;
+}
+
+.changepw__modalMessage {
+  margin: 0;
+  padding: 20px 20px 16px;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: normal;
+  color: #131313;
+}
+
+.changepw__modalMessage--success {
+  text-align: center;
+}
+
+/* Figma 1152-6595: 비밀번호·비밀번호 확인 불일치 모달 */
+.changepw__modalMessage--mismatch {
+  color: #131313;
+  text-align: center;
+}
+
+.changepw__modalDivider {
+  height: 1px;
+  background: rgba(19, 19, 19, 0.1);
+  margin: 0 20px;
+}
+
+.changepw__modalConfirm {
+  display: block;
+  width: 100%;
+  padding: 14px 20px;
+  border: none;
+  background: transparent;
+  font-size: 15px;
+  font-weight: 500;
+  color: #FFC21C;
+  text-align: center;
+  cursor: pointer;
+}
+
+/* Figma 1152-6785: 비밀번호 변경 성공 모달 - 로그인 하기 버튼 (가운데) */
+.changepw__modalConfirm--login {
+  text-align: center;
+}

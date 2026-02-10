@@ -1,0 +1,369 @@
+/* Figma 191-196951 메뉴 리스트 */
+
+.admin-menu-list {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  width: 100%;
+  min-width: 1060px; /* 메인 영역 overflow-x 대응 */
+}
+
+.admin-menu-list__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.admin-menu-list__headLeft {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.admin-menu-list__layout {
+  width: calc(100% + 60px); /* AdminShell main padding(30px*2) 보정 */
+  margin-left: -30px;
+  border-top: 1px solid rgba(19, 19, 19, 0.2); /* 스샷 상단 회색 라인 */
+  display: grid;
+  grid-template-columns: 762px 1fr;
+  grid-template-rows: auto 1fr;
+  column-gap: 24px;
+  row-gap: 18px;
+  align-items: start;
+}
+
+.admin-menu-list__tabsRow {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.admin-menu-list__tabs {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  border: 1px solid rgba(19, 19, 19, 0.1);
+  border-radius: 0;
+  overflow: hidden;
+  width: fit-content;
+  background: #FAFAFA;
+}
+
+.admin-menu-list__tab {
+  min-width: 126px;
+  height: 51px;
+  border: none;
+  background: #FAFAFA;
+  color: rgba(19, 19, 19, 0.6);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  border-right: 1px solid rgba(19, 19, 19, 0.1);
+}
+
+.admin-menu-list__tab:last-child {
+  border-right: none;
+}
+
+.admin-menu-list__tab--active {
+  background: #FFC21C;
+  color: #131313;
+}
+
+.admin-menu-list__tab--add {
+  min-width: 126px;
+  background: #FAFAFA;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.admin-menu-list__left {
+  grid-column: 1;
+  grid-row: 2;
+  padding-top: 6px;
+}
+
+.admin-menu-list__loading,
+.admin-menu-list__empty {
+  margin: 12px 0 0;
+  font-size: 14px;
+  color: rgba(19, 19, 19, 0.55);
+}
+
+.admin-menu-list__grid {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.admin-menu-list__cardWrap {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.admin-menu-list__drag {
+  width: 24px;
+  height: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(19, 19, 19, 0.35);
+  user-select: none;
+}
+
+.admin-menu-list__card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 188px;
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  text-align: left;
+}
+
+.admin-menu-list__thumbWrap {
+  width: 188px;
+  height: 188px;
+  border-radius: 4px;
+  overflow: hidden;
+  background: #F0F0F0;
+  position: relative;
+}
+
+.admin-menu-list__thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.admin-menu-list__thumbPlaceholder {
+  width: 100%;
+  height: 100%;
+  background: #EDEDED;
+}
+
+.admin-menu-list__card--selected .admin-menu-list__thumbWrap::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(19, 19, 19, 0.7);
+}
+
+.admin-menu-list__cardText {
+  padding-left: 4px;
+}
+
+.admin-menu-list__name {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 500;
+  color: rgba(19, 19, 19, 0.8);
+}
+
+.admin-menu-list__price {
+  margin: 2px 0 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #131313;
+}
+
+.admin-menu-list__right {
+  grid-column: 2;
+  grid-row: 1 / span 2; /* 회색선(탭 시작)부터 상세가 시작 */
+  background: #FAFAFA;
+  border-left: none;
+  min-height: 600px;
+  padding: 0;
+  margin-left: 0;
+}
+
+.admin-menu-list__detail {
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-menu-list__detailImageWrap {
+  position: relative;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 386px;
+}
+
+.admin-menu-list__detailActions {
+  position: absolute;
+  right: 24px;
+  top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 1;
+}
+
+.admin-menu-list__iconAction {
+  width: 54px;
+  height: 54px;
+  border-radius: 4px;
+  border: 1px solid rgba(19, 19, 19, 0.6);
+  background: #fff;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  font-size: 18px;
+}
+
+.admin-menu-list__iconAction--danger {
+  border: none;
+  background: rgba(19, 19, 19, 0.2);
+}
+
+.admin-menu-list__detailImage {
+  width: 373px;
+  height: 373px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.admin-menu-list__detailImagePlaceholder {
+  width: 373px;
+  height: 373px;
+  border-radius: 8px;
+  background: #EDEDED;
+}
+
+.admin-menu-list__detailBody {
+  padding: 24px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.admin-menu-list__chipRow {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.admin-menu-list__chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 51px;
+  min-width: 126px;
+  padding: 0 16px;
+  background: #FFC21C;
+  color: #131313;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 4px;
+}
+
+.admin-menu-list__detailTitle {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 500;
+  color: rgba(19, 19, 19, 0.8);
+}
+
+.admin-menu-list__detailSub {
+  margin: 4px 0 0;
+  font-size: 14px;
+  color: rgba(19, 19, 19, 0.6);
+}
+
+.admin-menu-list__detailDesc {
+  margin: 12px 0 0;
+  font-size: 15px;
+  color: rgba(19, 19, 19, 0.6);
+}
+
+.admin-menu-list__detailPrice {
+  margin: 16px 0 0;
+  font-size: 28px;
+  font-weight: 600;
+  color: #131313;
+}
+
+.admin-menu-list__bestRow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 2px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.admin-menu-list__bestText {
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(19, 19, 19, 0.6);
+}
+
+.admin-menu-list__bestCheck {
+  width: 18px;
+  height: 18px;
+  accent-color: #FFC21C;
+}
+
+.admin-menu-list__options {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.admin-menu-list__optionsHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.admin-menu-list__optionsTitle {
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(19, 19, 19, 0.6);
+  letter-spacing: -0.35px;
+}
+
+.admin-menu-list__optionsPlus {
+  width: 26px;
+  height: 26px;
+  border: none;
+  background: transparent;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  color: rgba(19, 19, 19, 0.7);
+}
+
+.admin-menu-list__optionsPlus:hover {
+  color: #131313;
+}
+
+.admin-menu-list__optionsLine {
+  width: 100%;
+  height: 1px;
+  background: rgba(19, 19, 19, 0.2);
+}
+
+.admin-menu-list__optionsEditor {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.admin-menu-list__optionsList {
+  margin-top: 0;
+}
+
+.admin-menu-list__optionsEmpty {
+  margin: 0;
+  font-size: 15px;
+  color: rgba(19, 19, 19, 0.6);
+}
+

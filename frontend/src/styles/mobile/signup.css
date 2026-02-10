@@ -1,0 +1,245 @@
+/* ========== 모바일 회원가입 (signup) ========== */
+
+.signup {
+  position: relative;
+  width: 360px;
+  height: 690px;
+  background: #fff;
+  overflow: hidden;
+}
+
+.signup__header {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 360px;
+  height: 56px;
+  padding-top: env(safe-area-inset-top, 0px);
+  background: #fff;
+  border-bottom: 1px solid rgba(19, 19, 19, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.signup__back {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 8px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.signup__back img { width: 18px; height: 18px; display: block; }
+
+.signup__logo { width: 54px; height: 16px; display: block; }
+
+.signup__title {
+  position: absolute;
+  left: 16px;
+  top: 72px;
+  width: 328px;
+  height: 30px;
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: normal;
+  color: #131313;
+}
+
+.signup__subtitle {
+  position: absolute;
+  left: 16px;
+  top: 108px;
+  width: 328px;
+  height: 16px;
+  margin: 0;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: normal;
+  color: rgba(19, 19, 19, 0.6);
+}
+
+.signup__errorEmpty {
+  position: absolute;
+  left: 16px;
+  top: 128px;
+  width: 328px;
+  margin: 0;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 14px;
+  color: #e53935;
+}
+
+.signup__caption {
+  position: absolute;
+  margin: 0;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: normal;
+  color: rgba(19, 19, 19, 0.6);
+}
+
+.signup__caption--name    { left: 16px; top: 139px; width: 328px; height: 14px; }
+.signup__caption--id      { left: 16px; top: 201px; width: 328px; height: 14px; }
+.signup__caption--email   { left: 16px; top: 263px; width: 328px; height: 14px; }
+.signup__caption--password { left: 16px; top: 325px; width: 328px; height: 14px; }
+.signup__caption--confirm { left: 16px; top: 387px; width: 328px; height: 14px; }
+
+.signup__caption--error,
+.signup__label--error { color: #e53935 !important; }
+
+.signup__label {
+  position: absolute;
+  margin: 0;
+  width: 328px;
+  height: 17px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: normal;
+  color: rgba(19, 19, 19, 0.8);
+}
+
+.signup__label--name    { left: 16px; top: 161px; }
+.signup__label--id      { left: 16px; top: 223px; }
+.signup__label--email   { left: 16px; top: 285px; }
+.signup__label--password { left: 16px; top: 347px; }
+.signup__label--confirm { left: 16px; top: 409px; }
+
+.signup__input {
+  position: absolute;
+  width: 328px;
+  height: 17px;
+  padding: 0;
+  margin: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: normal;
+  color: #131313;
+  caret-color: #131313;
+}
+
+.signup__input--name    { left: 16px; top: 161px; }
+.signup__input--id      { left: 16px; top: 223px; }
+.signup__input--email   { left: 16px; top: 285px; }
+.signup__input--password { left: 16px; top: 347px; }
+.signup__input--confirm { left: 16px; top: 409px; }
+
+.signup__line {
+  position: absolute;
+  width: 328px;
+  height: 2px;
+  display: block;
+}
+
+.signup__line--name    { left: 16px; top: 186px; }
+.signup__line--id      { left: 16px; top: 248px; }
+.signup__line--email   { left: 16px; top: 310px; }
+.signup__line--password { left: 16px; top: 372px; }
+.signup__line--confirm { left: 16px; top: 434px; }
+
+.signup__hit {
+  position: absolute;
+  left: 16px;
+  width: 328px;
+  height: 52px;
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: text;
+}
+
+.signup__hit--name { top: 139px; }
+.signup__hit--id { top: 201px; }
+.signup__hit--email { top: 263px; }
+.signup__hit--password { top: 325px; }
+.signup__hit--confirm { top: 387px; }
+
+.signup__button {
+  position: absolute;
+  left: 16px;
+  top: 616px;
+  width: 328px;
+  height: 46px;
+  background: rgba(19, 19, 19, 0.1);
+  border-radius: 4px;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+}
+
+.signup__button--active { background: #ffc21c; }
+
+.signup__buttonText {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: auto;
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: normal;
+  color: #131313;
+  white-space: nowrap;
+}
+
+.signup__modalBackdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 10;
+}
+
+.signup__modal {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 280px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  z-index: 11;
+  overflow: hidden;
+}
+
+.signup__modalMessage {
+  margin: 0;
+  padding: 20px 20px 16px;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: normal;
+  color: #e53935;
+}
+
+.signup__modalDivider {
+  height: 1px;
+  background: rgba(19, 19, 19, 0.1);
+  margin: 0 20px;
+}
+
+.signup__modalConfirm {
+  display: block;
+  width: 100%;
+  padding: 14px 20px;
+  border: none;
+  background: transparent;
+  font-size: 15px;
+  font-weight: 500;
+  color: #ff6b00;
+  text-align: right;
+  cursor: pointer;
+}

@@ -1,0 +1,1111 @@
+/* ========== 모바일 메뉴 상세 - Figma 834-40775 / 834-39850 / 834-39910 ========== */
+
+.figma360-scale--menuDetail {
+  overflow: hidden; /* 내부 스크롤 컨테이너 사용 */
+}
+
+.menu-detail {
+  position: relative;
+  width: 360px;
+  height: 690px;
+  background: #fff;
+}
+
+.menu-detail__scroll {
+  position: absolute;
+  inset: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  touch-action: pan-y;
+  overscroll-behavior: contain; /* 끝에서 튕기며 상단 점프 방지 */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  /* 하단 고정 패널(193px) + 짧은 컨텐츠에서도 "사진 다 넘김" 스크롤 여유 확보 */
+  padding-bottom: 430px;
+}
+.menu-detail__scroll--compact {
+  /* compact에서는 상단바(66px) 아래부터 스크롤 뷰포트 시작 */
+  inset: 66px 0 0 0;
+}
+.menu-detail__scroll::-webkit-scrollbar {
+  display: none;
+}
+
+/* ===== 헤더 ===== */
+.menu-detail__topOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 20;
+  height: 66px;
+  width: 360px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  box-sizing: border-box;
+  background: transparent;
+  /* 헤더 영역에서 스크롤 제스처가 막히지 않게(버튼만 클릭) */
+  pointer-events: none;
+  transition: opacity 120ms ease;
+}
+
+.menu-detail__topOverlay--hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.menu-detail__topBar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 30;
+  width: 360px;
+  height: 66px;
+  background: #fff;
+  box-shadow: 0px 2px 14px rgba(19, 19, 19, 0.08);
+  display: grid;
+  grid-template-columns: 48px 1fr 48px;
+  align-items: center;
+  padding: 0 8px;
+  box-sizing: border-box;
+  pointer-events: none;
+  transition: opacity 120ms ease;
+}
+
+.menu-detail__topBar--hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.menu-detail__compactHeader {
+  --menu-detail-compact-header-h: 185px;
+  --menu-detail-compact-img-w: 160px;
+  --menu-detail-compact-text-left: calc(var(--menu-detail-compact-img-w) + 32px);
+  position: relative;
+  z-index: 5;
+  width: 360px;
+  height: var(--menu-detail-compact-header-h);
+  background: #fff;
+  overflow: hidden;
+  /* 헤더 영역에서 스크롤 제스처가 막히지 않게 */
+  pointer-events: none;
+}
+
+.menu-detail__compactSpacer {
+  height: 66px;
+}
+
+.menu-detail__compactHeader .menu-detail__compactRow {
+  height: var(--menu-detail-compact-header-h);
+  position: relative;
+  display: block; /* 기존 grid 레이아웃 무시 */
+}
+
+.menu-detail__compactHeader .menu-detail__compactImg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  margin: 0; /* Figma: x=0부터 시작 */
+  width: var(--menu-detail-compact-img-w);
+  height: var(--menu-detail-compact-header-h);
+}
+
+.menu-detail__compactHeader .menu-detail__compactInfo {
+  position: absolute;
+  /* 이미지(149px)와 겹치지 않게 약간 여유 */
+  left: var(--menu-detail-compact-text-left);
+  top: 60px;
+  width: 149px;
+  margin: 0;
+  padding: 0;
+}
+
+.menu-detail__compactHeader .menu-detail__priceCompact {
+  position: absolute;
+  left: var(--menu-detail-compact-text-left);
+  top: 125px;
+}
+
+/* compact 헤더에서는 이미지 직각(라운드 제거) */
+.menu-detail__compactHeader .menu-detail__compactImg {
+  border-radius: 0;
+}
+
+.menu-detail__compactHeader .menu-detail__divider {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+}
+
+.menu-detail__iconBtn {
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: transparent;
+  color: #131313;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  pointer-events: auto;
+}
+
+.menu-detail__logo {
+  width: 52px;
+  height: 15px;
+  justify-self: center;
+  object-fit: contain;
+  pointer-events: auto;
+}
+
+/* ===== 히어로 ===== */
+.menu-detail__hero {
+  padding-top: 0;
+}
+
+/* 요청사항: 상단 아이콘 영역(66px) 제외하고, 히어로(360×278) 전체를 사진으로 꽉 채움 */
+.menu-detail__heroFull {
+  width: 360px;
+  height: 278px;
+  background: rgba(19, 19, 19, 0.06);
+  overflow: hidden;
+}
+
+.menu-detail__heroFullImg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+}
+
+.menu-detail__heroFullImg--empty {
+  background: rgba(19, 19, 19, 0.06);
+}
+
+.menu-detail__divider {
+  height: 1px;
+  width: 366px;
+  margin-left: -3px;
+  background: rgba(19, 19, 19, 0.2);
+}
+
+/* ===== 정보(01) ===== */
+.menu-detail__info {
+  padding: 16px 16px 0;
+}
+
+.menu-detail__nameBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.menu-detail__nameRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.menu-detail__name {
+  margin: 0;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 22px;
+  font-weight: 500;
+  line-height: normal;
+  color: #131313;
+}
+
+.menu-detail__bestBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 10px;
+  height: 24px;
+  border-radius: 4px;
+  background: #F9DB88;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(19, 19, 19, 0.8);
+}
+
+.menu-detail__nameEn {
+  margin: 0;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: normal;
+  color: rgba(19, 19, 19, 0.6);
+}
+
+.menu-detail__desc {
+  margin: 12px 0 0;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: normal;
+  color: rgba(19, 19, 19, 0.6);
+  white-space: pre-wrap;
+}
+
+.menu-detail__price {
+  margin: 14px 0 0;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: normal;
+  color: #131313;
+}
+
+/* ===== 영양정보 (Figma 834-44624) ===== */
+.menu-detail__nutrition {
+  width: 328px;
+  margin: 12px auto 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.menu-detail__nutritionHead {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.menu-detail__nutritionTitle {
+  margin: 0;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: #131313;
+}
+
+.menu-detail__nutritionServing {
+  margin: 0;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+  color: rgba(19, 19, 19, 0.8);
+}
+
+.menu-detail__nutritionNote {
+  margin: 0;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  color: rgba(19, 19, 19, 0.6);
+}
+
+.menu-detail__nutritionBox {
+  width: 100%;
+  background: #F7F7F7;
+  border-radius: 4px;
+  padding: 16px;
+  box-sizing: border-box;
+  min-height: 300px; /* Figma 수치 */
+}
+
+.menu-detail__nutritionRow {
+  position: relative;
+  display: grid;
+  grid-template-columns: 90px 1fr;
+  column-gap: 0;
+  align-items: start;
+  padding: 0 0 12px;
+}
+
+.menu-detail__nutritionRow:last-child {
+  /* 마지막 행도 아래에 여유를 둬서 회색 줄이 약 10px 아래에 보이게 */
+  padding-bottom: 10px;
+}
+
+.menu-detail__nutritionName {
+  margin: 0;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  color: rgba(19, 19, 19, 0.6);
+}
+
+.menu-detail__nutritionValue {
+  margin: 0;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(19, 19, 19, 0.8);
+}
+
+.menu-detail__nutritionLine {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: rgba(19, 19, 19, 0.12);
+}
+
+/* ===== compact header(02/04) ===== */
+.menu-detail__hero--compact {
+  padding-top: 66px; /* 상단 바 아래 */
+}
+
+.menu-detail__compactRow {
+  position: relative;
+  width: 360px;
+  height: 149px;
+}
+
+.menu-detail__compactImg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 149px;
+  /* 정보 영역 높이에 맞춰 사진도 꽉 채움 */
+  height: var(--menu-detail-compact-header-h, 149px);
+  border-radius: 8px;
+  background: rgba(19, 19, 19, 0.06);
+  background-size: cover;
+  background-position: center;
+  margin: 0;
+}
+
+.menu-detail__compactInfo {
+  position: absolute;
+  left: 145px; /* Figma 텍스트 시작점 */
+  top: 29px;
+  width: 149px;
+  padding: 0;
+  margin: 0;
+}
+
+.menu-detail__nameCompact {
+  margin: 0;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 18px;
+  font-weight: 500;
+  color: #131313;
+}
+
+.menu-detail__priceCompact {
+  position: absolute;
+  left: 145px;
+  top: 94px;
+  margin: 0;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: #131313;
+}
+
+/* ===== 온도 선택 pill ===== */
+.menu-detail__tempPill {
+  width: 328px;
+  height: 45px;
+  border-radius: 68px;
+  background: #EFEFF0;
+  margin: 14px auto 0;
+  padding: 5.5px;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+}
+
+.menu-detail__tempPill--compact {
+  margin-top: 12px;
+}
+
+.menu-detail__tempBtn {
+  border: none;
+  border-radius: 68px;
+  background: transparent;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: rgba(19, 19, 19, 0.3);
+  cursor: pointer;
+}
+
+.menu-detail__tempBtn--active {
+  background: #fff;
+}
+
+.menu-detail__tempBtn--hot.menu-detail__tempBtn--active {
+  color: #AD3434;
+}
+
+.menu-detail__tempBtn--iced.menu-detail__tempBtn--active {
+  color: #0037FF;
+}
+
+/* ===== 옵션 영역(02/04) ===== */
+.menu-detail__options {
+  padding: 14px 16px 0;
+}
+
+.menu-detail__options--compact {
+  padding-top: 12px;
+}
+
+.menu-detail__sectionTitle {
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: #131313;
+  margin: 0 0 10px;
+}
+
+.menu-detail__beanRow {
+  display: flex;
+  gap: 4px;
+}
+
+.menu-detail__beanCard {
+  width: 106px;
+  height: 59px;
+  border-radius: 4px;
+  border: none;
+  background: #F7F7F7;
+  padding: 0;
+  cursor: pointer;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.menu-detail__beanCard--active {
+  background: #fff;
+  border: 1px solid #131313;
+  box-shadow: 0px 4px 24px rgba(19, 19, 19, 0.25);
+}
+
+.menu-detail__beanKo {
+  margin: 0;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #131313;
+  line-height: 1;
+}
+
+.menu-detail__beanEn {
+  margin: 0;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  color: rgba(19, 19, 19, 0.6);
+  line-height: 1;
+}
+
+.menu-detail__beanDesc {
+  margin-top: 12px;
+  width: 327px;
+  min-height: 96px; /* Figma 수치 */
+  border-radius: 4px;
+  border: 1px solid rgba(19, 19, 19, 0.2);
+  background: #fff;
+  box-sizing: border-box;
+  padding: 10px 12px;
+}
+
+.menu-detail__beanDescText {
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 13px;
+  line-height: 1.28;
+  color: rgba(19, 19, 19, 0.6);
+  white-space: pre-wrap;
+}
+
+.menu-detail__beanDescBody {
+  margin: 0;
+}
+
+.menu-detail__beanDescTraits {
+  margin: 6px 0 0;
+  font-weight: 700;
+}
+
+.menu-detail__optRow {
+  width: calc(100% + 32px);
+  margin-left: -16px;
+  padding: 16px;
+  border: none;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.menu-detail__optRight {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.menu-detail__optExtra {
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(19, 19, 19, 0.6);
+}
+
+.menu-detail__optLeft {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.menu-detail__optName {
+  margin: 0;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: rgba(19, 19, 19, 0.8);
+}
+
+.menu-detail__optValue {
+  margin: 0;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  color: rgba(19, 19, 19, 0.6);
+}
+
+.menu-detail__chev {
+  font-size: 18px;
+  color: rgba(19, 19, 19, 0.5);
+  /* 오른쪽(>) 방향으로 표시 */
+  transform: none;
+}
+
+.menu-detail__sheetOverlay {
+  position: absolute;
+  inset: 0;
+  z-index: 100;
+  background: rgba(19, 19, 19, 0.7);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.menu-detail__sheet {
+  width: 360px;
+  height: auto;
+  background: #fff;
+  position: relative;
+  overflow: hidden;
+}
+
+.menu-detail__sheet--shot {
+  height: 207px; /* Figma 834-40184 */
+}
+
+.menu-detail__sheet--milk {
+  height: 331px; /* Figma 834-40663 */
+}
+
+.menu-detail__sheet--syrup {
+  height: 301px; /* Figma 1168-6593 */
+}
+
+.menu-detail__sheet--whip {
+  height: 258px; /* Figma 834-43084 */
+}
+
+.menu-detail__sheet--added {
+  height: 164px; /* Figma 834-42254 */
+}
+
+.menu-detail__sheetClose {
+  position: absolute;
+  right: 16px;
+  top: 17px;
+  width: 20px;
+  height: 20px;
+  border: none;
+  background: transparent;
+  color: rgba(19, 19, 19, 0.9);
+  font-size: 20px;
+  line-height: 20px;
+  cursor: pointer;
+}
+
+.menu-detail__sheetTitle {
+  position: absolute;
+  left: 16px;
+  top: 16px;
+  margin: 0;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: #131313;
+}
+
+.menu-detail__sheetSubtitle {
+  position: absolute;
+  left: 16px;
+  top: 41px;
+  margin: 0;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  color: rgba(19, 19, 19, 0.6);
+}
+
+.menu-detail__sheetRow {
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  top: 73px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.menu-detail__sheetItem {
+  margin: 0;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #131313;
+}
+
+.menu-detail__sheetQty {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.menu-detail__sheetQtyNum {
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #131313;
+  min-width: 14px;
+  text-align: center;
+}
+
+.menu-detail__sheetApplyBtn {
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  bottom: 32px;
+  height: 46px;
+  border-radius: 4px;
+  border: none;
+  background: #FFC21C;
+  color: #131313;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.menu-detail__addedCartIcon {
+  position: absolute;
+  top: 22px;   /* Figma */
+  right: 16px; /* Figma */
+  width: 20px;
+  height: 20px;
+  border: none;
+  background: transparent;
+  color: #fff;
+  cursor: pointer;
+}
+
+.menu-detail__addedActions {
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  top: 86px; /* Figma */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.menu-detail__addedBtn {
+  width: 160px;  /* Figma */
+  height: 46px;  /* Figma */
+  border-radius: 4px;
+  padding: 10px;
+  box-sizing: border-box;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: #131313;
+  cursor: pointer;
+}
+
+.menu-detail__addedBtn--outline {
+  background: #fff;
+  border: 1px solid #FFC21C;
+}
+
+.menu-detail__addedBtn--primary {
+  background: #FFC21C;
+  border: none;
+}
+
+/* ===== 휘핑 크림 시트 ===== */
+.menu-detail__whipBody {
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  top: 61px; /* Figma */
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.menu-detail__whipMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.menu-detail__whipMetaLabel {
+  margin: 0;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 12px;
+  font-weight: 300; /* Light */
+  color: rgba(19, 19, 19, 0.6);
+}
+
+.menu-detail__whipMetaValue {
+  margin: 0;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #131313;
+}
+
+.menu-detail__whipChoices {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.menu-detail__whipBtn {
+  height: 41px;
+  border-radius: 4px;
+  border: 1px solid transparent;
+  background: #F7F7F7;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #131313;
+  text-align: center;
+  cursor: pointer;
+  padding: 0;
+  flex: 1 1 0;
+}
+
+.menu-detail__whipBtn--active {
+  background: #fff;
+  border-color: #131313;
+  box-shadow: 0px 4px 24px rgba(19, 19, 19, 0.25);
+}
+
+.menu-detail__milkGrid {
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  top: 53px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+}
+
+.menu-detail__milkCard {
+  height: 83px;
+  border-radius: 4px;
+  border: 1px solid transparent;
+  background: #F7F7F7;
+  padding: 0;
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.menu-detail__milkCard--active {
+  background: #fff;
+  border-color: #131313;
+  box-shadow: 0px 4px 24px rgba(19, 19, 19, 0.25);
+}
+
+.menu-detail__milkKo {
+  margin: 0;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #131313;
+  line-height: 1;
+}
+
+.menu-detail__milkEn {
+  margin: 0;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  color: rgba(19, 19, 19, 0.6);
+  line-height: 1;
+}
+
+.menu-detail__milkPrice {
+  margin: 0;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(19, 19, 19, 0.6);
+  line-height: 1;
+  /* 카드 내부 중앙 정렬(요청사항) */
+  text-align: center;
+}
+
+.menu-detail__syrupList {
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  top: 61px; /* Figma */
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.menu-detail__syrupTopRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.menu-detail__syrupLabel {
+  margin: 0;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(19, 19, 19, 0.8);
+}
+
+.menu-detail__syrupNoneChip {
+  height: 32px;
+  padding: 6px;
+  border-radius: 4px;
+  border: 1px solid #FFC21C;
+  background: rgba(255, 194, 28, 0.06);
+  color: rgba(19, 19, 19, 0.8);
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.menu-detail__syrupNoneChip--active {
+  /* Figma 836-117508: 선택 시 노란색으로 채움 */
+  background: #FFC21C;
+  border: none;
+}
+
+.menu-detail__syrupRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.menu-detail__syrupName {
+  margin: 0;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(19, 19, 19, 0.8);
+}
+
+.menu-detail__syrupQty {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.menu-detail__syrupQtyBtn {
+  width: 20px;
+  height: 20px;
+  border-radius: 40px;
+  background: #fff;
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 1;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(19, 19, 19, 0.8);
+}
+
+.menu-detail__syrupQtyBtn--minus {
+  border: 1px solid rgba(19, 19, 19, 0.2);
+}
+
+.menu-detail__syrupQtyBtn--plus {
+  border: 1px solid rgba(19, 19, 19, 0.8);
+}
+
+.menu-detail__syrupQtyNum {
+  min-width: 14px;
+  text-align: center;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(19, 19, 19, 0.8);
+}
+
+.menu-detail__bottomSpace {
+  height: 24px;
+}
+
+.menu-detail__loading {
+  margin: 14px 16px 0;
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(19, 19, 19, 0.55);
+}
+
+/* ===== 하단 고정 패널 ===== */
+.menu-detail__bottom {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 360px;
+  height: auto;          /* 내용만큼 늘어나되 */
+  min-height: 193px;     /* 기본 디자인 높이는 유지 */
+  border-top: 1px solid #131313;
+  background: #fff;
+  overflow: visible;     /* 옵션 줄 늘어나도 버튼 안 잘리게 */
+  padding: 12px 16px 16px;
+  box-sizing: border-box;
+}
+
+.menu-detail__changedLabel {
+  margin: 0;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(19, 19, 19, 0.4);
+}
+
+.menu-detail__changedRow {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-top: 8px;
+}
+
+.menu-detail__changedName {
+  flex: 0 0 44px; /* 라벨 폭 고정 → 값 시작점 정렬 */
+  white-space: nowrap;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(19, 19, 19, 0.6);
+}
+
+.menu-detail__changedValue {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: #131313;
+}
+
+.menu-detail__changedPrice {
+  flex: 0 0 auto;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: #131313;
+  text-align: right;
+  white-space: nowrap; /* '+4,800원' 줄바꿈 방지 */
+  width: auto;         /* 길어지면 왼쪽으로 확장 */
+  min-width: 45px;     /* 기본은 Figma 폭 유지 */
+  line-height: 16px;   /* Figma: 16px 높이 느낌 */
+}
+
+.menu-detail__bottomLine {
+  height: 1px;
+  background: rgba(19, 19, 19, 0.2);
+  margin-top: 6px;
+}
+
+.menu-detail__qtyRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 16px;
+}
+
+.menu-detail__qty {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.menu-detail__qtyBtn {
+  width: 24px;
+  height: 24px;
+  border-radius: 40px;
+  border: 1px solid rgba(19, 19, 19, 0.2);
+  background: #fff;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 1;
+  color: rgba(19, 19, 19, 0.7);
+}
+
+.menu-detail__qtyBtn--plus {
+  border-color: #131313;
+  color: #131313;
+}
+
+.menu-detail__qtyNum {
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #131313;
+  min-width: 10px;
+  text-align: center;
+}
+
+.menu-detail__total {
+  margin: 0;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: #131313;
+}
+
+.menu-detail__addBtn {
+  margin-top: 18px;
+  width: 328px;
+  height: 46px;
+  border-radius: 4px;
+  border: none;
+  background: #FFC21C;
+  color: #131313;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+}
+

@@ -1,0 +1,295 @@
+/* ========== 모바일 아이디 찾기 (findid) - Figma 1152:6429 ========== */
+/* 헤더(로고 + 뒤로 버튼)는 회원가입과 동일 → signup__header, signup__back, signup__logo 사용 */
+
+.findid {
+  position: relative;
+  width: 360px;
+  height: 690px;
+  background: #fff;
+  overflow: hidden;
+}
+
+.findid__title {
+  position: absolute;
+  left: 16px;
+  top: 72px;
+  width: 328px;
+  height: 30px;
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: normal;
+  color: #131313;
+}
+
+.findid__subtitle {
+  position: absolute;
+  left: 16px;
+  top: 108px;
+  width: 328px;
+  height: 16px;
+  margin: 0;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: normal;
+  color: rgba(19, 19, 19, 0.6);
+}
+
+/* '가입 시 입력한...' 문구 아래 12px에 표시 (빈 값 / 찾을 수 없음 공통) */
+.findid__errorEmpty {
+  position: absolute;
+  left: 16px;
+  top: 136px;
+  width: 328px;
+  margin: 0;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 14px;
+  color: #e53935;
+}
+
+/* Figma 1152-6912: 일치하는 계정 없을 때 에러 문구 아래로 필드 밀기 */
+.findid--notFound .findid__caption--name  { top: 166px; }
+.findid--notFound .findid__caption--email { top: 228px; }
+.findid--notFound .findid__label--name    { top: 188px; }
+.findid--notFound .findid__label--email   { top: 250px; }
+.findid--notFound .findid__input--name    { top: 188px; }
+.findid--notFound .findid__input--email   { top: 250px; }
+.findid--notFound .findid__line--name     { top: 213px; }
+.findid--notFound .findid__line--email    { top: 275px; }
+.findid--notFound .findid__hit--name      { top: 174px; }
+.findid--notFound .findid__hit--email     { top: 236px; }
+
+.findid__caption {
+  position: absolute;
+  margin: 0;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: normal;
+  color: rgba(19, 19, 19, 0.6);
+}
+
+.findid__caption--name  { left: 16px; top: 144px; width: 328px; height: 14px; }
+.findid__caption--email { left: 16px; top: 206px; width: 328px; height: 14px; }
+
+.findid__caption--error,
+.findid__label--error { color: #e53935 !important; }
+
+.findid__label {
+  position: absolute;
+  margin: 0;
+  width: 328px;
+  height: 17px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: normal;
+  color: rgba(19, 19, 19, 0.8);
+}
+
+.findid__label--name  { left: 16px; top: 166px; }
+.findid__label--email { left: 16px; top: 228px; }
+
+.findid__input {
+  position: absolute;
+  width: 328px;
+  height: 17px;
+  padding: 0;
+  margin: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: normal;
+  color: #131313;
+  caret-color: #131313;
+}
+
+.findid__input--name  { left: 16px; top: 166px; }
+.findid__input--email { left: 16px; top: 228px; }
+
+.findid__line {
+  position: absolute;
+  width: 328px;
+  height: 2px;
+  display: block;
+}
+
+.findid__line--name  { left: 16px; top: 191px; }
+.findid__line--email { left: 16px; top: 253px; }
+
+.findid__hit {
+  position: absolute;
+  left: 16px;
+  width: 328px;
+  height: 52px;
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: text;
+}
+
+.findid__hit--name  { top: 152px; }
+.findid__hit--email { top: 214px; }
+
+.findid__button {
+  position: absolute;
+  left: 16px;
+  top: 616px;
+  width: 328px;
+  height: 46px;
+  background: rgba(19, 19, 19, 0.1);
+  border-radius: 4px;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+}
+
+.findid__button--active { background: #ffc21c; }
+
+.findid__buttonText {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: auto;
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: normal;
+  color: #131313;
+  white-space: nowrap;
+}
+
+.findid__modalBackdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 10;
+}
+
+.findid__modal {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 280px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  z-index: 11;
+  overflow: hidden;
+}
+
+.findid__modalMessage {
+  margin: 0;
+  padding: 20px 20px 16px;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: normal;
+  color: #e53935;
+}
+
+.findid__modalDivider {
+  height: 1px;
+  background: rgba(19, 19, 19, 0.1);
+  margin: 0 20px;
+}
+
+.findid__modalConfirm {
+  display: block;
+  width: 100%;
+  padding: 14px 20px;
+  border: none;
+  background: transparent;
+  font-size: 15px;
+  font-weight: 500;
+  color: #ff6b00;
+  text-align: right;
+  cursor: pointer;
+}
+
+/* ========== Figma 1152-6935: 아이디 확인 성공 화면 ========== */
+.findid--result .findid__resultTitle {
+  position: absolute;
+  left: 16px;
+  top: 72px;
+  width: 328px;
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: normal;
+  color: #131313;
+}
+
+.findid--result .findid__resultDesc {
+  position: absolute;
+  left: 16px;
+  top: 108px;
+  width: 328px;
+  margin: 0;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 20px;
+  color: rgba(19, 19, 19, 0.8);
+}
+
+.findid--result .findid__resultDesc--second {
+  top: 128px;
+}
+
+.findid--result .findid__resultIdLabel {
+  position: absolute;
+  left: 16px;
+  top: 168px;
+  width: 328px;
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: normal;
+  color: rgba(19, 19, 19, 0.8);
+}
+
+/* 1번: 박스 - 343×79, 반경 4px, 배경 #FFC21C 10% */
+.findid--result .findid__resultIdBox {
+  position: absolute;
+  left: 8.5px;
+  top: 192px;
+  width: 343px;
+  height: 79px;
+  padding: 0;
+  background: #FFC21C1A;
+  border-radius: 4px;
+  font-family: Pretendard, system-ui, -apple-system, 'Malgun Gothic', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 128%;
+  color: #131313;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.findid--result .findid__resultButton {
+  position: absolute;
+  left: 16px;
+  top: 616px;
+  width: 328px;
+  height: 46px;
+  background: rgba(19, 19, 19, 0.1);
+  border-radius: 4px;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font-size: 15px;
+  font-weight: 500;
+  color: #131313;
+  cursor: pointer;
+}
+
+.findid--result .findid__resultButton--active {
+  background: #ffc21c;
+}

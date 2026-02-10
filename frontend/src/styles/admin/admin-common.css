@@ -1,0 +1,16 @@
+/* ========== 백오피스 공통 ========== */
+
+.admin-layout {
+  min-height: 100vh;
+  background: #fff;
+}
+
+.admin-login {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  background: #fff;
+  position: relative;
+}

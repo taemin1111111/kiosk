@@ -1,0 +1,274 @@
+/* ========== 백오피스 로그인 (Figma 127:2169) ========== */
+
+.admin-login__frame {
+  position: relative;
+  width: 360px;
+  height: 530px;
+  background: #fff;
+}
+
+.admin-login__logo {
+  position: absolute;
+  left: 16px;
+  top: 16px;
+  width: 87px;
+  height: 26px;
+  display: block;
+  object-fit: contain;
+  object-position: left top;
+}
+
+.admin-login__welcome {
+  position: absolute;
+  left: 16px;
+  top: 124px;
+  width: 328px;
+}
+
+.admin-login__title1 {
+  position: absolute;
+  left: 0;
+  top: 0;
+  margin: 0;
+  font-size: 28px;
+  font-weight: 500;
+  line-height: 36px;
+  color: #131313;
+}
+
+.admin-login__title2 {
+  position: absolute;
+  left: 0;
+  top: 36px;
+  margin: 0;
+  font-size: 28px;
+  font-weight: 500;
+  line-height: 36px;
+  color: #131313;
+}
+
+.admin-login__subtitle {
+  position: absolute;
+  left: 0;
+  top: 88px;
+  margin: 0;
+  width: 328px;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 16px;
+  color: rgba(19, 19, 19, 0.6);
+}
+
+/* 아이디/비밀번호 틀렸을 때 알림: 부제목 아래 68px 공간 안 (일반 로그인과 동일 스타일) */
+.admin-login__errorAuth {
+  position: absolute;
+  left: 16px;
+  top: 228px;
+  width: 328px;
+  margin: 0;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 20px;
+  color: #e53935;
+}
+
+.admin-login__fields {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 360px;
+  height: 530px;
+}
+
+.admin-login__caption {
+  position: absolute;
+  margin: 0;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: normal;
+  color: rgba(19, 19, 19, 0.6);
+}
+
+/* 부제목 아래 68px 공간 뒤 아이디 영역 */
+.admin-login__caption--id {
+  left: 16px;
+  top: 296px;
+  width: 328px;
+  height: 14px;
+}
+
+.admin-login__caption--password {
+  left: 16px;
+  top: 373px;
+  width: 328px;
+  height: 14px;
+}
+
+.admin-login__label {
+  position: absolute;
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: normal;
+  color: rgba(19, 19, 19, 0.8);
+}
+
+.admin-login__label--id {
+  left: 16px;
+  top: 318px;
+  width: 328px;
+  height: 17px;
+}
+
+.admin-login__label--password {
+  left: 16px;
+  top: 395px;
+  width: 328px;
+  height: 17px;
+}
+
+.admin-login__input {
+  position: absolute;
+  width: 328px;
+  height: 17px;
+  padding: 0;
+  margin: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: normal;
+  color: #131313;
+  caret-color: #131313;
+}
+
+.admin-login__input--id {
+  left: 16px;
+  top: 318px;
+}
+
+.admin-login__input--password {
+  left: 16px;
+  top: 395px;
+}
+
+.admin-login__line {
+  position: absolute;
+  width: 328px;
+  height: 2px;
+  display: block;
+}
+
+.admin-login__line--id {
+  left: 16px;
+  top: 343px;
+}
+
+.admin-login__line--password {
+  left: 16px;
+  top: 420px;
+}
+
+.admin-login__hit {
+  position: absolute;
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: text;
+}
+
+.admin-login__hit--id {
+  left: 16px;
+  top: 296px;
+  width: 328px;
+  height: 53px;
+}
+
+.admin-login__hit--password {
+  left: 16px;
+  top: 373px;
+  width: 328px;
+  height: 53px;
+}
+
+/* 비밀번호 라벨 아래 81px 공간 뒤 로그인 버튼 */
+.admin-login__button {
+  position: absolute;
+  left: 16px;
+  top: 476px;
+  width: 328px;
+  height: 46px;
+  background: rgba(19, 19, 19, 0.1);
+  border-radius: 4px;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+}
+
+.admin-login__button--active {
+  background: #ffc21c;
+}
+
+.admin-login__buttonText {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: normal;
+  color: #131313;
+  white-space: nowrap;
+}
+
+.admin-login__modalBackdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 100;
+}
+
+.admin-login__modal {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 280px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  z-index: 101;
+  overflow: hidden;
+}
+
+.admin-login__modalMessage {
+  margin: 0;
+  padding: 20px 20px 16px;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: normal;
+  color: #131313;
+}
+
+.admin-login__modalDivider {
+  height: 1px;
+  background: rgba(19, 19, 19, 0.1);
+  margin: 0 20px;
+}
+
+.admin-login__modalConfirm {
+  display: block;
+  width: 100%;
+  padding: 14px 20px;
+  border: none;
+  background: transparent;
+  font-size: 15px;
+  font-weight: 500;
+  color: #ff6b00;
+  text-align: right;
+  cursor: pointer;
+}

@@ -1,0 +1,7 @@
+/* 백오피스 스타일 통합 - 새 화면 추가 시 @import 한 줄 추가 */
+@import './admin-common.css';
+@import './admin-login.css';
+@import './admin-dashboard.css';
+@import './admin-menu-register.css';
+@import './admin-menu-list.css';
+@import './admin-terms.css';

@@ -1,0 +1,640 @@
+/* Figma 191-197743 메뉴 등록하기 */
+
+.admin-menu-register {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+}
+
+.admin-menu-register__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.admin-menu-register__belowTitle {
+  margin-top: 42px;
+}
+
+.admin-menu-register__breadcrumb {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(19, 19, 19, 0.5);
+}
+
+.admin-menu-register__title {
+  margin: 8px 0 0;
+  font-size: 24px;
+  font-weight: 700;
+  color: #131313;
+}
+
+.admin-menu-register__submitBtn {
+  padding: 10px 20px;
+  border: 1px solid rgba(19, 19, 19, 0.2);
+  border-radius: 8px;
+  background: rgba(19, 19, 19, 0.1); /* #131313 10% */
+  font-size: 14px;
+  font-weight: 600;
+  color: #131313;
+  cursor: pointer;
+}
+
+.admin-menu-register__submitBtn--active {
+  /* Figma 191-198259 */
+  border: none;
+  border-radius: 4px;
+  background: #FFC21C;
+  padding: 10px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #131313;
+}
+
+.admin-menu-register__submitBtn--disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.admin-menu-register__submitBtn:disabled {
+  cursor: not-allowed;
+}
+
+.admin-menu-register__submitBtn:hover {
+  background: rgba(19, 19, 19, 0.15);
+}
+
+.admin-menu-register__submitBtn--active:hover {
+  background: #FFC21C;
+}
+
+.admin-menu-register__form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .admin-menu-register__form {
+    grid-template-columns: 1fr;
+  }
+}
+
+.admin-menu-register__colLeft,
+.admin-menu-register__colRight {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.admin-menu-register__field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.admin-menu-register__label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #131313;
+}
+
+.admin-menu-register__labelRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.admin-menu-register__fieldErr {
+  font-size: 13px;
+  font-weight: 500;
+  color: #DF6666;
+}
+
+.admin-menu-register__select--err {
+  border-color: #DF6666;
+  background: #fff;
+}
+
+.admin-menu-register__select--err:focus,
+.admin-menu-register__select--err:focus-visible {
+  border-color: #DF6666;
+}
+
+.admin-menu-register__select,
+.admin-menu-register__input,
+.admin-menu-register__textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #E0E0E0;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #131313;
+  background: #FAFAFA;
+  box-sizing: border-box;
+}
+
+.admin-menu-register__select:focus,
+.admin-menu-register__input:focus,
+.admin-menu-register__textarea:focus,
+.admin-menu-register__select:focus-visible,
+.admin-menu-register__input:focus-visible,
+.admin-menu-register__textarea:focus-visible {
+  outline: none;
+  border-color: #FFC21C;
+  background: #FFFFFF; /* 활성화(포커스) 입력 칸은 흰 배경 */
+}
+
+.admin-menu-register__select {
+  cursor: pointer;
+  appearance: auto;
+}
+
+.admin-menu-register__textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.admin-menu-register__textarea--sm {
+  min-height: 60px;
+}
+
+.admin-menu-register__inputWrap {
+  position: relative;
+  width: 100%;
+}
+
+.admin-menu-register__inputWrap .admin-menu-register__input {
+  padding-right: 92px; /* counter 영역 확보 */
+}
+
+.admin-menu-register__counterWrap {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: rgba(19, 19, 19, 0.35);
+  pointer-events: none;
+}
+
+.admin-menu-register__counterSep {
+  color: rgba(19, 19, 19, 0.25);
+}
+
+.admin-menu-register__counterBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 18px;
+  padding: 0 6px;
+  border-radius: 6px;
+  background: rgba(19, 19, 19, 0.1); /* #131313 10% */
+  color: rgba(19, 19, 19, 0.45);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.admin-menu-register__priceWrap {
+  position: relative;
+  width: 100%;
+}
+
+.admin-menu-register__priceWrap .admin-menu-register__input {
+  width: 100%;
+  padding-right: 44px; /* '원' 단위 영역 확보 */
+}
+
+.admin-menu-register__unit {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 14px;
+  font-weight: 500;
+  color: #131313;
+  pointer-events: none;
+}
+
+.admin-menu-register__upload {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #E0E0E0;
+  border-radius: 8px;
+  background: #FAFAFA;
+  overflow: hidden;
+}
+
+.admin-menu-register__uploadHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px;
+  border-bottom: 1px solid #E0E0E0;
+}
+
+.admin-menu-register__uploadText {
+  font-size: 13px;
+  color: rgba(19, 19, 19, 0.5);
+  flex: 1;
+  min-width: 0;
+}
+
+.admin-menu-register__uploadBtn {
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  font-size: 24px;
+  line-height: 1;
+  color: #131313;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.admin-menu-register__fileInput {
+  display: none;
+}
+
+.admin-menu-register__uploadBody {
+  min-height: 120px;
+  padding: 16px;
+  cursor: pointer;
+}
+
+.admin-menu-register__uploadHint {
+  font-size: 13px;
+  color: rgba(19, 19, 19, 0.45);
+}
+
+.admin-menu-register__uploadEmpty {
+  width: 100%;
+  min-height: 160px;
+  border: 1px solid #E0E0E0;
+  border-radius: 8px;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.admin-menu-register__uploadPreviewRow {
+  display: grid;
+  grid-template-columns: 1fr 220px;
+  gap: 16px;
+  width: 100%;
+  align-items: start;
+}
+
+.admin-menu-register__uploadPreviewBox {
+  width: 100%;
+  min-height: 260px;
+  border: 1px solid #E0E0E0;
+  border-radius: 8px;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  box-sizing: border-box;
+}
+
+.admin-menu-register__uploadPreview {
+  width: 100%;
+  max-height: 320px;
+  object-fit: contain;
+  border-radius: 6px;
+}
+
+.admin-menu-register__uploadMeta {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 6px;
+}
+
+.admin-menu-register__uploadMetaText {
+  min-width: 0;
+}
+
+.admin-menu-register__uploadFileName {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #131313;
+  word-break: break-all;
+}
+
+.admin-menu-register__uploadFileDim {
+  margin: 6px 0 0;
+  font-size: 13px;
+  color: rgba(19, 19, 19, 0.55);
+}
+
+.admin-menu-register__uploadRemove {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 18px;
+  line-height: 1;
+  color: rgba(19, 19, 19, 0.7);
+  padding: 6px;
+  border-radius: 8px;
+}
+
+.admin-menu-register__uploadRemove:hover {
+  background: rgba(19, 19, 19, 0.08);
+}
+
+.admin-menu-register__addBtn {
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: transparent;
+  font-size: 18px;
+  line-height: 1;
+  color: #131313;
+  cursor: pointer;
+}
+
+.admin-menu-register__row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.admin-menu-register__row .admin-menu-register__select--sm,
+.admin-menu-register__row .admin-menu-register__input--sm {
+  flex: 1;
+}
+
+.admin-menu-register__select--sm,
+.admin-menu-register__input--sm {
+  max-width: 200px;
+}
+
+.admin-menu-register__inputBtn {
+  padding: 8px 16px;
+  border: 1px solid rgba(19, 19, 19, 0.2);
+  border-radius: 4px;
+  background: #fff;
+  font-size: 13px;
+  font-weight: 500;
+  color: #131313;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.admin-menu-register__optionCard {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  border: 1px solid #E0E0E0;
+  border-radius: 8px;
+  background: #FAFAFA;
+}
+
+.admin-menu-register__optionRow {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.admin-menu-register__radioLabel,
+.admin-menu-register__checkboxLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #131313;
+  cursor: pointer;
+}
+
+.admin-menu-register__optionActions {
+  margin-left: auto;
+  display: flex;
+  gap: 4px;
+}
+
+.admin-menu-register__iconBtn {
+  padding: 4px;
+  border: none;
+  background: transparent;
+  font-size: 16px;
+  cursor: pointer;
+  color: rgba(19, 19, 19, 0.6);
+}
+
+.admin-menu-register__iconBtn:hover {
+  color: #131313;
+}
+
+.admin-menu-register__msg {
+  margin: 0 0 8px;
+  font-size: 14px;
+}
+
+.admin-menu-register__msg--ok {
+  color: #0a0;
+}
+
+.admin-menu-register__msg--err {
+  color: #c00;
+}
+
+.admin-menu-register__modalBackdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(19, 19, 19, 0.7);
+  z-index: 200;
+}
+
+.admin-menu-register__modal {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 328px;
+  height: 118px;
+  background: #fff;
+  border-radius: 8px;
+  z-index: 201;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-menu-register__modalMessage {
+  margin: 0;
+  padding: 12px 12px 0;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: normal;
+  color: rgba(19, 19, 19, 0.8);
+}
+
+.admin-menu-register__modalDivider {
+  height: 1px;
+  background: rgba(19, 19, 19, 0.2);
+  margin: auto 12px 0;
+}
+
+.admin-menu-register__modalConfirm {
+  border: none;
+  background: transparent;
+  padding: 12px 0 14px;
+  font-size: 15px;
+  font-weight: 800;
+  color: #FFC21C;
+  text-align: center;
+  cursor: pointer;
+}
+
+.admin-menu-register__nutritionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid #E0E0E0;
+}
+
+.admin-menu-register__nutritionTitle {
+  font-size: 14px;
+  font-weight: 600;
+  color: #131313;
+}
+
+.admin-menu-register__nutritionToggle {
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: transparent;
+  font-size: 22px;
+  line-height: 1;
+  color: #131313;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.admin-menu-register__nutritionToggle:hover {
+  background: rgba(19, 19, 19, 0.06);
+}
+
+.admin-menu-register__nutritionBox {
+  padding-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.admin-menu-register__nutritionCols {
+  display: grid;
+  grid-template-columns: 280px 1fr 120px 36px;
+  gap: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(19, 19, 19, 0.45);
+  padding: 0 2px;
+}
+
+.admin-menu-register__nutritionRow {
+  display: grid;
+  grid-template-columns: 280px 1fr 120px 36px;
+  gap: 12px;
+  align-items: center;
+}
+
+.admin-menu-register__nutritionAddBtn {
+  height: 42px;
+  border: 1px solid rgba(19, 19, 19, 0.35);
+  border-radius: 8px;
+  background: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  color: #131313;
+  cursor: pointer;
+}
+
+.admin-menu-register__nutritionAddBtn:hover {
+  background: rgba(19, 19, 19, 0.06);
+}
+
+.admin-menu-register__nutritionRemoveBtn {
+  width: 36px;
+  height: 42px;
+  border: 1px solid rgba(19, 19, 19, 0.2);
+  border-radius: 8px;
+  background: #fff;
+  font-size: 18px;
+  line-height: 1;
+  color: rgba(19, 19, 19, 0.75);
+  cursor: pointer;
+}
+
+.admin-menu-register__nutritionRemoveBtn:hover {
+  background: rgba(19, 19, 19, 0.06);
+}
+
+.admin-menu-register__nutritionList {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.admin-menu-register__nutritionList li {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 12px;
+  align-items: center;
+  padding: 10px 12px;
+  border: 1px solid #E0E0E0;
+  border-radius: 8px;
+  background: #FAFAFA;
+}
+
+.admin-menu-register__nutritionItemName {
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(19, 19, 19, 0.75);
+}
+
+.admin-menu-register__nutritionItemValue {
+  font-size: 13px;
+  color: rgba(19, 19, 19, 0.75);
+  text-align: right;
+}
+
+.admin-menu-register__optionList {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+}
+
+.admin-menu-register__optionList li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 8px;
+  background: #f5f5f5;
+  border-radius: 4px;
+  margin-bottom: 4px;
+  font-size: 13px;
+}

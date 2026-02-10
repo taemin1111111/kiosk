@@ -1,0 +1,269 @@
+/* ========== 모바일 로그인 (login01) ========== */
+
+.login01 {
+  position: relative;
+  width: 360px;
+  height: 690px;
+  background: #fff;
+  overflow: hidden;
+}
+
+.login01__p { margin: 0; }
+
+.login01__logo {
+  position: absolute;
+  left: 10px;
+  top: 32.5px;
+  width: 54px;
+  height: 16px;
+  display: block;
+}
+
+.login01__welcome {
+  position: absolute;
+  left: 0;
+  top: 96px;
+  width: 360px;
+  height: 94px;
+}
+
+.login01__welcomeTitle {
+  position: absolute;
+  left: 16px;
+  top: 0;
+  width: 184px;
+  height: 66px;
+  font-size: 28px;
+  font-weight: 500;
+  line-height: normal;
+  color: #131313;
+}
+
+.login01__welcomePrompt {
+  position: absolute;
+  left: 16px;
+  top: 78px;
+  width: 328px;
+  height: 16px;
+  margin: 0;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: normal;
+  color: rgba(19, 19, 19, 0.6);
+}
+
+/* Figma 834-38475: 아이디/비밀번호 불일치 인라인 에러 */
+.login01__errorAuth {
+  position: absolute;
+  left: 16px;
+  top: 196px;
+  width: 328px;
+  margin: 0;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 20px;
+  color: #e53935;
+}
+
+.login01__fields {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 360px;
+  height: 690px;
+}
+
+.login01__fieldGroup { position: absolute; left: 0; top: 0; width: 360px; height: 82px; }
+.login01__field { position: absolute; left: 16px; top: 0; width: 328px; height: 25px; }
+.login01__field--password { top: 57px; }
+
+.login01__label {
+  position: absolute;
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: normal;
+  color: rgba(19, 19, 19, 0.8);
+}
+
+.login01__line328 {
+  position: absolute;
+  width: 328px;
+  height: 2px;
+  display: block;
+}
+
+.login01__links {
+  position: absolute;
+  left: 74.5px;
+  top: 356px;
+  width: 211px;
+  height: 14px;
+}
+
+.login01__linkText {
+  position: absolute;
+  top: 0;
+  margin: 0;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: normal;
+  color: rgba(19, 19, 19, 0.8);
+  text-decoration: none;
+}
+
+.login01__linkText--findId { left: 0; width: 55px; height: 14px; }
+.login01__linkText--findPassword { left: 79px; width: 66px; height: 14px; }
+.login01__linkText--signup { left: 169px; width: 42px; height: 14px; }
+
+.login01__divider {
+  position: absolute;
+  top: 2px;
+  width: 10px;
+  height: 2px;
+  display: block;
+  transform: rotate(90deg);
+  transform-origin: left top;
+}
+
+.login01__divider--1 { left: 67px; }
+.login01__divider--2 { left: 157px; }
+
+.login01__button {
+  position: absolute;
+  left: 16px;
+  top: 616px;
+  width: 328px;
+  height: 46px;
+  background: rgba(19, 19, 19, 0.1);
+  border-radius: 4px;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+}
+
+.login01__button--active { background: #ffc21c; }
+
+.login01__buttonText {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: auto;
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: normal;
+  color: #131313;
+  white-space: nowrap;
+}
+
+.login01__hit {
+  position: absolute;
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+.login01__hit--id {
+  left: 16px;
+  top: 240px;
+  width: 328px;
+  height: 47px;
+  cursor: pointer;
+}
+
+.login01__hit--password {
+  left: 16px;
+  top: 297px;
+  width: 328px;
+  height: 47px;
+  cursor: pointer;
+}
+
+.login01__caption {
+  position: absolute;
+  margin: 0;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: normal;
+  color: rgba(19, 19, 19, 0.6);
+}
+
+.login01__caption--id { left: 16px; top: 240px; width: 328px; height: 14px; }
+.login01__caption--password { left: 16px; top: 297px; width: 328px; height: 14px; }
+
+.login01__label--id { left: 16px; top: 262px; width: 328px; height: 17px; }
+.login01__label--password { left: 16px; top: 319px; width: 328px; height: 17px; }
+
+.login01__input {
+  position: absolute;
+  width: 328px;
+  height: 17px;
+  padding: 0;
+  margin: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: normal;
+  color: #131313;
+  caret-color: #131313;
+}
+
+.login01__input--id { left: 16px; top: 262px; }
+.login01__input--password { left: 16px; top: 319px; color: #131313; caret-color: #131313; }
+
+.login01__line328--id { left: 16px; top: 287px; }
+.login01__line328--password { left: 16px; top: 344px; }
+
+.login01__modalBackdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 10;
+}
+
+.login01__modal {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 280px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  z-index: 11;
+  overflow: hidden;
+}
+
+.login01__modalMessage {
+  margin: 0;
+  padding: 20px 20px 16px;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: normal;
+  color: #131313;
+}
+
+.login01__modalDivider {
+  height: 1px;
+  background: rgba(19, 19, 19, 0.1);
+  margin: 0 20px;
+}
+
+.login01__modalConfirm {
+  display: block;
+  width: 100%;
+  padding: 14px 20px;
+  border: none;
+  background: transparent;
+  font-size: 15px;
+  font-weight: 500;
+  color: #FFC21C;
+  text-align: center;
+  cursor: pointer;
+}
