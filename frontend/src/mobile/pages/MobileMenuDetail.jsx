@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { computeScale } from '../../utils/figmaScale';
-import { getAppMenuDetail, postAppCartItem } from '../../api';
+import { getAppMenuDetail, getAppActiveCart, postAppCartItem } from '../../api';
 
 import logoSvg from '../../assets/Vector.svg';
 import backSvg from '../../assets/arrow_back_ios_new.svg';
@@ -80,6 +80,8 @@ export default function MobileMenuDetail() {
   const { id } = useParams();
   const menuId = Number(id);
   const navigate = useNavigate();
+  const location = useLocation();
+  const cartItemFromCart = location.state?.cartItem;
 
   const [scale, setScale] = useState(1);
   const [loading, setLoading] = useState(true);
@@ -89,6 +91,7 @@ export default function MobileMenuDetail() {
   const [selectedByGroup, setSelectedByGroup] = useState({}); // { [group_id]: item_id }
   const [activeSheet, setActiveSheet] = useState(null); // 'shot' | 'milk' | 'syrup' | 'whip' | 'added' | null
   const [addingToCart, setAddingToCart] = useState(false);
+  const [cartCount, setCartCount] = useState(0);
   const [shotCountDraft, setShotCountDraft] = useState(2);
   const [shotExtraCount, setShotExtraCount] = useState(0); // 기본 2샷 대비 추가 샷 개수
   const [milkDraftItemId, setMilkDraftItemId] = useState(null);
@@ -139,6 +142,21 @@ export default function MobileMenuDetail() {
     setActiveSheet(null);
   }, [menuId]);
 
+  const fetchCart = async () => {
+    const res = await getAppActiveCart().catch(() => ({ ok: false }));
+    if (res?.ok && res.data?.summary) setCartCount(Number(res.data.summary.count) || 0);
+  };
+
+  useEffect(() => {
+    fetchCart();
+  }, []);
+
+  useEffect(() => {
+    const onFocus = () => fetchCart();
+    window.addEventListener('focus', onFocus);
+    return () => window.removeEventListener('focus', onFocus);
+  }, []);
+
   // 기본 선택값: 각 그룹의 첫 아이템
   useEffect(() => {
     if (!menu?.option_groups) return;
@@ -150,6 +168,63 @@ export default function MobileMenuDetail() {
     }
     setSelectedByGroup((prev) => ({ ...next, ...prev }));
   }, [menu?.option_groups]);
+
+  // 장바구니에서 "옵션변경"으로 들어온 경우: 선택했던 옵션·수량 복원
+  useEffect(() => {
+    if (!menu?.option_groups?.length || !cartItemFromCart) return;
+    const cartItem = cartItemFromCart;
+    const opts = Array.isArray(cartItem.options) ? cartItem.options : [];
+    const optionGroupsFromMenu = menu.option_groups;
+    const shotGrp = findShotGroup(optionGroupsFromMenu);
+    const syrupGrp = findSyrupGroup(optionGroupsFromMenu);
+
+    setQty(Math.max(1, Number(cartItem.qty) || 1));
+
+    const nextSelectedByGroup = {};
+    let shotExtra = 0;
+    let syrupCountsNext = {};
+    let syrupNone = false;
+
+    for (const o of opts) {
+      const gid = Number(o.group_id);
+      const itemId = Number(o.item_id);
+      const q = Math.max(0, Number(o.option_qty) || 1);
+      const itemNameKo = String(o.item_name_ko || '');
+
+      if (shotGrp && gid === Number(shotGrp.group_id)) {
+        const items = shotGrp.items || [];
+        const extraItem =
+          items.find((it) => String(it.name_ko || '').includes('추가')) ||
+          items.find((it) => String(it.name_en || '').toLowerCase().includes('extra')) ||
+          null;
+        if (extraItem && Number(extraItem.id) === itemId) shotExtra = q;
+        continue;
+      }
+      if (syrupGrp && gid === Number(syrupGrp.group_id)) {
+        const items = syrupGrp.items || [];
+        const noneItem = items.find((it) => String(it.name_ko || '').includes('없'));
+        if (noneItem && Number(noneItem.id) === itemId) {
+          syrupNone = true;
+          syrupCountsNext = {};
+        } else if (!syrupNone) {
+          syrupCountsNext[itemId] = (syrupCountsNext[itemId] || 0) + q;
+        }
+        continue;
+      }
+      nextSelectedByGroup[gid] = itemId;
+    }
+
+    setSelectedByGroup((prev) => ({ ...prev, ...nextSelectedByGroup }));
+    setShotExtraCount(shotExtra);
+    if (shotExtra > 0) setShotCountDraft(2 + shotExtra);
+    setSyrupCounts(syrupCountsNext);
+    setSyrupCountsDraft(syrupCountsNext);
+    setSyrupTouched(opts.some((o) => syrupGrp && Number(o.group_id) === Number(syrupGrp.group_id)));
+    setSyrupNoneSelected(syrupNone);
+    setSyrupNoneSelectedDraft(syrupNone);
+    setMilkDraftItemId(null);
+    setWhipDraftItemId(null);
+  }, [menu?.option_groups, cartItemFromCart]);
 
   // 히어로가 스크롤에서 사라지면 compact 헤더로 전환 (Figma 02/04)
   useEffect(() => {
@@ -392,6 +467,7 @@ export default function MobileMenuDetail() {
         return;
       }
 
+      fetchCart();
       setActiveSheet('added');
     } finally {
       setAddingToCart(false);
@@ -585,18 +661,32 @@ export default function MobileMenuDetail() {
             <button type="button" className="menu-detail__iconBtn" aria-label="뒤로" onClick={() => navigate(-1)}>
               <img src={backSvg} alt="" width={18} height={18} />
             </button>
-            <button type="button" className="menu-detail__iconBtn" aria-label="장바구니">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" /><line x1="3" y1="6" x2="21" y2="6" /><path d="M16 10a4 4 0 01-8 0" /></svg>
-            </button>
+            <span className="menu-detail__cartWrap">
+              <button type="button" className="menu-detail__iconBtn" aria-label={`장바구니 ${cartCount}개`} onClick={() => navigate('/menu/cart')}>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" /><line x1="3" y1="6" x2="21" y2="6" /><path d="M16 10a4 4 0 01-8 0" /></svg>
+              </button>
+              {cartCount > 0 && (
+                <span className="menu-detail__cartBadge" aria-hidden>
+                  {cartCount > 99 ? '99+' : cartCount}
+                </span>
+              )}
+            </span>
           </div>
           <header className={`menu-detail__topBar ${compact ? '' : 'menu-detail__topBar--hidden'}`} aria-label="상단 고정바">
             <button type="button" className="menu-detail__iconBtn" aria-label="뒤로" onClick={() => navigate(-1)}>
               <img src={backSvg} alt="" width={18} height={18} />
             </button>
             <img className="menu-detail__logo" src={logoSvg} alt="FELN" />
-            <button type="button" className="menu-detail__iconBtn" aria-label="장바구니">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" /><line x1="3" y1="6" x2="21" y2="6" /><path d="M16 10a4 4 0 01-8 0" /></svg>
-            </button>
+            <span className="menu-detail__cartWrap">
+              <button type="button" className="menu-detail__iconBtn" aria-label={`장바구니 ${cartCount}개`} onClick={() => navigate('/menu/cart')}>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" /><line x1="3" y1="6" x2="21" y2="6" /><path d="M16 10a4 4 0 01-8 0" /></svg>
+              </button>
+              {cartCount > 0 && (
+                <span className="menu-detail__cartBadge" aria-hidden>
+                  {cartCount > 99 ? '99+' : cartCount}
+                </span>
+              )}
+            </span>
           </header>
 
           {/* 스크롤 영역 */}
@@ -680,41 +770,43 @@ export default function MobileMenuDetail() {
             {/* 옵션 영역(원두/기타) - 아래로 스크롤하면 자연스럽게 보이게 항상 렌더 */}
             {menu && (
               <section className={`menu-detail__options ${compact ? 'menu-detail__options--compact' : ''}`}>
-                {/* 원두 */}
-                <div className="menu-detail__sectionTitle">원두</div>
+                {/* 원두 - 옵션에 원두 그룹이 있을 때만 표시 */}
                 {beanGroup && (
-                  <div className="menu-detail__beanRow">
-                    {(beanGroup.items || []).slice(0, 3).map((it) => {
-                      const gid = Number(beanGroup.group_id);
-                      const sel = Number(selectedByGroup[gid]);
-                      const active = Number(it.id) === sel;
-                      return (
-                        <button
-                          key={it.id}
-                          type="button"
-                          className={`menu-detail__beanCard ${active ? 'menu-detail__beanCard--active' : ''}`}
-                          onClick={() => setGroupSelection(gid, it.id)}
-                        >
-                          <p className="menu-detail__beanKo">{it.name_ko}</p>
-                          <p className="menu-detail__beanEn">{it.name_en || ''}</p>
-                        </button>
-                      );
-                    })}
-                  </div>
+                  <>
+                    <div className="menu-detail__sectionTitle">원두</div>
+                    <div className="menu-detail__beanRow">
+                      {(beanGroup.items || []).slice(0, 3).map((it) => {
+                        const gid = Number(beanGroup.group_id);
+                        const sel = Number(selectedByGroup[gid]);
+                        const active = Number(it.id) === sel;
+                        return (
+                          <button
+                            key={it.id}
+                            type="button"
+                            className={`menu-detail__beanCard ${active ? 'menu-detail__beanCard--active' : ''}`}
+                            onClick={() => setGroupSelection(gid, it.id)}
+                          >
+                            <p className="menu-detail__beanKo">{it.name_ko}</p>
+                            <p className="menu-detail__beanEn">{it.name_en || ''}</p>
+                          </button>
+                        );
+                      })}
+                    </div>
+                    <div className="menu-detail__beanDesc">
+                      <div className="menu-detail__beanDescText">
+                        <p className="menu-detail__beanDescBody">
+                          {beanDescription.body.map((line, idx) => (
+                            <span key={idx}>
+                              {line}
+                              <br />
+                            </span>
+                          ))}
+                        </p>
+                        <p className="menu-detail__beanDescTraits">{beanDescription.traits}</p>
+                      </div>
+                    </div>
+                  </>
                 )}
-                <div className="menu-detail__beanDesc">
-                  <div className="menu-detail__beanDescText">
-                    <p className="menu-detail__beanDescBody">
-                      {beanDescription.body.map((line, idx) => (
-                        <span key={idx}>
-                          {line}
-                          <br />
-                        </span>
-                      ))}
-                    </p>
-                    <p className="menu-detail__beanDescTraits">{beanDescription.traits}</p>
-                  </div>
-                </div>
 
                 {/* 기타 옵션 목록 (샷/우유/시럽 등) */}
                 {otherGroups.map((g) => {
@@ -850,22 +942,6 @@ export default function MobileMenuDetail() {
                 if (e.target === e.currentTarget) setActiveSheet(null);
               }}
             >
-              <button
-                type="button"
-                className="menu-detail__addedCartIcon"
-                aria-label="장바구니"
-                onClick={() => {
-                  setActiveSheet(null);
-                  navigate('/menu', { state: { scrollToCart: true, cartRefresh: Date.now() } });
-                }}
-              >
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-                  <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
-                  <line x1="3" y1="6" x2="21" y2="6" />
-                  <path d="M16 10a4 4 0 01-8 0" />
-                </svg>
-              </button>
-
               <div className="menu-detail__sheet menu-detail__sheet--added">
                 <button type="button" className="menu-detail__sheetClose" aria-label="닫기" onClick={() => setActiveSheet(null)}>
                   ×
@@ -878,7 +954,7 @@ export default function MobileMenuDetail() {
                     className="menu-detail__addedBtn menu-detail__addedBtn--outline"
                     onClick={() => {
                       setActiveSheet(null);
-                      navigate('/menu', { state: { scrollToCart: true, cartRefresh: Date.now() } });
+                      navigate('/menu/cart');
                     }}
                   >
                     장바구니로 이동

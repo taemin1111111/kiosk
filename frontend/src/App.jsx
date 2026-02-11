@@ -8,6 +8,13 @@ import MobileFindPassword from './mobile/pages/MobileFindPassword';
 import MobileChangePassword from './mobile/pages/MobileChangePassword';
 import MobileMenu from './mobile/pages/MobileMenu';
 import MobileMenuDetail from './mobile/pages/MobileMenuDetail';
+import MobileCart from './mobile/pages/MobileCart';
+import MobileCheckout from './mobile/pages/MobileCheckout';
+import MobilePaymentComplete from './mobile/pages/MobilePaymentComplete';
+import MobileOrderHistory from './mobile/pages/MobileOrderHistory';
+import MobileMyPage from './mobile/pages/MobileMyPage';
+import MobileTerms from './mobile/pages/MobileTerms';
+import MobileTermsDetail from './mobile/pages/MobileTermsDetail';
 import MobileNotFound from './mobile/pages/MobileNotFound';
 
 import AdminLayout from './admin/layout/AdminLayout';
@@ -44,6 +51,13 @@ function App() {
         <Route path="find-password" element={<MobileFindPassword />} />
         <Route path="change-password" element={<MobileChangePassword />} />
         <Route path="menu" element={<MobileMenu />} />
+        <Route path="menu/cart" element={<MobileCart />} />
+        <Route path="menu/checkout" element={<MobileCheckout />} />
+        <Route path="menu/order-complete" element={<MobilePaymentComplete />} />
+        <Route path="menu/order-history" element={<MobileOrderHistory />} />
+        <Route path="menu/mypage" element={<MobileMyPage />} />
+        <Route path="menu/terms" element={<MobileTerms />} />
+        <Route path="menu/terms/:type" element={<MobileTermsDetail />} />
         <Route path="menu/:id" element={<MobileMenuDetail />} />
         <Route path="*" element={<MobileNotFound />} />
       </Route>

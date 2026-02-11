@@ -34,6 +34,34 @@ export default function AdminMenuRegister() {
   const [nutritions, setNutritions] = useState([]); // [{ category_id, value }]
   const [selectedOptionGroupIds, setSelectedOptionGroupIds] = useState([]);
   const [optionGroupToAdd, setOptionGroupToAdd] = useState('');
+  const [categoryDropdownOpen, setCategoryDropdownOpen] = useState(false);
+  const categoryDropdownRef = useRef(null);
+  const [openNutritionDropdownId, setOpenNutritionDropdownId] = useState(null);
+  const nutritionBoxRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (categoryDropdownRef.current && !categoryDropdownRef.current.contains(e.target)) {
+        setCategoryDropdownOpen(false);
+      }
+    };
+    if (categoryDropdownOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => document.removeEventListener('mousedown', handleClickOutside);
+    }
+  }, [categoryDropdownOpen]);
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (openNutritionDropdownId !== null && nutritionBoxRef.current && !nutritionBoxRef.current.contains(e.target)) {
+        setOpenNutritionDropdownId(null);
+      }
+    };
+    if (openNutritionDropdownId !== null) {
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => document.removeEventListener('mousedown', handleClickOutside);
+    }
+  }, [openNutritionDropdownId]);
 
   const isFormFullyFilled = Boolean(
     String(categoryId).trim() &&
@@ -44,8 +72,7 @@ export default function AdminMenuRegister() {
       description.trim() &&
       ingredients.trim() &&
       Boolean(imageUrls?.[0]) &&
-      (nutritions?.length || 0) > 0 &&
-      (selectedOptionGroupIds?.length || 0) > 0
+      (nutritions?.length || 0) > 0
   );
 
   useEffect(() => {
@@ -130,6 +157,15 @@ export default function AdminMenuRegister() {
 
   const removeNutrition = (categoryId) => {
     setNutritions((prev) => prev.filter((x) => Number(x.category_id) !== Number(categoryId)));
+  };
+
+  const editNutrition = (n) => {
+    setNutritions((prev) => prev.filter((x) => Number(x.category_id) !== Number(n.category_id)));
+    setNutritionInputs((prev) => {
+      const first = prev[0];
+      if (!first) return [{ id: newRowId(), category_id: String(n.category_id), value: n.value }];
+      return [{ ...first, category_id: String(n.category_id), value: n.value }, ...prev.slice(1)];
+    });
   };
 
   const pickImageFile = () => imageFileRef.current?.click();
@@ -270,22 +306,45 @@ export default function AdminMenuRegister() {
                   <label className="admin-menu-register__label">카테고리</label>
                   {categoryError && <span className="admin-menu-register__fieldErr">카테고리를 선택해 주세요</span>}
                 </div>
-                <select
-                  className={`admin-menu-register__select ${categoryError ? 'admin-menu-register__select--err' : ''}`}
-                  aria-label="카테고리 선택"
-                  value={categoryId}
-                  onChange={(e) => {
-                    setCategoryId(e.target.value);
-                    if (e.target.value) setCategoryError(false);
-                  }}
-                >
-                  <option value="">카테고리를 선택해 주세요.</option>
-                  {categories.map((c) => (
-                    <option key={c.id} value={c.id}>
-                      {c.name_ko}
-                    </option>
-                  ))}
-                </select>
+                <div className="admin-menu-register__categoryDropdown" ref={categoryDropdownRef}>
+                  <button
+                    type="button"
+                    className={`admin-menu-register__categoryTrigger ${categoryDropdownOpen ? 'admin-menu-register__categoryTrigger--open' : ''} ${categoryError ? 'admin-menu-register__categoryTrigger--err' : ''} ${!categoryId ? 'admin-menu-register__categoryTrigger--placeholder' : ''}`}
+                    aria-label="카테고리 선택"
+                    aria-expanded={categoryDropdownOpen}
+                    aria-haspopup="listbox"
+                    onClick={() => setCategoryDropdownOpen(!categoryDropdownOpen)}
+                  >
+                    <span className="admin-menu-register__categoryTriggerText">
+                      {categoryId ? (categories.find((c) => String(c.id) === String(categoryId))?.name_ko ?? '') : '카테고리를 선택해 주세요.'}
+                    </span>
+                    <span className="admin-menu-register__categoryTriggerIcon" aria-hidden>▼</span>
+                  </button>
+                  {categoryDropdownOpen && (
+                    <div
+                      className="admin-menu-register__categoryPanel"
+                      role="listbox"
+                      aria-label="카테고리 목록"
+                    >
+                      {categories.map((c) => (
+                        <button
+                          key={c.id}
+                          type="button"
+                          role="option"
+                          aria-selected={String(categoryId) === String(c.id)}
+                          className="admin-menu-register__categoryOption"
+                          onClick={() => {
+                            setCategoryId(String(c.id));
+                            setCategoryError(false);
+                            setCategoryDropdownOpen(false);
+                          }}
+                        >
+                          {c.name_ko}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
               </section>
               <section className="admin-menu-register__field">
                 <label className="admin-menu-register__label">상품명</label>
@@ -431,29 +490,52 @@ export default function AdminMenuRegister() {
                   </button>
                 </div>
 
-                <div className="admin-menu-register__nutritionBox">
+                <div className="admin-menu-register__nutritionBox" ref={nutritionBoxRef}>
                   <div className="admin-menu-register__nutritionCols">
                     <span>카테고리</span>
                     <span>내용</span>
                     <span />
-                    <span />
                   </div>
 
-                  {nutritionInputs.map((row) => (
+                  {nutritionInputs.map((row) => {
+                    const selectedNutCat = nutritionCategories.find((c) => String(c.id) === String(row.category_id));
+                    const isOpen = openNutritionDropdownId === row.id;
+                    return (
                     <div key={row.id} className="admin-menu-register__nutritionRow">
-                      <select
-                        className="admin-menu-register__select"
-                        value={row.category_id}
-                        onChange={(e) => updateNutritionInput(row.id, { category_id: e.target.value })}
-                        aria-label="영양정보 카테고리"
-                      >
-                        <option value="">카테고리 선택</option>
-                        {nutritionCategories.map((c) => (
-                          <option key={c.id} value={c.id}>
-                            {c.name_ko} ({c.unit})
-                          </option>
-                        ))}
-                      </select>
+                      <div className="admin-menu-register__categoryDropdown admin-menu-register__categoryDropdown--sm">
+                        <button
+                          type="button"
+                          className={`admin-menu-register__categoryTrigger ${isOpen ? 'admin-menu-register__categoryTrigger--open' : ''} ${!row.category_id ? 'admin-menu-register__categoryTrigger--placeholder' : ''}`}
+                          aria-label="영양정보 카테고리 선택"
+                          aria-expanded={isOpen}
+                          aria-haspopup="listbox"
+                          onClick={() => setOpenNutritionDropdownId(isOpen ? null : row.id)}
+                        >
+                          <span className="admin-menu-register__categoryTriggerText">
+                            {row.category_id ? (selectedNutCat ? `${selectedNutCat.name_ko} (${selectedNutCat.unit})` : '') : '카테고리 선택'}
+                          </span>
+                          <span className="admin-menu-register__categoryTriggerIcon" aria-hidden>▼</span>
+                        </button>
+                        {isOpen && (
+                          <div className="admin-menu-register__categoryPanel" role="listbox" aria-label="영양정보 카테고리 목록">
+                            {nutritionCategories.map((c) => (
+                              <button
+                                key={c.id}
+                                type="button"
+                                role="option"
+                                aria-selected={String(row.category_id) === String(c.id)}
+                                className="admin-menu-register__categoryOption"
+                                onClick={() => {
+                                  updateNutritionInput(row.id, { category_id: String(c.id) });
+                                  setOpenNutritionDropdownId(null);
+                                }}
+                              >
+                                {c.name_ko} ({c.unit})
+                              </button>
+                            ))}
+                          </div>
+                        )}
+                      </div>
 
                       <input
                         type="text"
@@ -466,40 +548,48 @@ export default function AdminMenuRegister() {
                       <button type="button" className="admin-menu-register__nutritionAddBtn" onClick={() => commitNutritionRow(row)}>
                         입력
                       </button>
-
-                      <button
-                        type="button"
-                        className="admin-menu-register__nutritionRemoveBtn"
-                        aria-label="입력줄 삭제"
-                        onClick={() => removeNutritionInputRow(row.id)}
-                      >
-                        ×
-                      </button>
                     </div>
-                  ))}
+                  );
+                  })}
 
                   {nutritions.length > 0 && (
-                    <ul className="admin-menu-register__nutritionList">
-                      {nutritions
-                        .slice()
-                        .sort((a, b) => {
-                          const aa = nutritionCategories.find((x) => Number(x.id) === Number(a.category_id));
-                          const bb = nutritionCategories.find((x) => Number(x.id) === Number(b.category_id));
-                          return (aa?.sort_order ?? 9999) - (bb?.sort_order ?? 9999);
-                        })
-                        .map((n) => {
-                          const c = nutritionCategories.find((x) => Number(x.id) === Number(n.category_id));
-                          return (
-                            <li key={n.category_id}>
-                              <span className="admin-menu-register__nutritionItemName">{c ? `${c.name_ko} (${c.unit})` : n.category_id}</span>
-                              <span className="admin-menu-register__nutritionItemValue">{n.value}</span>
-                              <button type="button" className="admin-menu-register__iconBtn" onClick={() => removeNutrition(n.category_id)} aria-label="삭제">
-                                삭제
-                              </button>
-                            </li>
-                          );
-                        })}
-                    </ul>
+                    <div className="admin-menu-register__nutritionTableWrap">
+                    <table className="admin-menu-register__nutritionTable">
+                      <thead>
+                        <tr>
+                          <th>카테고리</th>
+                          <th>내용</th>
+                          <th />
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {nutritions
+                          .slice()
+                          .sort((a, b) => {
+                            const aa = nutritionCategories.find((x) => Number(x.id) === Number(a.category_id));
+                            const bb = nutritionCategories.find((x) => Number(x.id) === Number(b.category_id));
+                            return (aa?.sort_order ?? 9999) - (bb?.sort_order ?? 9999);
+                          })
+                          .map((n) => {
+                            const c = nutritionCategories.find((x) => Number(x.id) === Number(n.category_id));
+                            return (
+                              <tr key={n.category_id}>
+                                <td className="admin-menu-register__nutritionItemName">{c ? c.name_ko : n.category_id}</td>
+                                <td className="admin-menu-register__nutritionItemValue">{n.value}</td>
+                                <td className="admin-menu-register__nutritionTableActions">
+                                  <button type="button" className="admin-menu-register__nutritionTableIcon" onClick={() => editNutrition(n)} aria-label="수정">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" /><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" /></svg>
+                                  </button>
+                                  <button type="button" className="admin-menu-register__nutritionTableIcon" onClick={() => removeNutrition(n.category_id)} aria-label="삭제">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="3 6 5 6 21 6" /><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" /><line x1="10" y1="11" x2="10" y2="17" /><line x1="14" y1="11" x2="14" y2="17" /></svg>
+                                  </button>
+                                </td>
+                              </tr>
+                            );
+                          })}
+                      </tbody>
+                    </table>
+                    </div>
                   )}
                 </div>
               </section>

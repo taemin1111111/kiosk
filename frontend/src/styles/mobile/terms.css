@@ -1,0 +1,273 @@
+/* ========== 약관 목록 - Figma 836-119419 (360x690) ========== */
+
+.figma360-stage--terms {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.15);
+  box-sizing: border-box;
+}
+
+.figma360-scale--terms {
+  position: relative;
+  left: auto;
+  top: auto;
+  width: 360px;
+  height: 690px;
+  transform: scale(var(--figma360-scale, 1));
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.terms {
+  position: relative;
+  width: 360px;
+  height: 690px;
+  max-height: 690px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  box-sizing: border-box;
+}
+
+.terms__topBar {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  height: 57px;
+  padding: 5px 16px;
+  box-sizing: border-box;
+}
+
+.terms__back {
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: #131313;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.terms__back svg {
+  display: block;
+  width: 24px;
+  height: 24px;
+}
+
+.terms__header {
+  flex-shrink: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 0 16px;
+  gap: 8px;
+}
+
+.terms__greeting {
+  flex: 1;
+  min-width: 0;
+}
+
+.terms__name,
+.terms__welcome {
+  margin: 0;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: normal;
+  color: #131313;
+}
+
+.terms__bell {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  margin-top: 19px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.terms__bell img {
+  display: block;
+  width: 20px;
+  height: 20px;
+}
+
+/* 리스트: 서비스 이용약관, 개인정보 처리방침 */
+.terms__list {
+  flex: 1;
+  min-height: 0;
+  padding: 24px 16px;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+.terms__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 16px 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: #131313;
+  box-sizing: border-box;
+}
+
+.terms__rowLabel {
+  flex: 1;
+}
+
+.terms__rowChevron {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #131313;
+}
+
+.terms__rowChevron svg {
+  display: block;
+  width: 24px;
+  height: 24px;
+}
+
+.terms__divider {
+  height: 1px;
+  background: rgba(19, 19, 19, 0.12);
+}
+
+/* ========== 서비스 이용약관/개인정보 처리방침 상세 - Figma 836-120413 ========== */
+.figma360-stage--termsDetail {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.15);
+  box-sizing: border-box;
+}
+
+.figma360-scale--termsDetail {
+  position: relative;
+  left: auto;
+  top: auto;
+  width: 360px;
+  height: 690px;
+  transform: scale(var(--figma360-scale, 1));
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.termsDetail {
+  position: relative;
+  width: 360px;
+  height: 690px;
+  background: #fff;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.termsDetail__topBar {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 360px;
+  height: 57px;
+  padding: 5px 16px;
+  display: flex;
+  align-items: center;
+  background: #fff;
+  box-sizing: border-box;
+}
+
+.termsDetail__back {
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.termsDetail__back img {
+  width: 18px;
+  height: 18px;
+  display: block;
+}
+
+.termsDetail__titleBar {
+  position: absolute;
+  left: 0;
+  top: 57px;
+  width: 360px;
+  padding: 10px 16px;
+  background: #fff;
+  box-sizing: border-box;
+}
+
+.termsDetail__title {
+  margin: 0;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: normal;
+  color: #131313;
+}
+
+.termsDetail__box {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 126px;
+  bottom: 24px;
+  width: 327px;
+  border: 1px solid rgba(19, 19, 19, 0.2);
+  border-radius: 4px;
+  padding: 20px 12px;
+  background: #fff;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.termsDetail__boxInner {
+  height: 100%;
+  overflow-y: auto;
+  /* 스크롤은 유지, 스크롤바는 숨김 */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge legacy */
+}
+
+.termsDetail__boxInner::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none; /* Chrome/Safari */
+}
+
+.termsDetail__text {
+  margin: 0;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.28;
+  color: rgba(19, 19, 19, 0.6);
+  white-space: pre-wrap;
+}

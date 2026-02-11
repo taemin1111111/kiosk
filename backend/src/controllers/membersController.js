@@ -28,8 +28,8 @@ export async function signup(req, res) {
     const passwordHash = await bcrypt.hash(password, SALT_ROUNDS);
 
     const [result] = await pool.execute(
-      `INSERT INTO members (username, name, email, password_hash, role)
-       VALUES (?, ?, ?, ?, 'USER')`,
+      `INSERT INTO members (username, name, email, password_hash, role, store_point_balance, toss_point_balance)
+       VALUES (?, ?, ?, ?, 'USER', 0, 0)`,
       [username.trim(), name.trim(), email.trim(), passwordHash]
     );
 

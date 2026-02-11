@@ -156,6 +156,129 @@
   appearance: auto;
 }
 
+/* 카테고리 버튼(트리거) - Figma 191-198342 */
+.admin-menu-register__categoryDropdown {
+  position: relative;
+  width: 100%;
+}
+.admin-menu-register__categoryTrigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 10px 12px;
+  border: 1px solid #D3D3D3;
+  border-radius: 6px;
+  font-size: 14px;
+  color: #131313;
+  background: #FFFFFF;
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+.admin-menu-register__categoryTrigger:hover {
+  border-color: #b8b8b8;
+}
+.admin-menu-register__categoryTrigger--open {
+  border-color: #FFC21C;
+  background: #FFFFFF;
+}
+.admin-menu-register__categoryTrigger--err {
+  border-color: #DF6666;
+  background: #FFFFFF;
+}
+.admin-menu-register__categoryTrigger--placeholder .admin-menu-register__categoryTriggerText {
+  color: #888888;
+}
+.admin-menu-register__categoryTriggerText {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.admin-menu-register__categoryTriggerIcon {
+  flex-shrink: 0;
+  font-size: 10px;
+  color: #000000;
+  transition: transform 0.2s;
+}
+.admin-menu-register__categoryTrigger--open .admin-menu-register__categoryTriggerIcon {
+  transform: rotate(180deg);
+}
+.admin-menu-register__categoryPanel {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  margin-top: 4px;
+  max-height: 240px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: #FFFFFF;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+  z-index: 100;
+  padding: 0;
+  list-style: none;
+  box-sizing: border-box;
+}
+.admin-menu-register__categoryPanel::-webkit-scrollbar {
+  width: 8px;
+}
+.admin-menu-register__categoryPanel::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.04);
+  border-radius: 4px;
+}
+.admin-menu-register__categoryPanel::-webkit-scrollbar-thumb {
+  background: #FFC21C;
+  border-radius: 4px;
+}
+.admin-menu-register__categoryPanel::-webkit-scrollbar-thumb:hover {
+  background: #e6ad00;
+}
+.admin-menu-register__categoryOption {
+  display: block;
+  width: 100%;
+  padding: 12px 16px;
+  border: none;
+  border-bottom: 1px solid #E0E0E0;
+  background: transparent;
+  font-size: 14px;
+  font-weight: 500;
+  color: #131313;
+  text-align: left;
+  cursor: pointer;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+.admin-menu-register__categoryOption:last-child {
+  border-bottom: none;
+}
+.admin-menu-register__categoryOption:hover {
+  background: rgba(255, 194, 28, 0.08);
+}
+
+/* 영양정보 행용 카테고리 드롭다운 (동일 디자인, 그리드 셀 안에서) */
+.admin-menu-register__categoryDropdown--sm {
+  min-width: 0;
+}
+.admin-menu-register__nutritionRow .admin-menu-register__categoryTrigger {
+  height: 54px;
+  padding: 8px 10px;
+  font-size: 13px;
+  box-sizing: border-box;
+}
+.admin-menu-register__nutritionRow .admin-menu-register__categoryPanel {
+  max-height: 200px;
+}
+.admin-menu-register__nutritionRow .admin-menu-register__input {
+  height: 54px;
+  box-sizing: border-box;
+}
+
 .admin-menu-register__textarea {
   resize: vertical;
   min-height: 80px;
@@ -542,9 +665,10 @@
   gap: 10px;
 }
 
+/* 영양정보 행: 카테고리 | 내용 | 입력 버튼(108px) – x버튼 없음 */
 .admin-menu-register__nutritionCols {
   display: grid;
-  grid-template-columns: 280px 1fr 120px 36px;
+  grid-template-columns: 3fr 5fr 108px;
   gap: 12px;
   font-size: 12px;
   font-weight: 600;
@@ -554,72 +678,140 @@
 
 .admin-menu-register__nutritionRow {
   display: grid;
-  grid-template-columns: 280px 1fr 120px 36px;
+  grid-template-columns: 3fr 5fr 108px;
   gap: 12px;
   align-items: center;
 }
 
+/* 입력 버튼 - Figma 스펙 */
 .admin-menu-register__nutritionAddBtn {
-  height: 42px;
-  border: 1px solid rgba(19, 19, 19, 0.35);
-  border-radius: 8px;
-  background: #fff;
+  display: flex;
+  width: 108px;
+  height: 54px;
+  padding: 4px 14px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  border-radius: 4px;
+  border: 1px solid rgba(19, 19, 19, 0.60);
+  background: var(--White, #FFF);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.05);
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 14px;
-  font-weight: 600;
-  color: #131313;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 140%;
+  letter-spacing: -0.35px;
+  color: rgba(19, 19, 19, 0.80);
   cursor: pointer;
+  box-sizing: border-box;
 }
 
 .admin-menu-register__nutritionAddBtn:hover {
   background: rgba(19, 19, 19, 0.06);
 }
 
-.admin-menu-register__nutritionRemoveBtn {
-  width: 36px;
-  height: 42px;
-  border: 1px solid rgba(19, 19, 19, 0.2);
-  border-radius: 8px;
-  background: #fff;
-  font-size: 18px;
-  line-height: 1;
-  color: rgba(19, 19, 19, 0.75);
-  cursor: pointer;
+/* 영양정보 표 - Figma 191-198353 */
+.admin-menu-register__nutritionTableWrap {
+  margin-top: 8px;
+  border: 1px solid rgba(19, 19, 19, 0.15);
+  border-right: none;
+  border-radius: 4px;
+  overflow: hidden;
 }
 
-.admin-menu-register__nutritionRemoveBtn:hover {
+.admin-menu-register__nutritionTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.admin-menu-register__nutritionTable thead {
   background: rgba(19, 19, 19, 0.06);
 }
 
-.admin-menu-register__nutritionList {
-  list-style: none;
-  margin: 8px 0 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
 
-.admin-menu-register__nutritionList li {
-  display: grid;
-  grid-template-columns: 1fr 1fr auto;
-  gap: 12px;
-  align-items: center;
-  padding: 10px 12px;
-  border: 1px solid #E0E0E0;
-  border-radius: 8px;
-  background: #FAFAFA;
-}
-
-.admin-menu-register__nutritionItemName {
-  font-size: 13px;
+.admin-menu-register__nutritionTable th {
+  padding: 12px 14px;
+  text-align: left;
   font-weight: 600;
-  color: rgba(19, 19, 19, 0.75);
+  color: rgba(19, 19, 19, 0.8);
+  border-bottom: 1px solid rgba(19, 19, 19, 0.15);
 }
 
-.admin-menu-register__nutritionItemValue {
-  font-size: 13px;
-  color: rgba(19, 19, 19, 0.75);
+.admin-menu-register__nutritionTable th:first-child {
+  width: 30%;
+  border-right: 1px solid rgba(19, 19, 19, 0.15);
+}
+
+.admin-menu-register__nutritionTable th:nth-child(3) {
+  width: 80px;
   text-align: right;
+  border-left: 1px solid rgba(19, 19, 19, 0.15);
+}
+
+.admin-menu-register__nutritionTable tbody tr {
+  background: #fff;
+}
+
+.admin-menu-register__nutritionTable td {
+  padding: 12px 14px;
+  height: 54px;
+  box-sizing: border-box;
+  vertical-align: middle;
+  border-bottom: 1px solid rgba(19, 19, 19, 0.12);
+}
+
+.admin-menu-register__nutritionTable td:first-child {
+  border-right: 1px solid rgba(19, 19, 19, 0.12);
+}
+
+.admin-menu-register__nutritionTable tbody tr:last-child td {
+  border-bottom: 1px solid rgba(19, 19, 19, 0.12);
+}
+
+.admin-menu-register__nutritionTable .admin-menu-register__nutritionItemName {
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(19, 19, 19, 0.85);
+}
+
+.admin-menu-register__nutritionTable .admin-menu-register__nutritionItemValue {
+  font-size: 14px;
+  color: rgba(19, 19, 19, 0.85);
+  text-align: left;
+}
+
+.admin-menu-register__nutritionTableActions {
+  width: 1%;
+  white-space: nowrap;
+  text-align: right;
+  border-left: 1px solid rgba(19, 19, 19, 0.12);
+}
+
+.admin-menu-register__nutritionTableIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  margin-left: 4px;
+  border: none;
+  background: transparent;
+  color: rgba(19, 19, 19, 0.6);
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.admin-menu-register__nutritionTableIcon:first-of-type {
+  margin-left: 0;
+}
+
+.admin-menu-register__nutritionTableIcon:hover {
+  color: #131313;
+  background: rgba(19, 19, 19, 0.06);
 }
 
 .admin-menu-register__optionList {

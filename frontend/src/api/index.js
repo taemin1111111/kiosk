@@ -140,6 +140,18 @@ export async function getAppMenuDetail(menuId) {
   return parseResJson(res);
 }
 
+/** GET /app/service-terms - 서비스 이용약관 (최신 1건) */
+export async function getAppServiceTerms() {
+  const res = await fetch(`${API_BASE}/app/service-terms`, { headers: getAuthHeaders() });
+  return parseResJson(res);
+}
+
+/** GET /app/privacy-policy - 개인정보 처리방침 (최신 1건) */
+export async function getAppPrivacyPolicy() {
+  const res = await fetch(`${API_BASE}/app/privacy-policy`, { headers: getAuthHeaders() });
+  return parseResJson(res);
+}
+
 /** GET /app/carts/active - ACTIVE 장바구니 조회 */
 export async function getAppActiveCart() {
   const res = await fetch(`${API_BASE}/app/carts/active`, { headers: getAuthHeaders() });
@@ -184,6 +196,35 @@ export async function deleteAppCartItem(cartItemId) {
     method: 'DELETE',
     headers: getAuthHeaders(),
   });
+  return parseResJson(res);
+}
+
+/**
+ * POST /app/checkout - 결제하기
+ * payload: { method:'card'|'simple'|'cash'|'transfer', store_point_used: number, toss_point_used: number, eat_type: 'in'|'takeout' }
+ */
+export async function postAppCheckout(payload) {
+  const res = await fetch(`${API_BASE}/app/checkout`, {
+    method: 'POST',
+    headers: getAuthHeaders(),
+    body: JSON.stringify(payload),
+  });
+  return parseResJson(res);
+}
+
+/** GET /app/orders - 주문내역 */
+/**
+ * GET /app/orders - 내 주문내역
+ * @param {{ status?: string, dateFrom?: string, dateTo?: string }} params - 선택: status(ALL/PAID/...), dateFrom/dateTo (YYYY-MM-DD)
+ */
+export async function getAppOrders(params = {}) {
+  const q = new URLSearchParams();
+  if (params.status != null && params.status !== '') q.set('status', params.status);
+  if (params.dateFrom) q.set('dateFrom', params.dateFrom);
+  if (params.dateTo) q.set('dateTo', params.dateTo);
+  const query = q.toString();
+  const url = query ? `${API_BASE}/app/orders?${query}` : `${API_BASE}/app/orders`;
+  const res = await fetch(url, { headers: getAuthHeaders() });
   return parseResJson(res);
 }
 

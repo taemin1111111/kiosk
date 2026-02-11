@@ -1,0 +1,487 @@
+/* ========== 장바구니 전용 화면 - Figma 834-45178 ========== */
+
+/* 1) 바깥(회색 배경/오버레이): 화면 전체 height 100vh, 가운데 카드 배치 */
+.figma360-stage--cart {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.15);
+  box-sizing: border-box;
+}
+
+.figma360-scale--cart {
+  position: relative;
+  left: auto;
+  top: auto;
+  width: 360px;
+  height: 690px;
+  transform: scale(var(--figma360-scale, 1));
+  flex-shrink: 0;
+}
+
+/* 2) 흰 카드(장바구니 박스): 690px 고정 */
+.cart {
+  position: relative;
+  width: 360px;
+  height: 690px;
+  max-height: 690px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  box-sizing: border-box;
+}
+
+/* 헤더: 고정 영역 (스크롤 안 함) */
+.cart__header {
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 360px;
+  padding: 57px 16px 12px;
+  box-sizing: border-box;
+  background: #fff;
+  border-bottom: 1px solid rgba(19, 19, 19, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  z-index: 10;
+}
+.cart__title {
+  margin: 0;
+  color: #131313;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+/* X 버튼: 흰 여백(57px) 영역 안, 오른쪽에서 16px */
+.cart__close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: #131313;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.cart__close svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* 카테고리 탭: 고정 영역 */
+.cart__categories {
+  flex-shrink: 0;
+  display: flex;
+  gap: 0;
+  padding: 0;
+  overflow-x: auto;
+  background: #fff;
+  border-bottom: 1px solid rgba(19, 19, 19, 0.06);
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-x;
+  overscroll-behavior-x: contain;
+}
+.cart__categories::-webkit-scrollbar {
+  display: none;
+}
+
+.cart__category {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  width: 82px;
+  height: 34px;
+  padding: 10px 0;
+  border: none;
+  border-radius: 0;
+  background: #EFEFF0;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(19, 19, 19, 0.60);
+  text-align: center;
+  line-height: normal;
+  cursor: pointer;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+  box-sizing: border-box;
+  touch-action: manipulation;
+}
+.cart__category:active {
+  outline: none;
+}
+
+.cart__category--active {
+  background: #ffc21c;
+  color: #131313;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* 주문 메뉴 섹션 헤더: 고정 영역 */
+.cart__section {
+  flex-shrink: 0;
+  padding: 16px 16px 12px;
+  border-bottom: 4px solid rgba(239, 239, 240, 0.70);
+  box-sizing: border-box;
+}
+.cart__sectionTitleRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+.cart__sectionTitle {
+  margin: 0;
+  color: #131313;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+.cart__totalCount {
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  color: rgba(19, 19, 19, 0.6);
+}
+.cart__sectionHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.cart__selectAll {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: rgba(19, 19, 19, 0.80);
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  cursor: pointer;
+}
+.cart__selectAll input {
+  width: 13.333px;
+  height: 13.333px;
+  aspect-ratio: 1 / 1;
+  flex-shrink: 0;
+  appearance: none;
+  -webkit-appearance: none;
+  border: 2px solid #FDC21D;
+  border-radius: 2px;
+  background: #fff;
+  cursor: pointer;
+}
+.cart__selectAll input:checked {
+  background: #FDC21D;
+  border-color: #FDC21D;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M4 10l4 4 8-8' stroke='%23fff' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-size: 9px;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.cart__actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.cart__linkBtn {
+  padding: 0;
+  border: none;
+  background: transparent;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 12px;
+  color: rgba(19, 19, 19, 0.3);
+  text-decoration: underline;
+  cursor: pointer;
+}
+.cart__linkBtn:hover:not(:disabled) {
+  color: rgba(19, 19, 19, 0.7);
+}
+.cart__linkBtn:disabled {
+  cursor: not-allowed;
+}
+.cart__divider {
+  font-size: 12px;
+  color: #131313;
+}
+
+/* 리스트 영역만 스크롤 (고정 영역: header / footer, 가변 스크롤: 여기만) */
+.cart__listWrap {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.cart__listWrap::-webkit-scrollbar {
+  display: none;
+}
+
+.cart__list {
+  padding: 0;
+  min-height: 120px;
+  padding-bottom: 24px;
+  box-sizing: border-box;
+}
+.cart__loading,
+.cart__empty {
+  padding: 24px 0;
+  margin: 0;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  color: rgba(19, 19, 19, 0.55);
+  text-align: center;
+}
+.cart__items {
+  list-style: none;
+  margin: 0;
+  padding: 16px 0 0;
+}
+
+/* ========== 장바구니 아이템 1개 - Figma 836-121231 (노블더 교육생 테스트) ========== */
+.cart__item {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px;
+  box-sizing: border-box;
+  background: #fff;
+  border-bottom: 4px solid rgba(239, 239, 240, 0.70);
+}
+.cart__item:last-child {
+  border-bottom: none;
+}
+
+.cart__itemCheck {
+  flex-shrink: 0;
+  margin: 0;
+  cursor: pointer;
+}
+.cart__itemCheck input {
+  width: 13.333px;
+  height: 13.333px;
+  aspect-ratio: 1 / 1;
+  margin: 0;
+  appearance: none;
+  -webkit-appearance: none;
+  border: 2px solid #FDC21D;
+  border-radius: 2px;
+  background: #fff;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+.cart__itemCheck input:checked {
+  background: #FDC21D;
+  border-color: #FDC21D;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M4 10l4 4 8-8' stroke='%23fff' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-size: 9px;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.cart__itemImg {
+  flex-shrink: 0;
+  width: 80px;
+  height: 80px;
+  aspect-ratio: 1 / 1;
+  padding: 8px;
+  border-radius: 8px;
+  box-sizing: border-box;
+  background: #fff;
+  background-size: cover;
+  background-position: center;
+}
+
+.cart__itemBody {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.cart__itemNameKo {
+  margin: 0;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  color: #131313;
+  line-height: 1.3;
+}
+.cart__itemNameEn {
+  margin: 0;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  color: rgba(19, 19, 19, 0.55);
+  line-height: 1.3;
+}
+.cart__itemOptionsWrap {
+  margin: 0;
+}
+.cart__itemOptions {
+  margin: 0;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 12px;
+  color: rgba(19, 19, 19, 0.6);
+  line-height: 1.4;
+}
+.cart__itemOptionsLine {
+  margin: 0;
+  display: block;
+}
+.cart__itemOptionsLine + .cart__itemOptionsLine {
+  margin-top: 2px;
+}
+.cart__optionDivider {
+  color: #131313;
+}
+.cart__optionChange {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 11px;
+  color: rgba(19, 19, 19, 0.6);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.cart__itemRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 4px;
+}
+.cart__itemQty {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.cart__itemQtyBtn {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  font-size: 18px;
+  font-weight: 400;
+  color: rgba(19, 19, 19, 0.6);
+  cursor: pointer;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.cart__itemQtyBtn:disabled {
+  color: rgba(19, 19, 19, 0.25);
+  cursor: not-allowed;
+}
+.cart__itemQtyNum {
+  min-width: 20px;
+  text-align: center;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #131313;
+}
+.cart__itemPrice {
+  margin: 0;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  color: #131313;
+}
+
+.cart__itemDelete {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: rgba(19, 19, 19, 0.5);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.cart__itemDelete:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.cart__itemDelete svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* 푸터: 카드 안 하단 고정 (리스트가 푸터 밑으로 안 나가게) */
+.cart__footer {
+  flex-shrink: 0;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 16px 16px 24px;
+  padding-bottom: calc(24px + env(safe-area-inset-bottom, 0));
+  background: #fff;
+  border-top: 4px solid rgba(239, 239, 240, 0.70);
+  box-shadow: 0 -4px 24px rgba(19, 19, 19, 0.25);
+}
+.cart__footerRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+.cart__footerCount {
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #131313;
+}
+.cart__footerTotal {
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: #131313;
+}
+.cart__orderBtn {
+  width: 100%;
+  height: 52px;
+  padding: 0;
+  border: none;
+  border-radius: 8px;
+  background: #FDC21D;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: #131313;
+  cursor: pointer;
+}

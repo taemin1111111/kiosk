@@ -152,6 +152,37 @@
   pointer-events: auto;
 }
 
+/* Figma: 장바구니 개수 뱃지 - 아이콘 오른쪽 위에 붙어서 겹침 */
+.menu-detail__cartWrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+}
+.menu-detail__cartBadge {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  min-width: 14px;
+  height: 14px;
+  padding: 0 3px;
+  box-sizing: border-box;
+  border-radius: 50%;
+  background: #FFD233;
+  color: #131313;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 9px;
+  font-weight: 600;
+  line-height: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
 .menu-detail__logo {
   width: 52px;
   height: 15px;
@@ -305,7 +336,7 @@
   border-radius: 4px;
   padding: 16px;
   box-sizing: border-box;
-  min-height: 300px; /* Figma 수치 */
+  /* 내용(행 개수)에 맞게 높이 자동 조절 */
 }
 
 .menu-detail__nutritionRow {
@@ -315,6 +346,11 @@
   column-gap: 0;
   align-items: start;
   padding: 0 0 12px;
+}
+
+.menu-detail__nutritionRow + .menu-detail__nutritionRow {
+  /* 2번째 행부터는 위 여백을 줘서 라인과 글자 간격 유지 */
+  padding-top: 12px;
 }
 
 .menu-detail__nutritionRow:last-child {
@@ -706,18 +742,6 @@
   font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 15px;
   font-weight: 700;
-  cursor: pointer;
-}
-
-.menu-detail__addedCartIcon {
-  position: absolute;
-  top: 22px;   /* Figma */
-  right: 16px; /* Figma */
-  width: 20px;
-  height: 20px;
-  border: none;
-  background: transparent;
-  color: #fff;
   cursor: pointer;
 }
 

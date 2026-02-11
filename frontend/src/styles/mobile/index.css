@@ -7,4 +7,9 @@
 @import './changepw.css';
 @import './menu.css';
 @import './menu-detail.css';
-
+@import './cart.css';
+@import './checkout.css';
+@import './order-complete.css';
+@import './order-history.css';
+@import './mypage.css';
+@import './terms.css';

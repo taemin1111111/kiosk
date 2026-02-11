@@ -1,0 +1,570 @@
+/* ========== 결제하기 - Figma 836-120580 ========== */
+
+/* 1) 바깥: 화면 전체 100vh, 가운데 카드 배치 */
+.figma360-stage--checkout {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.15);
+  box-sizing: border-box;
+}
+
+.figma360-scale--checkout {
+  position: relative;
+  left: auto;
+  top: auto;
+  width: 360px;
+  height: 690px;
+  transform: scale(var(--figma360-scale, 1));
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+/* 2) 흰 카드: 690px 고정 */
+.checkout {
+  position: relative;
+  width: 360px;
+  height: 690px;
+  max-height: 690px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  box-sizing: border-box;
+}
+
+/* 헤더: 고정 (결제하기 쓰여 있는 부분) - topBar 57px + titleBar 49px = 106px */
+.checkout__header {
+  flex-shrink: 0;
+  background: #fff;
+  box-sizing: border-box;
+}
+.checkout__topBar {
+  height: 57px;
+  padding: 5px 16px;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+}
+.checkout__titleBar {
+  height: 49px;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+}
+.checkout__back {
+  width: 40px;
+  height: 40px;
+  padding: 8px;
+  border: none;
+  background: transparent;
+  color: #131313;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+.checkout__backIcon {
+  width: 18px;
+  height: 18px;
+  display: block;
+}
+.checkout__title {
+  margin: 0;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 24px;
+  font-weight: 500;
+  color: #131313;
+  line-height: 1.3;
+}
+
+/* 3) 결제하기 제목 아래 ~ 결제 버튼 푸터 전까지만 스크롤 (주문 내역, 식사 방법, 토스 포인트) */
+.checkout__body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.checkout__body::-webkit-scrollbar {
+  display: none;
+}
+
+.checkout__line {
+  height: 4px;
+  background: rgba(239, 239, 240, 0.70);
+  flex-shrink: 0;
+}
+
+.checkout__section {
+  padding: 16px;
+  box-sizing: border-box;
+}
+.checkout__sectionTitle {
+  margin: 0 0 12px;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: #131313;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.checkout__sectionTitle--btn {
+  width: 100%;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+}
+/* 접기/펼치기 아이콘 - Figma 크기 9.423×5.59, 비율 59/35 */
+.checkout__chevronIcon {
+  width: 9.423px;
+  height: 5.59px;
+  aspect-ratio: 59 / 35;
+  display: block;
+  object-fit: contain;
+}
+.checkout__chevronIcon--up {
+  transform: rotate(180deg);
+}
+
+/* 주문 내역 - 연한 회색 배경 */
+.checkout__section--order {
+  background: rgba(239, 239, 240, 0.5);
+}
+.checkout__orderList {
+  margin: 0;
+  padding: 0;
+}
+.checkout__orderItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 0;
+  box-sizing: border-box;
+}
+.checkout__orderImg {
+  flex-shrink: 0;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: #fff;
+  background-size: cover;
+  background-position: center;
+  box-sizing: border-box;
+}
+.checkout__orderInfo {
+  flex: 1;
+  min-width: 0;
+}
+.checkout__orderNameKo {
+  margin: 0 0 2px;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: #131313;
+  line-height: 1.3;
+}
+.checkout__orderNameEn {
+  margin: 0 0 4px;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  color: rgba(19, 19, 19, 0.55);
+  line-height: 1.3;
+}
+.checkout__orderOptions {
+  margin: 0;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 12px;
+  color: rgba(19, 19, 19, 0.6);
+  line-height: 1.4;
+}
+.checkout__orderOptionsLine {
+  margin: 0;
+  display: block;
+}
+.checkout__orderOptionsLine + .checkout__orderOptionsLine {
+  margin-top: 2px;
+}
+.checkout__optionDivider {
+  color: #131313;
+}
+.checkout__orderPrice {
+  flex-shrink: 0;
+  margin: 0;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: #131313;
+}
+.checkout__loading,
+.checkout__empty {
+  padding: 24px 0;
+  margin: 0;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  color: rgba(19, 19, 19, 0.55);
+  text-align: center;
+}
+
+/* 식사 방법 - 결제수단과 동일 구조 (헤더 + 선택값 오른쪽, 펼치면 그리드) */
+.checkout__diningHeader {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 0;
+  margin: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+}
+.checkout__diningTitle {
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: #131313;
+}
+.checkout__diningHeaderRight {
+  position: absolute;
+  left: 120px;
+  right: 28px;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(19, 19, 19, 0.8);
+  text-align: left;
+}
+.checkout__diningBody {
+  padding: 12px 0 0;
+  margin-top: 12px;
+}
+.checkout__diningGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+}
+.checkout__diningCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 91px;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  background: rgba(19, 19, 19, 0.06);
+  cursor: pointer;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(19, 19, 19, 0.35);
+  box-sizing: border-box;
+}
+.checkout__diningCard--active {
+  background: #fff;
+  border-color: #131313;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  color: #131313;
+}
+/* 식사 방법 아이콘: 활성 #131313, 비활성 #131313 60% */
+.checkout__diningCardIcon {
+  width: 32px;
+  height: 32px;
+  display: block;
+  object-fit: contain;
+  filter: brightness(0) saturate(100%);
+  opacity: 0.6;
+}
+.checkout__diningCard--active .checkout__diningCardIcon {
+  opacity: 1;
+  filter: brightness(0) saturate(100%);
+}
+.checkout__diningCardLabel {
+  display: block;
+  line-height: 1.3;
+}
+
+/* ========== 토스 포인트 - Figma 834-45704 ========== */
+.checkout__section--toss .checkout__sectionTitle {
+  margin: 0;
+}
+.checkout__tossHeader {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 0;
+  margin: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+}
+.checkout__tossHeaderTitle {
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: #131313;
+}
+.checkout__tossHeaderRight {
+  position: absolute;
+  left: 120px;
+  right: 28px;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(19, 19, 19, 0.55);
+  text-align: left;
+}
+.checkout__tossHeaderPlaceholder {
+  color: rgba(19, 19, 19, 0.4);
+}
+.checkout__tossBody {
+  padding: 12px 0 0;
+  margin-top: 12px;
+}
+.checkout__tossInstruction {
+  margin: 0 0 12px;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(19, 19, 19, 0.55);
+  line-height: 1.4;
+}
+.checkout__tossOptions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.checkout__tossOption {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  background: #fff;
+  border: 1px solid transparent;
+  box-sizing: border-box;
+}
+.checkout__tossOption:hover {
+  background: rgba(19, 19, 19, 0.03);
+}
+.checkout__tossOption--selected {
+  border-color: rgba(19, 19, 19, 0.12);
+  background: rgba(19, 19, 19, 0.02);
+}
+.checkout__tossRadio {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+  width: 0;
+  height: 0;
+}
+.checkout__tossOptionIcon {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: contain;
+  display: block;
+}
+.checkout__tossOptionText {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.checkout__tossOptionLabel {
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  color: #131313;
+}
+.checkout__tossOptionAmount {
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: #131313;
+}
+.checkout__tossRadioMark {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  border: 1.5px solid rgba(19, 19, 19, 0.25);
+  border-radius: 50%;
+  background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2313131333' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E") center no-repeat;
+  background-size: 12px 12px;
+  box-sizing: border-box;
+}
+.checkout__tossOption--selected .checkout__tossRadioMark {
+  border-color: #0064FF;
+  background-color: #0064FF;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");
+  background-size: 12px 12px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/* 결제수단 섹션 - Figma 836-120458 */
+.checkout__paymentHeader {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 0;
+  margin: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+}
+.checkout__paymentTitle {
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: #131313;
+}
+.checkout__paymentHeaderRight {
+  position: absolute;
+  left: 120px;
+  right: 28px;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(19, 19, 19, 0.8);
+  text-align: left;
+}
+.checkout__paymentBody {
+  padding: 12px 0 0;
+  margin-top: 12px;
+}
+.checkout__paymentGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+}
+.checkout__paymentCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 91px;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  background: rgba(19, 19, 19, 0.06);
+  cursor: pointer;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(19, 19, 19, 0.35);
+  box-sizing: border-box;
+}
+.checkout__paymentCard--active {
+  background: #fff;
+  border-color: #131313;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  color: #131313;
+}
+/* 결제 수단 아이콘: 활성 #131313, 비활성 #131313 60% */
+.checkout__paymentCardIcon {
+  width: 32px;
+  height: 32px;
+  display: block;
+  object-fit: contain;
+  filter: brightness(0) saturate(100%);
+  opacity: 0.6;
+}
+.checkout__paymentCard--active .checkout__paymentCardIcon {
+  opacity: 1;
+  filter: brightness(0) saturate(100%); /* #131313 */
+}
+.checkout__paymentCardLabel {
+  display: block;
+  line-height: 1.3;
+}
+
+/* 푸터 - Figma 834-45704 (포인트 적립, 할인된 금액, 결제 버튼) */
+.checkout__footer {
+  flex-shrink: 0;
+  width: 100%;
+  padding: 16px;
+  padding-bottom: calc(16px + env(safe-area-inset-bottom, 0));
+  background: #fff;
+  box-sizing: border-box;
+  box-shadow: 0 -4px 24px rgba(19, 19, 19, 0.08);
+}
+.checkout__footerRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #131313;
+}
+.checkout__footerLabel {
+  font-style: normal;
+}
+.checkout__footerHighlight {
+  color: #0064FF;
+  font-weight: 600;
+  font-style: normal;
+}
+.checkout__footerValue {
+  font-weight: 500;
+  color: #131313;
+}
+.checkout__footerValue--discount {
+  color: #EE0000;
+}
+/* Figma 836-120226: 결제하기 버튼 비활성화 */
+.checkout__payError {
+  margin: 0 0 8px;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  color: #EE0000;
+}
+.checkout__payBtn {
+  width: 100%;
+  height: 52px;
+  margin-top: 12px;
+  padding: 0;
+  border: none;
+  border-radius: 8px;
+  background: #FFC800;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: #000000;
+  cursor: pointer;
+  display: block;
+}
+.checkout__payBtn:disabled {
+  background: rgba(19, 19, 19, 0.12);
+  color: #ffffff;
+  cursor: not-allowed;
+}

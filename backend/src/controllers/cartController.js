@@ -26,12 +26,19 @@ function normalizeOptions(options) {
     .filter((o) => o.group_id && o.item_id);
 }
 
-/** GET /app/carts/active - ACTIVE 장바구니 조회 (아이템 + 옵션) */
+/** GET /app/carts/active - ACTIVE 장바구니 조회 (아이템 + 옵션) + 회원 포인트 */
 export async function getAppActiveCart(req, res) {
   const memberId = Number(req.user?.userId) || 0;
   if (!memberId) return res.status(401).json({ ok: false, message: '로그인이 필요합니다.' });
 
   try {
+    const [memberRows] = await pool.execute(
+      `SELECT COALESCE(store_point_balance, 0) AS store_point_balance, COALESCE(toss_point_balance, 0) AS toss_point_balance FROM members WHERE id = ? LIMIT 1`,
+      [memberId]
+    );
+    const storePointBalance = Number(memberRows?.[0]?.store_point_balance) || 0;
+    const tossPointBalance = Number(memberRows?.[0]?.toss_point_balance) || 0;
+
     const [carts] = await pool.execute(
       `SELECT id, status, created_at, updated_at FROM carts WHERE member_id = ? AND status = 'ACTIVE' ORDER BY id DESC LIMIT 1`,
       [memberId]
@@ -40,7 +47,13 @@ export async function getAppActiveCart(req, res) {
     if (!cart?.id) {
       return res.json({
         ok: true,
-        data: { cart: null, items: [], summary: { count: 0, total: 0 } },
+        data: {
+          cart: null,
+          items: [],
+          summary: { count: 0, total: 0 },
+          store_point_balance: storePointBalance,
+          toss_point_balance: tossPointBalance,
+        },
       });
     }
 
@@ -49,7 +62,9 @@ export async function getAppActiveCart(req, res) {
       SELECT
         ci.id,
         ci.menu_id,
+        m.category_id,
         m.name_ko AS menu_name_ko,
+        m.name_en AS menu_name_en,
         (
           SELECT mi.image_url
           FROM menu_images mi
@@ -110,7 +125,9 @@ export async function getAppActiveCart(req, res) {
     const normalizedItems = items.map((it) => ({
       id: Number(it.id),
       menu_id: Number(it.menu_id),
+      category_id: it.category_id != null ? Number(it.category_id) : null,
       menu_name_ko: it.menu_name_ko,
+      menu_name_en: it.menu_name_en || null,
       image_url: it.image_url || null,
       qty: Number(it.qty) || 1,
       base_price: Number(it.base_price) || 0,
@@ -136,6 +153,8 @@ export async function getAppActiveCart(req, res) {
         cart: { id: Number(cart.id), status: cart.status },
         items: normalizedItems,
         summary,
+        store_point_balance: storePointBalance,
+        toss_point_balance: tossPointBalance,
       },
     });
   } catch (err) {
@@ -157,7 +176,7 @@ export async function postAppAddCartItem(req, res) {
   const options = normalizeOptions(req.body?.options);
 
   if (!menuId) return res.status(400).json({ ok: false, message: 'menu_id가 필요합니다.' });
-  if (options.length === 0) return res.status(400).json({ ok: false, message: 'options가 필요합니다.' });
+  /* 옵션 없이도 담기 가능 (options 빈 배열이면 기본가만 적용) */
 
   let conn;
   try {

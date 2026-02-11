@@ -4,6 +4,7 @@ import { computeScale } from '../../utils/figmaScale';
 import { deleteAppCartItem, deleteAppClearCart, getAppActiveCart, getAppCategories, getAppMenus, patchAppCartItemQty } from '../../api';
 
 import logoSvg from '../../assets/Vector.svg';
+import replaySvg from '../../assets/replay.svg';
 
 const ALL_TAB = { id: 'all', name_ko: '전체' };
 
@@ -17,6 +18,7 @@ export default function MobileMenu() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [cartBusyId, setCartBusyId] = useState(0);
+  const [emptyCartModalOpen, setEmptyCartModalOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const footerRef = useRef(null);
@@ -254,16 +256,23 @@ export default function MobileMenu() {
   };
 
   return (
-    <div className="figma360-stage">
+    <div className="figma360-stage figma360-stage--menu">
       <div className="figma360-scale figma360-scale--menu" style={{ '--figma360-scale': String(scale) }}>
         <div className="menu">
           <header className="menu__header">
             <img className="menu__logo" src={logoSvg} alt="FELN" />
             <div className="menu__icons">
-              <button type="button" className="menu__icon" aria-label="장바구니">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" /><line x1="3" y1="6" x2="21" y2="6" /><path d="M16 10a4 4 0 01-8 0" /></svg>
-              </button>
-              <button type="button" className="menu__icon menu__icon--person" aria-label="마이페이지" onClick={() => navigate('/')}>
+              <span className="menu__iconWrap menu__iconWrap--cart">
+                <button type="button" className="menu__icon" aria-label="장바구니" onClick={() => navigate('/menu/cart')}>
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" /><line x1="3" y1="6" x2="21" y2="6" /><path d="M16 10a4 4 0 01-8 0" /></svg>
+                </button>
+                {cartCount > 0 && (
+                  <span className="menu__cartBadge" aria-label={`장바구니 ${cartCount}개`}>
+                    {cartCount > 99 ? '99+' : cartCount}
+                  </span>
+                )}
+              </span>
+              <button type="button" className="menu__icon menu__icon--person" aria-label="마이페이지" onClick={() => navigate('/menu/mypage')}>
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="12" cy="8" r="4" /><path d="M4 20c0-4 4-6 8-6s8 2 8 6" /></svg>
               </button>
             </div>
@@ -292,6 +301,7 @@ export default function MobileMenu() {
             ))}
           </nav>
 
+          <div className="menu__productsWrap">
           <div className="menu__products">
             {loading ? (
               <p className="menu__loading">로딩 중...</p>
@@ -317,15 +327,16 @@ export default function MobileMenu() {
               ))
             )}
           </div>
+          </div>
 
           <footer ref={footerRef} className="menu__footer">
             <div className="menu__footerRow">
               <div className="menu__cartTitleWrap" aria-label="장바구니">
-                <span className="menu__cartTitle">장바구니</span>
+                <span className="menu__cartTitle">주문내역</span>
                 <span className="menu__cartTitleCount">{cartCount}</span>
               </div>
               <button type="button" className="menu__reset" onClick={handleReset}>
-                <svg className="menu__resetIcon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" /><path d="M3 3v5h5" /></svg>
+                <img src={replaySvg} alt="" className="menu__resetIcon" width="14" height="14" aria-hidden />
                 초기화
               </button>
             </div>
@@ -393,13 +404,44 @@ export default function MobileMenu() {
             </div>
             <div className="menu__footerRow menu__footerRow--total">
               <span className="menu__totalLabel">총 {total.toLocaleString('ko-KR')}원</span>
-              <button type="button" className="menu__orderBtn">
+              <button
+                type="button"
+                className="menu__orderBtn"
+                onClick={() => {
+                  if (cartItems.length === 0) setEmptyCartModalOpen(true);
+                  else navigate('/menu/checkout');
+                }}
+              >
                 주문하기
               </button>
             </div>
           </footer>
         </div>
       </div>
+
+      {emptyCartModalOpen && (
+        <div
+          className="menu__emptyModalOverlay"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="menu__emptyModalTitle"
+          onClick={() => setEmptyCartModalOpen(false)}
+        >
+          <div className="menu__emptyModal" onClick={(e) => e.stopPropagation()}>
+            <p id="menu__emptyModalTitle" className="menu__emptyModalMessage">
+              결제할 상품을 선택해주세요.
+            </p>
+            <div className="menu__emptyModalLine" aria-hidden="true" />
+            <button
+              type="button"
+              className="menu__emptyModalBtn"
+              onClick={() => setEmptyCartModalOpen(false)}
+            >
+              확인
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

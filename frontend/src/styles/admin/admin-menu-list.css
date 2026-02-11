@@ -29,7 +29,7 @@
   display: grid;
   grid-template-columns: 762px 1fr;
   grid-template-rows: auto 1fr;
-  column-gap: 24px;
+  column-gap: 0;
   row-gap: 18px;
   align-items: start;
 }
@@ -82,6 +82,27 @@
   grid-column: 1;
   grid-row: 2;
   padding-top: 6px;
+  overflow-y: auto;
+  max-height: calc(100vh - 220px);
+}
+
+/* 왼쪽 리스트 스크롤바 노란색 */
+.admin-menu-list__left::-webkit-scrollbar {
+  width: 8px;
+}
+
+.admin-menu-list__left::-webkit-scrollbar-track {
+  background: rgba(19, 19, 19, 0.06);
+  border-radius: 4px;
+}
+
+.admin-menu-list__left::-webkit-scrollbar-thumb {
+  background: #FFC21C;
+  border-radius: 4px;
+}
+
+.admin-menu-list__left::-webkit-scrollbar-thumb:hover {
+  background: #e6ae19;
 }
 
 .admin-menu-list__loading,
@@ -93,7 +114,8 @@
 
 .admin-menu-list__grid {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  flex-wrap: wrap;
   gap: 20px;
 }
 
@@ -194,6 +216,13 @@
   align-items: center;
   justify-content: center;
   min-height: 386px;
+  width: 100%;
+}
+
+.admin-menu-list__detailImageInner {
+  position: relative;
+  width: 373px;
+  flex-shrink: 0;
 }
 
 .admin-menu-list__detailActions {
@@ -236,6 +265,31 @@
   background: #EDEDED;
 }
 
+/* 카테고리 칩: 넓은 영역(사진 나오는 부분 전체) 왼쪽 맨 아래에 딱 붙임 */
+.admin-menu-list__chipOnImage {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  padding: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.admin-menu-list__detailImageWrap .admin-menu-list__chipOnImage .admin-menu-list__chip,
+.admin-menu-list__detailImageWrap .admin-menu-list__chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 51px;
+  min-width: 126px;
+  padding: 0 16px;
+  background: #FFC21C;
+  color: #131313;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 0;
+}
+
 .admin-menu-list__detailBody {
   padding: 24px 32px;
   display: flex;
@@ -243,10 +297,23 @@
   gap: 16px;
 }
 
-.admin-menu-list__chipRow {
+/* 상세 정보 + 옵션/+ 버튼 한 줄: 왼쪽 상세, 오른쪽 옵션·+ 딱 붙음 */
+.admin-menu-list__detailRow {
   display: flex;
-  align-items: center;
-  justify-content: flex-start;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.admin-menu-list__detailRow .admin-menu-list__detailText {
+  flex: 1;
+  min-width: 0;
+}
+
+.admin-menu-list__detailRow .admin-menu-list__optionsHead {
+  flex-shrink: 0;
+  margin-top: 0;
 }
 
 .admin-menu-list__chip {
@@ -304,10 +371,52 @@
   color: rgba(19, 19, 19, 0.6);
 }
 
+/* Figma 1050-22934: 베스트 메뉴 체크박스 (비활성/미체크 시 직사각형, 노란 테두리, 흰 배경) */
 .admin-menu-list__bestCheck {
   width: 18px;
   height: 18px;
-  accent-color: #FFC21C;
+  margin: 0;
+  flex-shrink: 0;
+  appearance: none;
+  -webkit-appearance: none;
+  border: 1.5px solid #FFC21C;
+  border-radius: 0;
+  background: #fff;
+  cursor: pointer;
+  position: relative;
+  box-sizing: border-box;
+}
+
+/* Figma 1050-22927: 베스트 메뉴 체크박스 활성(체크) 상태 – 노란 사각, 흰 체크, 부드러운 톤 */
+.admin-menu-list__bestCheck:checked {
+  background: #FFC21C;
+  border-color: #FFC21C;
+  box-shadow: 0 0 0 1px rgba(255, 194, 28, 0.3);
+}
+
+.admin-menu-list__bestCheck:checked::after {
+  content: '';
+  position: absolute;
+  left: 5px;
+  top: 2px;
+  width: 5px;
+  height: 10px;
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+  box-shadow: 0 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.admin-menu-list__bestCheck:disabled {
+  border-color: rgba(255, 194, 28, 0.6);
+  background: #fff;
+  cursor: not-allowed;
+  opacity: 1;
+}
+
+.admin-menu-list__bestRow:has(.admin-menu-list__bestCheck:disabled) {
+  cursor: not-allowed;
+  opacity: 0.85;
 }
 
 .admin-menu-list__options {

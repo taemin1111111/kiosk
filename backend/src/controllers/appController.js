@@ -152,3 +152,39 @@ export async function getAppMenuDetail(req, res) {
   }
 }
 
+/** GET /app/service-terms - 서비스 이용약관 (최신 1건) */
+export async function getAppServiceTerms(_req, res) {
+  try {
+    const [rows] = await pool.execute(
+      `
+      SELECT id, content, updated_at
+      FROM service_terms
+      ORDER BY updated_at DESC, id DESC
+      LIMIT 1
+      `
+    );
+    return res.json({ ok: true, data: rows?.[0] ?? null });
+  } catch (err) {
+    console.error('getAppServiceTerms:', err);
+    return res.status(500).json({ ok: false, message: '서비스 이용약관 조회 실패' });
+  }
+}
+
+/** GET /app/privacy-policy - 개인정보 처리방침 (최신 1건) */
+export async function getAppPrivacyPolicy(_req, res) {
+  try {
+    const [rows] = await pool.execute(
+      `
+      SELECT id, content, updated_at
+      FROM privacy_policy
+      ORDER BY updated_at DESC, id DESC
+      LIMIT 1
+      `
+    );
+    return res.json({ ok: true, data: rows?.[0] ?? null });
+  } catch (err) {
+    console.error('getAppPrivacyPolicy:', err);
+    return res.status(500).json({ ok: false, message: '개인정보 처리방침 조회 실패' });
+  }
+}
+

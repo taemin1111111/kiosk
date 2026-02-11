@@ -208,43 +208,45 @@ export default function AdminMenuList() {
                     🗑
                   </button>
                 </div>
-                {detail.images?.[0]?.image_url ? (
-                  <img className="admin-menu-list__detailImage" src={detail.images[0].image_url} alt={detail.name_ko} />
-                ) : (
-                  <div className="admin-menu-list__detailImagePlaceholder" />
-                )}
+                <div className="admin-menu-list__detailImageInner">
+                  {detail.images?.[0]?.image_url ? (
+                    <img className="admin-menu-list__detailImage" src={detail.images[0].image_url} alt={detail.name_ko} />
+                  ) : (
+                    <div className="admin-menu-list__detailImagePlaceholder" />
+                  )}
+                </div>
+                <div className="admin-menu-list__chipOnImage">
+                  <span className="admin-menu-list__chip">{activeCategory?.name_ko || detail.category_name || '카테고리'}</span>
+                </div>
               </div>
 
               <div className="admin-menu-list__detailBody">
-                <div className="admin-menu-list__chipRow">
-                  <span className="admin-menu-list__chip">{activeCategory?.name_ko || detail.category_name || '카테고리'}</span>
-                </div>
-
-                <div className="admin-menu-list__detailText">
-                  <h2 className="admin-menu-list__detailTitle">{detail.name_ko}</h2>
-                  {detail.name_en ? <p className="admin-menu-list__detailSub">{detail.name_en}</p> : null}
-                  {detail.description ? <p className="admin-menu-list__detailDesc">{detail.description}</p> : null}
-                  <p className="admin-menu-list__detailPrice">{formatWon(detail.base_price)}</p>
-                </div>
-
-                <label className="admin-menu-list__bestRow">
-                  <span className="admin-menu-list__bestText">베스트 메뉴로 지정</span>
-                  <input
-                    type="checkbox"
-                    className="admin-menu-list__bestCheck"
-                    checked={Number(detail.is_best) === 1}
-                    disabled={bestSaving}
-                    onChange={(e) => toggleBest(e.target.checked)}
-                  />
-                </label>
-
-                <div className="admin-menu-list__options">
+                <div className="admin-menu-list__detailRow">
+                  <div className="admin-menu-list__detailText">
+                    <h2 className="admin-menu-list__detailTitle">{detail.name_ko}</h2>
+                    {detail.name_en ? <p className="admin-menu-list__detailSub">{detail.name_en}</p> : null}
+                    {detail.description ? <p className="admin-menu-list__detailDesc">{detail.description}</p> : null}
+                    <p className="admin-menu-list__detailPrice">{formatWon(detail.base_price)}</p>
+                    <label className="admin-menu-list__bestRow">
+                      <span className="admin-menu-list__bestText">베스트 메뉴로 지정</span>
+                      <input
+                        type="checkbox"
+                        className="admin-menu-list__bestCheck"
+                        checked={Number(detail.is_best) === 1}
+                        disabled={bestSaving}
+                        onChange={(e) => toggleBest(e.target.checked)}
+                      />
+                    </label>
+                  </div>
                   <div className="admin-menu-list__optionsHead">
                     <span className="admin-menu-list__optionsTitle">옵션</span>
                     <button type="button" className="admin-menu-list__optionsPlus" aria-label="옵션 추가" onClick={() => setOptionsOpen(true)}>
                       +
                     </button>
                   </div>
+                </div>
+
+                <div className="admin-menu-list__options">
                   <div className="admin-menu-list__optionsLine" aria-hidden />
 
                   {optionsOpen && (
