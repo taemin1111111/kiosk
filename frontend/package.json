@@ -6,9 +6,16 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "cap:sync": "vite build --mode capacitor && npx cap sync",
+    "cap:sync:emulator": "vite build --mode emulator && npx cap sync",
+    "cap:android": "npx cap open android",
+    "cap:run:android": "npx cap run android"
   },
   "dependencies": {
+    "@capacitor/android": "^8.1.0",
+    "@capacitor/cli": "^8.1.0",
+    "@capacitor/core": "^8.1.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.28.0"

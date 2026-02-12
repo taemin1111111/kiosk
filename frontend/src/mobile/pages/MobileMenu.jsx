@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { computeScale } from '../../utils/figmaScale';
-import { deleteAppCartItem, deleteAppClearCart, getAppActiveCart, getAppCategories, getAppMenus, patchAppCartItemQty } from '../../api';
+import { deleteAppCartItem, deleteAppClearCart, getAppActiveCart, getAppCategories, getAppMenus, getImageUrl, patchAppCartItemQty } from '../../api';
 
 import logoSvg from '../../assets/Vector.svg';
 import replaySvg from '../../assets/replay.svg';
@@ -332,7 +332,7 @@ export default function MobileMenu() {
               >
                 <div
                   className="menu__productImage"
-                  style={p.image_url ? { backgroundImage: `url(${p.image_url})` } : undefined}
+                  style={p.image_url ? { backgroundImage: `url(${getImageUrl(p.image_url)})` } : undefined}
                   aria-label={`${p.name_ko} 이미지`}
                 />
                 {Number(p.is_best) === 1 && <span className="menu__productBest">Best</span>}
@@ -370,7 +370,7 @@ export default function MobileMenu() {
                     <div key={it.id} className="menu__cartCard">
                       <div
                         className="menu__cartCardImg"
-                        style={it.image_url ? { backgroundImage: `url(${it.image_url})` } : undefined}
+                        style={it.image_url ? { backgroundImage: `url(${getImageUrl(it.image_url)})` } : undefined}
                         aria-hidden
                       />
 

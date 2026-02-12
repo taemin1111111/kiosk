@@ -15,7 +15,20 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT ?? 3001;
 
-app.use(cors({ origin: process.env.FRONTEND_ORIGIN ?? 'http://localhost:5173' }));
+// 웹(5173) + Android 앱(Capacitor WebView는 origin이 http://localhost)
+const allowedOrigins = [
+  'http://localhost:5173',
+  'http://localhost',
+  'capacitor://localhost',
+  'https://localhost',
+];
+app.use(cors({
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) return callback(null, true);
+    if (process.env.FRONTEND_ORIGIN && origin === process.env.FRONTEND_ORIGIN) return callback(null, true);
+    return callback(null, false);
+  },
+}));
 app.use(express.json());
 
 // uploads 폴더 정적 서빙 (상품사진 업로드용)

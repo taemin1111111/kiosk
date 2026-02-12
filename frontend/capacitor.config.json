@@ -1,0 +1,12 @@
+{
+  "appId": "com.kiosk.app",
+  "appName": "Kiosk",
+  "webDir": "dist",
+  "android": {
+    "allowMixedContent": true
+  },
+  "server": {
+    "androidScheme": "http",
+    "cleartext": true
+  }
+}

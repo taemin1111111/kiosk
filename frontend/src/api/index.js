@@ -1,9 +1,34 @@
 /**
  * 공통 API - 모바일/백오피스 모두 사용
  * 로그인 JWT: localStorage에 저장, 인증 필요 API 호출 시 Authorization 헤더에 포함
+ * 웹: /api (프록시). Android 앱: 10.0.2.2:3001(에뮬) 또는 VITE_ANDROID_API_URL(실기기)
  */
 
-const API_BASE = import.meta.env.VITE_API_URL || '/api';
+import { Capacitor } from '@capacitor/core';
+
+function getApiBase() {
+  if (Capacitor.getPlatform() === 'android') {
+    return import.meta.env.VITE_ANDROID_API_URL || import.meta.env.VITE_API_URL || 'http://10.0.2.2:3001/api';
+  }
+  return import.meta.env.VITE_API_URL || '/api';
+}
+
+/** Android 앱에서 백엔드가 준 이미지 URL(localhost 또는 /uploads) → 에뮬/실기기에서 접근 가능한 주소로 변환 */
+export function getImageUrl(url) {
+  if (!url || typeof url !== 'string') return url;
+  const base = Capacitor.getPlatform() === 'android'
+    ? (import.meta.env.VITE_ANDROID_API_URL || import.meta.env.VITE_API_URL || 'http://10.0.2.2:3001/api')
+    : '';
+  if (base) {
+    const origin = base.replace(/\/api\/?$/, '');
+    let out = url
+      .replace(/https?:\/\/localhost(:\d+)?/g, origin)
+      .replace(/https?:\/\/127\.0\.0\.1(:\d+)?/g, origin);
+    if (out.startsWith('/')) out = origin + out;
+    return out;
+  }
+  return url;
+}
 
 /** 404 HTML 등 비정상 응답 시 JSON 파싱 에러 방지 */
 async function parseResJson(res) {
@@ -58,7 +83,7 @@ function getAuthOnlyHeaders() {
 }
 
 export async function healthCheck() {
-  const res = await fetch(`${API_BASE}/health`);
+  const res = await fetch(`${getApiBase()}/health`);
   return res.json();
 }
 
@@ -68,7 +93,7 @@ export async function healthCheck() {
  * @returns {{ ok: boolean, message?: string, memberId?: number }}
  */
 export async function signup(data) {
-  const res = await fetch(`${API_BASE}/members/signup`, {
+  const res = await fetch(`${getApiBase()}/members/signup`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),
@@ -82,7 +107,7 @@ export async function signup(data) {
  * @returns {{ ok: boolean, message?: string, username?: string }}
  */
 export async function findId(data) {
-  const res = await fetch(`${API_BASE}/members/find-id`, {
+  const res = await fetch(`${getApiBase()}/members/find-id`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(data),
@@ -102,7 +127,7 @@ export async function findId(data) {
  */
 export async function login(data) {
   try {
-    const res = await fetch(`${API_BASE}/members/login`, {
+    const res = await fetch(`${getApiBase()}/members/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
@@ -121,7 +146,7 @@ export async function login(data) {
 
 /** GET /app/categories - 사용자 메뉴 카테고리 탭 */
 export async function getAppCategories() {
-  const res = await fetch(`${API_BASE}/app/categories`, { headers: getAuthHeaders() });
+  const res = await fetch(`${getApiBase()}/app/categories`, { headers: getAuthHeaders() });
   return parseResJson(res);
 }
 
@@ -129,38 +154,38 @@ export async function getAppCategories() {
 export async function getAppMenus(params = {}) {
   const qs = new URLSearchParams();
   if (params.category_id) qs.set('category_id', String(params.category_id));
-  const url = `${API_BASE}/app/menus${qs.toString() ? `?${qs.toString()}` : ''}`;
+  const url = `${getApiBase()}/app/menus${qs.toString() ? `?${qs.toString()}` : ''}`;
   const res = await fetch(url, { headers: getAuthHeaders() });
   return parseResJson(res);
 }
 
 /** GET /app/menus/:id - 사용자 메뉴 상세(옵션 포함) */
 export async function getAppMenuDetail(menuId) {
-  const res = await fetch(`${API_BASE}/app/menus/${menuId}`, { headers: getAuthHeaders() });
+  const res = await fetch(`${getApiBase()}/app/menus/${menuId}`, { headers: getAuthHeaders() });
   return parseResJson(res);
 }
 
 /** GET /app/service-terms - 서비스 이용약관 (최신 1건) */
 export async function getAppServiceTerms() {
-  const res = await fetch(`${API_BASE}/app/service-terms`, { headers: getAuthHeaders() });
+  const res = await fetch(`${getApiBase()}/app/service-terms`, { headers: getAuthHeaders() });
   return parseResJson(res);
 }
 
 /** GET /app/privacy-policy - 개인정보 처리방침 (최신 1건) */
 export async function getAppPrivacyPolicy() {
-  const res = await fetch(`${API_BASE}/app/privacy-policy`, { headers: getAuthHeaders() });
+  const res = await fetch(`${getApiBase()}/app/privacy-policy`, { headers: getAuthHeaders() });
   return parseResJson(res);
 }
 
 /** GET /app/me - 로그인 회원 본인 정보 (id, username, name, email) */
 export async function getAppMe() {
-  const res = await fetch(`${API_BASE}/app/me`, { headers: getAuthHeaders() });
+  const res = await fetch(`${getApiBase()}/app/me`, { headers: getAuthHeaders() });
   return parseResJson(res);
 }
 
 /** PATCH /app/me - 이름 변경. payload: { name: string } */
 export async function patchAppMe(payload) {
-  const res = await fetch(`${API_BASE}/app/me`, {
+  const res = await fetch(`${getApiBase()}/app/me`, {
     method: 'PATCH',
     headers: getAuthHeaders(),
     body: JSON.stringify(payload),
@@ -170,7 +195,7 @@ export async function patchAppMe(payload) {
 
 /** GET /app/carts/active - ACTIVE 장바구니 조회 */
 export async function getAppActiveCart() {
-  const res = await fetch(`${API_BASE}/app/carts/active`, { headers: getAuthHeaders() });
+  const res = await fetch(`${getApiBase()}/app/carts/active`, { headers: getAuthHeaders() });
   return parseResJson(res);
 }
 
@@ -179,7 +204,7 @@ export async function getAppActiveCart() {
  * payload: { menu_id:number, qty:number, options:[{group_id,item_id,option_qty?}] }
  */
 export async function postAppCartItem(payload) {
-  const res = await fetch(`${API_BASE}/app/carts/active/items`, {
+  const res = await fetch(`${getApiBase()}/app/carts/active/items`, {
     method: 'POST',
     headers: getAuthHeaders(),
     body: JSON.stringify(payload),
@@ -189,7 +214,7 @@ export async function postAppCartItem(payload) {
 
 /** DELETE /app/carts/active/items - 장바구니 초기화 */
 export async function deleteAppClearCart() {
-  const res = await fetch(`${API_BASE}/app/carts/active/items`, {
+  const res = await fetch(`${getApiBase()}/app/carts/active/items`, {
     method: 'DELETE',
     headers: getAuthHeaders(),
   });
@@ -198,7 +223,7 @@ export async function deleteAppClearCart() {
 
 /** PATCH /app/carts/active/items/:id - 장바구니 아이템 수량 변경 */
 export async function patchAppCartItemQty(cartItemId, qty) {
-  const res = await fetch(`${API_BASE}/app/carts/active/items/${Number(cartItemId)}`, {
+  const res = await fetch(`${getApiBase()}/app/carts/active/items/${Number(cartItemId)}`, {
     method: 'PATCH',
     headers: getAuthHeaders(),
     body: JSON.stringify({ qty }),
@@ -208,7 +233,7 @@ export async function patchAppCartItemQty(cartItemId, qty) {
 
 /** DELETE /app/carts/active/items/:id - 장바구니 아이템 삭제 */
 export async function deleteAppCartItem(cartItemId) {
-  const res = await fetch(`${API_BASE}/app/carts/active/items/${Number(cartItemId)}`, {
+  const res = await fetch(`${getApiBase()}/app/carts/active/items/${Number(cartItemId)}`, {
     method: 'DELETE',
     headers: getAuthHeaders(),
   });
@@ -220,7 +245,7 @@ export async function deleteAppCartItem(cartItemId) {
  * payload: { method:'card'|'simple'|'cash'|'transfer', store_point_used: number, toss_point_used: number, eat_type: 'in'|'takeout' }
  */
 export async function postAppCheckout(payload) {
-  const res = await fetch(`${API_BASE}/app/checkout`, {
+  const res = await fetch(`${getApiBase()}/app/checkout`, {
     method: 'POST',
     headers: getAuthHeaders(),
     body: JSON.stringify(payload),
@@ -239,7 +264,7 @@ export async function getAppOrders(params = {}) {
   if (params.dateFrom) q.set('dateFrom', params.dateFrom);
   if (params.dateTo) q.set('dateTo', params.dateTo);
   const query = q.toString();
-  const url = query ? `${API_BASE}/app/orders?${query}` : `${API_BASE}/app/orders`;
+  const url = query ? `${getApiBase()}/app/orders?${query}` : `${getApiBase()}/app/orders`;
   const res = await fetch(url, { headers: getAuthHeaders() });
   return parseResJson(res);
 }
@@ -248,25 +273,25 @@ export async function getAppOrders(params = {}) {
 
 /** GET /bo/categories - 카테고리 드롭다운 (menus.category_id) */
 export async function getBoCategories() {
-  const res = await fetch(`${API_BASE}/bo/categories`, { headers: getAuthHeaders() });
+  const res = await fetch(`${getApiBase()}/bo/categories`, { headers: getAuthHeaders() });
   return parseResJson(res);
 }
 
 /** GET /bo/option-groups - 옵션 그룹 드롭다운 (menu_option_groups.group_id) */
 export async function getBoOptionGroups() {
-  const res = await fetch(`${API_BASE}/bo/option-groups`, { headers: getAuthHeaders() });
+  const res = await fetch(`${getApiBase()}/bo/option-groups`, { headers: getAuthHeaders() });
   return parseResJson(res);
 }
 
 /** GET /bo/option-groups/:id/items - 옵션 항목 목록 */
 export async function getBoOptionItems(groupId) {
-  const res = await fetch(`${API_BASE}/bo/option-groups/${groupId}/items`, { headers: getAuthHeaders() });
+  const res = await fetch(`${getApiBase()}/bo/option-groups/${groupId}/items`, { headers: getAuthHeaders() });
   return parseResJson(res);
 }
 
 /** GET /bo/nutrition-categories - 영양정보 카테고리 드롭다운 (menu_nutritions.category_id) */
 export async function getBoNutritionCategories() {
-  const res = await fetch(`${API_BASE}/bo/nutrition-categories`, { headers: getAuthHeaders() });
+  const res = await fetch(`${getApiBase()}/bo/nutrition-categories`, { headers: getAuthHeaders() });
   return parseResJson(res);
 }
 
@@ -274,33 +299,33 @@ export async function getBoNutritionCategories() {
 export async function getBoMenus(params = {}) {
   const qs = new URLSearchParams();
   if (params.category_id) qs.set('category_id', String(params.category_id));
-  const url = `${API_BASE}/bo/menus${qs.toString() ? `?${qs.toString()}` : ''}`;
+  const url = `${getApiBase()}/bo/menus${qs.toString() ? `?${qs.toString()}` : ''}`;
   const res = await fetch(url, { headers: getAuthHeaders() });
   return parseResJson(res);
 }
 
 /** GET /bo/menus/:id - 메뉴 상세 */
 export async function getBoMenuDetail(menuId) {
-  const res = await fetch(`${API_BASE}/bo/menus/${menuId}`, { headers: getAuthHeaders() });
+  const res = await fetch(`${getApiBase()}/bo/menus/${menuId}`, { headers: getAuthHeaders() });
   return parseResJson(res);
 }
 
 /** GET /bo/users - 유저 리스트 (role=USER) */
 export async function getBoUsers() {
-  const res = await fetch(`${API_BASE}/bo/users`, { headers: getAuthHeaders() });
+  const res = await fetch(`${getApiBase()}/bo/users`, { headers: getAuthHeaders() });
   return parseResJson(res);
 }
 
 /** GET /bo/orders/:id - 어드민 주문 상세 */
 export async function getBoOrderDetail(orderId) {
-  const res = await fetch(`${API_BASE}/bo/orders/${Number(orderId)}`, { headers: getAuthHeaders() });
+  const res = await fetch(`${getApiBase()}/bo/orders/${Number(orderId)}`, { headers: getAuthHeaders() });
   return parseResJson(res);
 }
 
 /** PATCH /bo/orders/:id/cancel - 주문 취소 */
 /** PATCH /bo/orders/:id/confirm - 확인 중 → 픽업 완료 */
 export async function patchBoOrderConfirm(orderId) {
-  const res = await fetch(`${API_BASE}/bo/orders/${Number(orderId)}/confirm`, {
+  const res = await fetch(`${getApiBase()}/bo/orders/${Number(orderId)}/confirm`, {
     method: 'PATCH',
     headers: getAuthHeaders(),
   });
@@ -308,7 +333,7 @@ export async function patchBoOrderConfirm(orderId) {
 }
 
 export async function patchBoOrderCancel(orderId) {
-  const res = await fetch(`${API_BASE}/bo/orders/${Number(orderId)}/cancel`, {
+  const res = await fetch(`${getApiBase()}/bo/orders/${Number(orderId)}/cancel`, {
     method: 'PATCH',
     headers: getAuthHeaders(),
   });
@@ -325,20 +350,20 @@ export async function getBoOrders(params = {}) {
   if (params.page) q.set('page', String(params.page));
   if (params.limit) q.set('limit', String(params.limit));
   const query = q.toString();
-  const url = query ? `${API_BASE}/bo/orders?${query}` : `${API_BASE}/bo/orders`;
+  const url = query ? `${getApiBase()}/bo/orders?${query}` : `${getApiBase()}/bo/orders`;
   const res = await fetch(url, { headers: getAuthHeaders() });
   return parseResJson(res);
 }
 
 /** GET /bo/service-terms - 서비스 이용약관 (최신 1건) */
 export async function getBoServiceTerms() {
-  const res = await fetch(`${API_BASE}/bo/service-terms`, { headers: getAuthHeaders() });
+  const res = await fetch(`${getApiBase()}/bo/service-terms`, { headers: getAuthHeaders() });
   return parseResJson(res);
 }
 
 /** POST /bo/service-terms - 서비스 이용약관 저장(새 버전 추가) */
 export async function postBoServiceTerms(content) {
-  const res = await fetch(`${API_BASE}/bo/service-terms`, {
+  const res = await fetch(`${getApiBase()}/bo/service-terms`, {
     method: 'POST',
     headers: getAuthHeaders(),
     body: JSON.stringify({ content }),
@@ -348,13 +373,13 @@ export async function postBoServiceTerms(content) {
 
 /** GET /bo/privacy-policy - 개인정보 처리방침 (최신 1건) */
 export async function getBoPrivacyPolicy() {
-  const res = await fetch(`${API_BASE}/bo/privacy-policy`, { headers: getAuthHeaders() });
+  const res = await fetch(`${getApiBase()}/bo/privacy-policy`, { headers: getAuthHeaders() });
   return parseResJson(res);
 }
 
 /** POST /bo/privacy-policy - 개인정보 처리방침 저장(새 버전 추가) */
 export async function postBoPrivacyPolicy(content) {
-  const res = await fetch(`${API_BASE}/bo/privacy-policy`, {
+  const res = await fetch(`${getApiBase()}/bo/privacy-policy`, {
     method: 'POST',
     headers: getAuthHeaders(),
     body: JSON.stringify({ content }),
@@ -364,7 +389,7 @@ export async function postBoPrivacyPolicy(content) {
 
 /** PATCH /bo/menus/:id/best - 베스트 메뉴 지정/해제 */
 export async function patchBoMenuBest(menuId, is_best) {
-  const res = await fetch(`${API_BASE}/bo/menus/${menuId}/best`, {
+  const res = await fetch(`${getApiBase()}/bo/menus/${menuId}/best`, {
     method: 'PATCH',
     headers: getAuthHeaders(),
     body: JSON.stringify({ is_best: is_best ? 1 : 0 }),
@@ -374,7 +399,7 @@ export async function patchBoMenuBest(menuId, is_best) {
 
 /** PATCH /bo/menus/:id/option-groups - 메뉴 옵션 그룹 교체 */
 export async function patchBoMenuOptionGroups(menuId, option_group_ids) {
-  const res = await fetch(`${API_BASE}/bo/menus/${menuId}/option-groups`, {
+  const res = await fetch(`${getApiBase()}/bo/menus/${menuId}/option-groups`, {
     method: 'PATCH',
     headers: getAuthHeaders(),
     body: JSON.stringify({ option_group_ids }),
@@ -384,7 +409,7 @@ export async function patchBoMenuOptionGroups(menuId, option_group_ids) {
 
 /** PATCH /bo/menus/:id - 메뉴 수정 (등록 payload 동일) */
 export async function patchBoMenu(menuId, payload) {
-  const res = await fetch(`${API_BASE}/bo/menus/${menuId}`, {
+  const res = await fetch(`${getApiBase()}/bo/menus/${menuId}`, {
     method: 'PATCH',
     headers: getAuthHeaders(),
     body: JSON.stringify(payload),
@@ -408,7 +433,7 @@ export async function patchBoMenu(menuId, payload) {
  * }} payload
  */
 export async function postBoMenus(payload) {
-  const res = await fetch(`${API_BASE}/bo/menus`, {
+  const res = await fetch(`${getApiBase()}/bo/menus`, {
     method: 'POST',
     headers: getAuthHeaders(),
     body: JSON.stringify(payload),
@@ -420,7 +445,7 @@ export async function postBoMenus(payload) {
 export async function uploadBoMenuImage(file) {
   const form = new FormData();
   form.append('file', file);
-  const res = await fetch(`${API_BASE}/bo/upload/menu-image`, {
+  const res = await fetch(`${getApiBase()}/bo/upload/menu-image`, {
     method: 'POST',
     headers: getAuthOnlyHeaders(),
     body: form,

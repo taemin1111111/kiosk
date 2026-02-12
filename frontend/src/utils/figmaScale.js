@@ -7,7 +7,7 @@ const RESIZE_DEBOUNCE_MS = 150;
 
 /**
  * - 데스크톱(>=768px): scale=1 → 360px 고정, 중앙 정렬 (폰 미리보기)
- * - 모바일(<768px): scale = min(w/360, h/690) → 화면에 맞게 확대/축소 (큰 폰 확대, 작은 폰 축소)
+ * - 모바일(<768px): scale = min(w/360, h/690) → 화면에 딱 맞춤, 스크롤 없음
  */
 export function computeScale() {
   const w = window.innerWidth;

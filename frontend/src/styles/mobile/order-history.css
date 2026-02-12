@@ -9,6 +9,10 @@
   box-sizing: border-box;
 }
 
+@media (max-width: 767px) {
+  .figma360-stage--order-history { background: #fff; }
+}
+
 .figma360-scale--order-history {
   position: relative;
   left: auto;

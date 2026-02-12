@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { computeScale } from '../../utils/figmaScale';
-import { getAppActiveCart, postAppCheckout } from '../../api';
+import { getAppActiveCart, getImageUrl, postAppCheckout } from '../../api';
 
 import backSvg from '../../assets/arrow_back_ios_new.svg';
 import chevronDownSvg from '../../assets/keyboard_arrow_down.svg';
@@ -141,7 +141,7 @@ export default function MobileCheckout() {
                       <div className="checkout__orderItem">
                         <div
                           className="checkout__orderImg"
-                          style={it.image_url ? { backgroundImage: `url(${it.image_url})` } : undefined}
+                          style={it.image_url ? { backgroundImage: `url(${getImageUrl(it.image_url)})` } : undefined}
                           aria-hidden
                         />
                         <div className="checkout__orderInfo">

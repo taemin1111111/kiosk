@@ -9,6 +9,10 @@
   box-sizing: border-box;
 }
 
+@media (max-width: 767px) {
+  .figma360-stage--mypage { background: #fff; }
+}
+
 .figma360-scale--mypage {
   position: relative;
   left: auto;

@@ -4,6 +4,7 @@ import { computeScale } from '../../utils/figmaScale';
 import {
   getAppCategories,
   getAppActiveCart,
+  getImageUrl,
   patchAppCartItemQty,
   deleteAppCartItem,
   deleteAppClearCart,
@@ -276,7 +277,7 @@ export default function MobileCart() {
                     </label>
                     <div
                       className="cart__itemImg"
-                      style={it.image_url ? { backgroundImage: `url(${it.image_url})` } : undefined}
+                      style={it.image_url ? { backgroundImage: `url(${getImageUrl(it.image_url)})` } : undefined}
                       aria-hidden
                     />
                     <div className="cart__itemBody">

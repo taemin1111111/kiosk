@@ -2,5 +2,7 @@ node_modules/
 dist/
 .env
 .env.local
+.env.capacitor
+.env.emulator
 *.log
 .DS_Store

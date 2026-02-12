@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { computeScale } from '../../utils/figmaScale';
-import { getAppOrders } from '../../api';
+import { getAppOrders, getImageUrl } from '../../api';
 import notificationsSvg from '../../assets/notifications.svg';
 
 /* orders.status ENUM: PENDING, PAID, CANCELLED, FAILED */
@@ -197,7 +197,7 @@ export default function MobileOrderHistory() {
                     <div className="order-history__itemImgWrap">
                       <div
                         className="order-history__itemImg"
-                        style={order.first_image_url ? { backgroundImage: `url(${order.first_image_url})` } : undefined}
+                        style={order.first_image_url ? { backgroundImage: `url(${getImageUrl(order.first_image_url)})` } : undefined}
                         aria-hidden
                       />
                       <span className="order-history__itemQtyBadge">{order.item_count ?? order.first_qty ?? 1}</span>

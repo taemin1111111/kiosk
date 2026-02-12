@@ -243,3 +243,17 @@
   text-align: right;
   cursor: pointer;
 }
+
+/* 모바일에서만: 아이디 찾기/비밀번호 찾기/회원가입 헤더 로고를 가로·세로 정중앙에 고정 */
+@media (max-width: 767px) {
+  .signup__header {
+    justify-content: center;
+  }
+  .signup__logo {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0;
+  }
+}

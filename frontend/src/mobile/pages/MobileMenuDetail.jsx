@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { computeScale } from '../../utils/figmaScale';
-import { getAppMenuDetail, getAppActiveCart, postAppCartItem } from '../../api';
+import { getAppMenuDetail, getAppActiveCart, getImageUrl, postAppCartItem } from '../../api';
 
 import logoSvg from '../../assets/Vector.svg';
 import backSvg from '../../assets/arrow_back_ios_new.svg';
@@ -258,7 +258,8 @@ export default function MobileMenuDetail() {
 
   const heroUrl = useMemo(() => {
     const imgs = menu?.images || [];
-    return imgs.length ? imgs[0].image_url : menu?.image_url;
+    const raw = imgs.length ? imgs[0].image_url : menu?.image_url;
+    return getImageUrl(raw || '');
   }, [menu]);
 
   const optionGroups = menu?.option_groups || [];

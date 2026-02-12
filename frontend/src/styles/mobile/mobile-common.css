@@ -12,6 +12,40 @@
   box-sizing: border-box;
 }
 
+/* 모바일에서만: 모든 페이지 스테이지가 화면 딱 맞게 (로그인처럼 꽉 참) */
+@media (max-width: 767px) {
+  .figma360-stage,
+  .figma360-stage--menu,
+  .figma360-stage--cart,
+  .figma360-stage--terms,
+  .figma360-stage--termsDetail,
+  .figma360-stage--order-history,
+  .figma360-stage--mypage,
+  .figma360-stage--checkout,
+  .figma360-stage--order-complete {
+    min-height: 100dvh;
+    height: 100dvh;
+    overflow: hidden;
+    background: #fff;
+    display: block;
+  }
+
+  .figma360-scale,
+  .figma360-scale--menu,
+  .figma360-scale--cart,
+  .figma360-scale--terms,
+  .figma360-scale--termsDetail,
+  .figma360-scale--order-history,
+  .figma360-scale--mypage,
+  .figma360-scale--checkout,
+  .figma360-scale--order-complete {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) scale(var(--figma360-scale, 1));
+  }
+}
+
 .figma360-scale {
   position: absolute;
   left: 50%;

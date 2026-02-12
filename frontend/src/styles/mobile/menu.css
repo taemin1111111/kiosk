@@ -10,6 +10,13 @@
   box-sizing: border-box;
 }
 
+/* 모바일에서만: 위·아래 회색 제거, 흰 배경으로 통일 */
+@media (max-width: 767px) {
+  .figma360-stage--menu {
+    background: #fff;
+  }
+}
+
 .figma360-scale--menu {
   position: relative;
   left: auto;
