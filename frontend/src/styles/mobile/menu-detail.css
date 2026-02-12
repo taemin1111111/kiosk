@@ -596,15 +596,23 @@
 .menu-detail__optLeft {
   display: flex;
   align-items: center;
-  gap: 28px;
+  gap: 12px;
+  flex: 1;
+  min-width: 0;
 }
 
+/* 타이틀: 왼쪽 시작, 너비 고정 → 값 텍스트가 같은 위치(중간 열)에서 시작 */
 .menu-detail__optName {
   margin: 0;
-  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  flex-shrink: 0;
+  width: 80px;
+  text-align: left;
+  color: rgba(19, 19, 19, 0.80);
+  font-family: Pretendard, -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 15px;
+  font-style: normal;
   font-weight: 600;
-  color: rgba(19, 19, 19, 0.8);
+  line-height: normal;
 }
 
 .menu-detail__optValue {

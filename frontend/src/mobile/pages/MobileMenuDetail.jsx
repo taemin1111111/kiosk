@@ -5,6 +5,7 @@ import { getAppMenuDetail, getAppActiveCart, postAppCartItem } from '../../api';
 
 import logoSvg from '../../assets/Vector.svg';
 import backSvg from '../../assets/arrow_back_ios_new.svg';
+import iconCartSvg from '../../assets/icon-cart.svg';
 
 function formatWon(value) {
   const n = Number(value) || 0;
@@ -340,7 +341,7 @@ export default function MobileMenuDetail() {
         '카페인 부담은 줄이고 커피 본연의 풍미는 살린 원두예요.',
         '늦은 시간이나 카페인에 민감한 분도 편안하게 즐길 수 있어요.',
       ],
-      traits: '부드러운 풍미 · 낮은 카페인 · 균형 잡힌 맛 · 부담 없는 마무리',
+      traits: '부드러운 풍미 · 낮은 카페인 · 균형 잡힌 맛',
     };
 
     if (ko.includes('블론드') || label.includes('blonde')) return BLONDE;
@@ -663,7 +664,7 @@ export default function MobileMenuDetail() {
             </button>
             <span className="menu-detail__cartWrap">
               <button type="button" className="menu-detail__iconBtn" aria-label={`장바구니 ${cartCount}개`} onClick={() => navigate('/menu/cart')}>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" /><line x1="3" y1="6" x2="21" y2="6" /><path d="M16 10a4 4 0 01-8 0" /></svg>
+                <img src={iconCartSvg} alt="" width={20} height={20} aria-hidden />
               </button>
               {cartCount > 0 && (
                 <span className="menu-detail__cartBadge" aria-hidden>
@@ -679,7 +680,7 @@ export default function MobileMenuDetail() {
             <img className="menu-detail__logo" src={logoSvg} alt="FELN" />
             <span className="menu-detail__cartWrap">
               <button type="button" className="menu-detail__iconBtn" aria-label={`장바구니 ${cartCount}개`} onClick={() => navigate('/menu/cart')}>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" /><line x1="3" y1="6" x2="21" y2="6" /><path d="M16 10a4 4 0 01-8 0" /></svg>
+                <img src={iconCartSvg} alt="" width={20} height={20} aria-hidden />
               </button>
               {cartCount > 0 && (
                 <span className="menu-detail__cartBadge" aria-hidden>

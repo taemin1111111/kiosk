@@ -5,6 +5,7 @@ import { deleteAppCartItem, deleteAppClearCart, getAppActiveCart, getAppCategori
 
 import logoSvg from '../../assets/Vector.svg';
 import replaySvg from '../../assets/replay.svg';
+import iconCartSvg from '../../assets/icon-cart.svg';
 
 const ALL_TAB = { id: 'all', name_ko: '전체' };
 
@@ -42,6 +43,11 @@ export default function MobileMenu() {
     cleanup: null,
   });
 
+  /** 카테고리별 상품 캐시 (전환 시 깜빡임 방지) */
+  const productsByCategoryRef = useRef({});
+  const categoryRef = useRef(category);
+  categoryRef.current = category;
+
   useEffect(() => {
     const update = () => setScale(computeScale());
     update();
@@ -60,7 +66,9 @@ export default function MobileMenu() {
       if (cancelled) return;
       const cats = catRes?.ok ? catRes.data || [] : [];
       setCategories([ALL_TAB, ...cats]);
-      setProducts(menuRes?.ok ? menuRes.data || [] : []);
+      const allMenus = menuRes?.ok ? menuRes.data || [] : [];
+      setProducts(allMenus);
+      productsByCategoryRef.current['all'] = allMenus;
       setLoading(false);
     })();
     return () => {
@@ -82,13 +90,26 @@ export default function MobileMenu() {
   }, []);
 
   useEffect(() => {
+    const cache = productsByCategoryRef.current;
+    const cached = cache[category];
+
+    if (cached) {
+      setProducts(cached);
+      setLoading(false);
+    } else {
+      setLoading(true);
+    }
+
+    const fetchingCategory = category;
     let cancelled = false;
     (async () => {
-      if (category === 'all') return; // 초기 로딩에서 전체는 이미 불러옴
-      setLoading(true);
-      const res = await getAppMenus({ category_id: Number(category) }).catch(() => ({ ok: false }));
-      if (!cancelled) {
-        setProducts(res?.ok ? res.data || [] : []);
+      const params = fetchingCategory === 'all' ? {} : { category_id: Number(fetchingCategory) };
+      const res = await getAppMenus(params).catch(() => ({ ok: false }));
+      if (cancelled) return;
+      const list = res?.ok ? res.data || [] : [];
+      cache[fetchingCategory] = list;
+      if (categoryRef.current === fetchingCategory) {
+        setProducts(list);
         setLoading(false);
       }
     })();
@@ -97,14 +118,8 @@ export default function MobileMenu() {
     };
   }, [category]);
 
-  const onClickCategory = async (id) => {
+  const onClickCategory = (id) => {
     setCategory(String(id));
-    if (String(id) === 'all') {
-      setLoading(true);
-      const res = await getAppMenus().catch(() => ({ ok: false }));
-      setProducts(res?.ok ? res.data || [] : []);
-      setLoading(false);
-    }
   };
 
   const onCategoryPointerDown = (e) => {
@@ -264,7 +279,7 @@ export default function MobileMenu() {
             <div className="menu__icons">
               <span className="menu__iconWrap menu__iconWrap--cart">
                 <button type="button" className="menu__icon" aria-label="장바구니" onClick={() => navigate('/menu/cart')}>
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" /><line x1="3" y1="6" x2="21" y2="6" /><path d="M16 10a4 4 0 01-8 0" /></svg>
+                  <img src={iconCartSvg} alt="" className="menu__iconImg" width="20" height="20" aria-hidden />
                 </button>
                 {cartCount > 0 && (
                   <span className="menu__cartBadge" aria-label={`장바구니 ${cartCount}개`}>
@@ -332,7 +347,7 @@ export default function MobileMenu() {
           <footer ref={footerRef} className="menu__footer">
             <div className="menu__footerRow">
               <div className="menu__cartTitleWrap" aria-label="장바구니">
-                <span className="menu__cartTitle">주문내역</span>
+                <span className="menu__cartTitle">장바구니</span>
                 <span className="menu__cartTitleCount">{cartCount}</span>
               </div>
               <button type="button" className="menu__reset" onClick={handleReset}>
@@ -341,9 +356,7 @@ export default function MobileMenu() {
               </button>
             </div>
             <div className="menu__cartList" aria-label="장바구니 목록">
-              {cartItems.length === 0 ? (
-                <p className="menu__cartEmpty">담긴 메뉴가 없습니다.</p>
-              ) : (
+              {cartItems.length > 0 && (
                 <div
                   ref={cartScrollRef}
                   className="menu__cartCards"

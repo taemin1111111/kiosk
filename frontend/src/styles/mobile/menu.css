@@ -130,6 +130,12 @@
   aspect-ratio: 34 / 39;
   stroke-width: 2.25;
 }
+.menu__iconImg {
+  display: block;
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
 
 /* 사람 아이콘: 장바구니와 동일 크기 */
 .menu__icon--person svg {
@@ -168,11 +174,12 @@
   border: none;
   border-radius: 0;
   background: rgba(19, 19, 19, 0.06);
-  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 12px;
-  font-weight: 600;
   color: rgba(19, 19, 19, 0.60);
   text-align: center;
+  font-family: Pretendard, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
   line-height: normal;
   cursor: pointer;
   outline: none;
@@ -184,12 +191,16 @@
   outline: none;
 }
 
-/* 활성화된 글자: 1번째 사진 스펙 */
+/* 활성화된 글자 */
 .menu__category--active {
   background: #ffc21c;
   color: #131313;
+  text-align: center;
+  font-family: Pretendard, -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 12px;
+  font-style: normal;
   font-weight: 600;
+  line-height: normal;
 }
 
 /* 음식 나오는 부분만 스크롤 (높이 = 690 - 헤더74 - 카테고리34 - 푸터 ≈ 350~360px 자동) */
@@ -235,11 +246,15 @@
 
 .menu__productBest {
   position: absolute;
-  top: 4px;
-  right: 4px; /* 요청: 오른쪽 위 */
+  top: 0;
+  right: 0;
   left: auto;
-  padding: 2px 6px;
-  background: #F9DB88; /* 요청 색 */
+  display: inline-flex;
+  padding: 4px 10px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  background: #F9DB88;
   border-radius: 4px;
   font-size: 10px;
   font-weight: 700;
@@ -299,15 +314,20 @@
   margin-bottom: 8px;
 }
 
+.menu__footerRow:first-child {
+  margin-bottom: 0;
+}
+
 .menu__footerRow:last-child {
   margin-bottom: 0;
 }
 
-/* 장바구니 글자와 총/주문하기 사이 공간 - 여기에 담긴 물건 목록 표시 (높이 116px) */
+/* 장바구니 글자와 총/주문하기 사이 공간 - 125px 고정, 좌우 네거티브 마진으로 화면 끝까지 */
 .menu__cartList {
-  min-height: 116px;
-  margin: 0 0 8px;
+  height: 125px;
+  margin: 0 -16px 0;
   overflow-y: auto;
+  overflow-x: hidden;
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
@@ -334,15 +354,21 @@
 }
 
 .menu__cartTitle {
-  font-size: 13px;
-  font-weight: 600;
   color: #131313;
+  font-family: Pretendard, sans-serif;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
 }
 
 .menu__cartTitleCount {
-  font-size: 15px;
-  font-weight: 700;
   color: #FFC21C;
+  font-family: Pretendard, sans-serif;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
 }
 
 .menu__reset {
@@ -383,7 +409,7 @@
   display: flex;
   gap: 10px;
   overflow-x: auto;
-  padding-bottom: 4px;
+  padding: 11px 16px 16px;
   -webkit-overflow-scrolling: touch;
   touch-action: pan-x;
   cursor: grab;
@@ -402,8 +428,8 @@
   width: 207px;
   height: 89px;
   border-radius: 8px;
-  background: #F7F7F7;
-  box-shadow: 0 4px 24px 0 rgba(19, 19, 19, 0.20);
+  background: #FFF;
+  box-shadow: 0 4px 16px 0 rgba(19, 19, 19, 0.20);
   overflow: hidden;
   flex: 0 0 auto;
 }
@@ -416,7 +442,7 @@
   height: 72px;
   margin: 8px;
   border-radius: 8px;
-  background: #F7F7F7; /* 요청 색상 */
+  background: #FFF;
   background-size: cover;
   background-position: center;
 }
@@ -496,8 +522,8 @@
   cursor: pointer;
 }
 .menu__cartCardClose:disabled {
-  opacity: 0.35;
   cursor: not-allowed;
+  /* opacity 변경 제거 → 수량 +/- 시 × 버튼 깜빡임 방지 */
 }
 
 /* Figma 836-115468: 장바구니 비었을 때 주문하기 클릭 시 모달 (완전 복제) */

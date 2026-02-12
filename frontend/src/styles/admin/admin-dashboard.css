@@ -274,16 +274,31 @@
   pointer-events: none;
 }
 
-/* 유저 정보 출력: 사진대로 흰 배경, 테두리 없음 */
+/* 테이블 섹션: 위쪽 선만 패딩 무시하고 쭉, 아래 선은 컬럼마다 끊김 */
+.admin-dashboard__tableSection {
+  width: 100%;
+}
+
+.admin-dashboard__tableTopLine {
+  height: 1px;
+  background: #E0E0E0;
+  margin: 0 -30px;
+}
+
+/* 유저 정보 출력: 흰 배경, 회색선이 가로로 쭉 보이게 테이블 너비 고정 */
 .admin-dashboard__tableWrap {
   overflow-x: auto;
   width: 100%;
+  max-width: 100%;
   background: #fff;
 }
 
 .admin-dashboard__table {
   width: 100%;
-  border-collapse: collapse;
+  min-width: 100%;
+  table-layout: fixed;
+  border-collapse: separate;
+  border-spacing: 12px 0;
   font-size: 14px;
   background: #fff;
 }
@@ -301,7 +316,7 @@
   border-bottom: none;
 }
 
-/* 헤더: 위·아래 가로로 쭉 회색선, 위 16px·좌우 33px·아래 16px */
+/* 헤더: 위쪽 선은 .admin-dashboard__tableTopLine으로 처리, 아래만 border */
 .admin-dashboard__tableHeaderRow th {
   padding: 16px 33px 16px;
   font-weight: 700;
@@ -310,7 +325,7 @@
   background: #fff;
   border-left: none;
   border-right: none;
-  border-top: 1px solid #E0E0E0;
+  border-top: none;
   border-bottom: 1px solid #E0E0E0;
 }
 

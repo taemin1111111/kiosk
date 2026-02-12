@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getBoCategories, getBoMenus, getBoMenuDetail, getBoOptionGroups, patchBoMenuBest, patchBoMenuOptionGroups } from '../../api';
 
@@ -22,6 +22,13 @@ export default function AdminMenuList() {
   const [optionGroupToAdd, setOptionGroupToAdd] = useState('');
   const [optionSaving, setOptionSaving] = useState(false);
 
+  const menusByCategoryRef = useRef({});
+  const activeCategoryIdRef = useRef(activeCategoryId);
+  activeCategoryIdRef.current = activeCategoryId;
+  const detailByMenuIdRef = useRef({});
+  const selectedMenuIdRef = useRef(selectedMenuId);
+  selectedMenuIdRef.current = selectedMenuId;
+
   const activeCategory = useMemo(
     () => categories.find((c) => String(c.id) === String(activeCategoryId)),
     [categories, activeCategoryId]
@@ -29,36 +36,65 @@ export default function AdminMenuList() {
 
   const refreshDetail = async (menuId) => {
     if (!menuId) return;
-    setDetailLoading(true);
+    const cache = detailByMenuIdRef.current;
+    const cached = cache[menuId];
+    if (cached) {
+      setDetail(cached);
+      setDetailLoading(false);
+    } else {
+      setDetailLoading(true);
+    }
     const d = await getBoMenuDetail(menuId);
-    if (d?.ok) setDetail(d.data);
-    setDetailLoading(false);
+    const data = d?.ok ? d.data : null;
+    if (data) cache[menuId] = data;
+    if (selectedMenuIdRef.current === menuId) {
+      setDetail(data);
+      setDetailLoading(false);
+    }
   };
 
-  const loadMenus = async (categoryId = '') => {
-    setLoading(true);
-    const res = await getBoMenus({ category_id: categoryId ? Number(categoryId) : undefined });
-    const list = res?.ok ? res.data || [] : [];
-    setMenus(list);
-
+  const applyMenusAndSelectFirst = (list) => {
     const firstId = list?.[0]?.id ?? null;
     setSelectedMenuId(firstId);
     setDetail(null);
-    setLoading(false);
-
     if (firstId) {
       setOptionsOpen(false);
       setOptionGroupToAdd('');
-      await refreshDetail(firstId);
+      refreshDetail(firstId);
+    }
+  };
+
+  const loadMenus = async (categoryId = '') => {
+    const cache = menusByCategoryRef.current;
+    const cached = cache[categoryId];
+
+    if (cached) {
+      setMenus(cached);
+      setLoading(false);
+      applyMenusAndSelectFirst(cached);
+    } else {
+      setLoading(true);
+    }
+
+    const res = await getBoMenus({ category_id: categoryId ? Number(categoryId) : undefined });
+    const list = res?.ok ? res.data || [] : [];
+    cache[categoryId] = list;
+
+    if (activeCategoryIdRef.current === categoryId) {
+      setMenus(list);
+      setLoading(false);
+      applyMenusAndSelectFirst(list);
     }
   };
 
   const selectMenu = async (menuId) => {
     if (!menuId) return;
     setSelectedMenuId(menuId);
-    setDetail(null);
     setOptionsOpen(false);
     setOptionGroupToAdd('');
+    const cached = detailByMenuIdRef.current[menuId];
+    if (cached) setDetail(cached);
+    else setDetail(null);
     await refreshDetail(menuId);
   };
 

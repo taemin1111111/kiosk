@@ -330,16 +330,20 @@
   box-shadow: none;
 }
 
-/* 테이블 (Figma 191-204829 복제) */
+/* 테이블 (Figma 191-204829 복제), 박스 12px 둥글게, 패딩 30 */
 .admin-order-history__tableWrap {
   overflow-x: auto;
   width: 100%;
   background: #FAFAFA;
+  border-radius: 12px;
+  padding: 30px;
+  box-sizing: border-box;
 }
 
 .admin-order-history__table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 12px 0;
   font-size: 14px;
   font-family: Pretendard, -apple-system, BlinkMacSystemFont, sans-serif;
   background: #FAFAFA;
@@ -352,14 +356,19 @@
   color: #131313;
 }
 
+/* 대표 타이틀(헤더) 행: 글자 디자인 + 아래만 회색선 */
 .admin-order-history__tableHeaderRow th {
   padding: 16px 24px;
-  font-weight: 700;
+  color: #505050;
+  font-family: Pretendard, -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 14px;
-  color: #131313;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 140%;
+  letter-spacing: -0.35px;
   background: #FAFAFA;
   border: none;
-  border-bottom: 1px solid #E8E8E8;
+  border-bottom: 1px solid #F1F1F5;
 }
 
 .admin-order-history__tableHeaderTitle {
@@ -369,7 +378,7 @@
 .admin-order-history__table tbody td {
   font-weight: 500;
   background: #FAFAFA;
-  border-bottom: 1px solid #E8E8E8;
+  border-bottom: none;
 }
 
 .admin-order-history__table tbody tr:last-child td {
@@ -483,27 +492,34 @@
   font-size: 14px;
   font-weight: 500;
   font-family: Pretendard, -apple-system, BlinkMacSystemFont, sans-serif;
+  border: 1px solid transparent; /* 상태 박스만 테두리(투명) 유지 */
 }
 
 /* 확인 중 */
 .admin-order-history__status--default {
   background: #FFFFFF;
-  color: #6D6D6D;
-  border: 1px solid #E0E0E0;
+  color: #131313;
+  font-family: Pretendard, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 140%; /* 19.6px */
+  letter-spacing: -0.35px;
+  border-color: transparent;
 }
 
 /* 픽업 완료 */
 .admin-order-history__status--complete {
   background: #FFC21C;
   color: rgba(19, 19, 19, 0.70);
-  border: none;
+  border-color: transparent;
 }
 
 /* 주문 취소됨 */
 .admin-order-history__status--cancelled {
   background: #EFEFEF;
   color: #6D6D6D;
-  border: 1px solid #E0E0E0;
+  border-color: transparent;
 }
 
 /* 페이지네이션 - Figma 191-199190: 박스/배경 없음, 화살표 연한 회색, 선택 페이지 볼드/진한색 */

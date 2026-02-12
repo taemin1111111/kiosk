@@ -112,7 +112,9 @@ export default function AdminDashboard() {
           </svg>
         </span>
       </div>
-      <div className="admin-dashboard__tableWrap">
+      <div className="admin-dashboard__tableSection">
+        <div className="admin-dashboard__tableTopLine" aria-hidden />
+        <div className="admin-dashboard__tableWrap">
         <table className="admin-dashboard__table">
           <thead>
             <tr className="admin-dashboard__tableHeaderRow">
@@ -149,6 +151,7 @@ export default function AdminDashboard() {
             )}
           </tbody>
         </table>
+        </div>
       </div>
       <div className="admin-dashboard__pagination">
         <button
