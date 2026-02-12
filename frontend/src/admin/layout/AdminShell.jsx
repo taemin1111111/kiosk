@@ -5,13 +5,13 @@ import chevronDownSvg from '../../assets/ChevronDown.svg';
 
 const SIDEBAR_MENUS = [
   { label: '유저관리', children: [{ to: '/admin/dashboard', label: '유저 리스트' }] },
-  { label: '주문관리', children: [{ to: '/admin/orders', label: '주문내역' }] },
+  { label: '주문관리', children: [{ to: '/admin/orders', label: '주문 내역' }] },
   { label: '메뉴관리', children: [{ to: '/admin/menus', label: '메뉴 리스트' }, { to: '/admin/menus/register', label: '메뉴 등록하기' }] },
   { label: '약관관리', children: [{ to: '/admin/terms', label: '서비스 이용약관' }, { to: '/admin/terms/privacy', label: '개인정보 처리방침' }] },
 ];
 
 export default function AdminShell() {
-  const [expandedMenus, setExpandedMenus] = useState(['유저관리', '메뉴관리']);
+  const [expandedMenus, setExpandedMenus] = useState(['유저관리', '주문관리', '메뉴관리']);
 
   return (
     <div className="admin-dashboard">

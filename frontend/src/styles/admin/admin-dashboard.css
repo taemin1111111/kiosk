@@ -364,26 +364,38 @@
 }
 
 /* 유저 숫자 넘기는거: 가로 중앙 정렬, 아래 31px 여백 */
+/* 페이징 - Figma 191-199190: 박스 없음, 화살표 연한 회색, 선택 페이지 볼드/진한색, 비선택 연한 회색 */
 .admin-dashboard__pagination {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 4px;
+  gap: 8px;
   width: 100%;
 }
 
 .admin-dashboard__pageArrow,
 .admin-dashboard__pageNum {
-  min-width: 32px;
-  height: 32px;
-  padding: 0 8px;
+  min-width: 28px;
+  height: 28px;
+  padding: 0;
   border: none;
-  border-radius: 4px;
+  border-radius: 0;
   background: transparent;
+  font-family: Pretendard, -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 14px;
   font-weight: 500;
   color: rgba(19, 19, 19, 0.5);
   cursor: pointer;
+}
+
+.admin-dashboard__pageArrow {
+  min-width: 44px;
+  height: 44px;
+  font-size: 24px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .admin-dashboard__pageNum--current {
@@ -391,7 +403,12 @@
   color: #131313;
 }
 
-.admin-dashboard__pageArrow:hover,
+.admin-dashboard__pageArrow:hover:not(:disabled),
 .admin-dashboard__pageNum:hover {
   color: #131313;
+}
+
+.admin-dashboard__pageArrow:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
 }

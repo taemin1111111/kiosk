@@ -271,3 +271,131 @@
   color: rgba(19, 19, 19, 0.6);
   white-space: pre-wrap;
 }
+
+/* 포인트/계정정보 상세: 박스 테두리 제거 */
+.termsDetail--point .termsDetail__box,
+.termsDetail--account .termsDetail__box {
+  border: none;
+}
+
+/* 포인트 상세 (termsDetail 레이아웃 재사용) */
+.pointDetail {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.pointDetail__row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(19, 19, 19, 0.08);
+}
+
+.pointDetail__row:last-child {
+  border-bottom: none;
+}
+
+.pointDetail__icon {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  object-fit: contain;
+}
+
+.pointDetail__label {
+  flex: 1;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  color: #131313;
+}
+
+.pointDetail__amount {
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: #131313;
+}
+
+/* 계정정보 상세 (termsDetail 레이아웃 재사용) */
+.accountDetail {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.accountDetail__row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(19, 19, 19, 0.08);
+}
+
+.accountDetail__row:last-child {
+  border-bottom: none;
+}
+
+.accountDetail__row--editable {
+  align-items: center;
+}
+
+.accountDetail__label {
+  flex: 0 0 72px;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(19, 19, 19, 0.7);
+}
+
+.accountDetail__value {
+  flex: 1;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+  color: #131313;
+}
+
+.accountDetail__nameWrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.accountDetail__input {
+  flex: 1;
+  min-width: 0;
+  padding: 8px 10px;
+  border: 1px solid rgba(19, 19, 19, 0.2);
+  border-radius: 4px;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  color: #131313;
+  box-sizing: border-box;
+}
+
+.accountDetail__input::placeholder {
+  color: rgba(19, 19, 19, 0.4);
+}
+
+.accountDetail__btn {
+  flex-shrink: 0;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 4px;
+  background: #131313;
+  color: #fff;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.accountDetail__btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

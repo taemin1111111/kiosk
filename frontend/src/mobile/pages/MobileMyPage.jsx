@@ -12,9 +12,9 @@ import iconSettings from '../../assets/settings.svg';
 const MENU_ITEMS = [
   { key: 'order-history', label: '주문내역', path: '/menu/order-history', icon: iconOrderHistory },
   { key: 'cart', label: '장바구니', path: '/menu/cart', icon: iconCart },
-  { key: 'point', label: '포인트', path: null, icon: iconStar },
+  { key: 'point', label: '포인트', path: '/menu/points', icon: iconStar },
   { key: 'terms', label: '약관', path: '/menu/terms', icon: iconStar },
-  { key: 'account', label: '계정정보', path: null, icon: iconAccount },
+  { key: 'account', label: '계정정보', path: '/menu/account', icon: iconAccount },
   { key: 'settings', label: '설정', path: null, icon: iconSettings },
 ];
 

@@ -100,7 +100,7 @@ export async function postAppCheckout(req, res) {
     // 1) orders 생성
     const [orderResult] = await conn.execute(
       `INSERT INTO orders (order_no, member_id, status, total_amount, paid_at, eat_type, store_point_used, toss_point_used)
-       VALUES (?, ?, 'PAID', ?, NOW(), ?, ?, ?)`,
+       VALUES (?, ?, 'PENDING', ?, NOW(), ?, ?, ?)`,
       [orderNo, memberId, totalAmount, eatType, storePointUsed, tossPointUsed]
     );
     const orderId = Number(orderResult.insertId);
@@ -317,5 +317,268 @@ export async function getAppOrders(req, res) {
   } catch (err) {
     console.error('getAppOrders:', err);
     return res.status(500).json({ ok: false, message: '주문내역 조회 실패' });
+  }
+}
+
+/**
+ * GET /bo/orders - 어드민 주문 내역
+ * - 전체: dateFrom, dateTo, status, page, limit
+ * - 회원 한 명: memberId, limit (날짜 없어도 됨)
+ * 스키마: orders(id, order_no, member_id, status, total_amount, created_at, paid_at, eat_type...), order_items, payments, members
+ */
+export async function getBoOrders(req, res) {
+  const status = (req.query.status || '').trim().toUpperCase();
+  const dateFrom = (req.query.dateFrom || '').trim();
+  const dateTo = (req.query.dateTo || '').trim();
+  const memberId = req.query.memberId != null && req.query.memberId !== '' ? Number(req.query.memberId) : null;
+  const page = Math.max(1, Number(req.query.page) || 1);
+  const limit = Math.min(500, Math.max(1, Number(req.query.limit) || 10));
+  const offset = (page - 1) * limit;
+
+  try {
+    const conditions = [];
+    const params = [];
+    if (status && status !== 'ALL') {
+      conditions.push('o.status = ?');
+      params.push(status);
+    }
+    if (dateFrom) {
+      conditions.push('o.created_at >= ?');
+      params.push(`${dateFrom} 00:00:00`);
+    }
+    if (dateTo) {
+      conditions.push('o.created_at <= ?');
+      params.push(`${dateTo} 23:59:59`);
+    }
+    if (memberId != null && memberId > 0) {
+      conditions.push('o.member_id = ?');
+      params.push(memberId);
+    }
+    const whereClause = conditions.length > 0 ? conditions.join(' AND ') : '1=1';
+
+    const [countRows] = await pool.execute(
+      `SELECT COUNT(*) AS cnt FROM orders o WHERE ${whereClause}`,
+      params
+    );
+    const totalCount = Number(countRows?.[0]?.cnt ?? 0);
+
+    const sql = `SELECT
+        o.id,
+        o.order_no,
+        o.status,
+        o.total_amount,
+        o.created_at,
+        o.paid_at,
+        o.eat_type,
+        m.name AS member_name,
+        first_oi.menu_name_ko AS first_menu_name,
+        first_oi.qty AS first_qty,
+        (SELECT COALESCE(SUM(oi2.qty), 0) FROM order_items oi2 WHERE oi2.order_id = o.id) AS item_count,
+        (SELECT p.method FROM payments p WHERE p.order_id = o.id ORDER BY p.id DESC LIMIT 1) AS payment_method
+      FROM orders o
+      LEFT JOIN members m ON m.id = o.member_id
+      LEFT JOIN (
+        SELECT oi.order_id, oi.menu_name_ko, oi.qty
+        FROM order_items oi
+        INNER JOIN (SELECT order_id, MIN(id) AS min_id FROM order_items GROUP BY order_id) sub
+          ON oi.order_id = sub.order_id AND oi.id = sub.min_id
+      ) first_oi ON o.id = first_oi.order_id
+      WHERE ${whereClause}
+      ORDER BY o.created_at DESC, o.id DESC
+      LIMIT ${Number(limit)} OFFSET ${Number(offset)}`;
+
+    const [orders] = await pool.execute(sql, params);
+
+    const list = (orders || []).map((row) => {
+      const itemCount = Number(row.item_count) || 0;
+      const firstName = row.first_menu_name || '';
+      const productText = itemCount > 1 ? `${firstName} 외` : firstName;
+      return {
+        id: row.id,
+        order_no: row.order_no,
+        status: row.status,
+        total_amount: Number(row.total_amount) || 0,
+        created_at: row.paid_at || row.created_at,
+        eat_type: row.eat_type || null,
+        member_name: row.member_name || '',
+        product_text: productText,
+        payment_method: row.payment_method || null,
+      };
+    });
+
+    return res.json({
+      ok: true,
+      data: { orders: list, total: totalCount, page, limit },
+    });
+  } catch (err) {
+    console.error('getBoOrders:', err);
+    return res.status(500).json({
+      ok: false,
+      message: '주문내역 조회 실패',
+      detail: err?.message || String(err),
+    });
+  }
+}
+
+/**
+ * GET /bo/orders/:id - 어드민 주문 상세 (order + order_items + order_item_options + payments + member)
+ */
+export async function getBoOrderDetail(req, res) {
+  const orderId = Number(req.params.id);
+  if (!orderId) return res.status(400).json({ ok: false, message: '주문 ID가 필요합니다.' });
+
+  try {
+    const [orderRows] = await pool.execute(
+      `SELECT o.id, o.order_no, o.status, o.total_amount, o.created_at, o.paid_at,
+        o.eat_type, m.id AS member_id, m.name AS member_name
+       FROM orders o
+       LEFT JOIN members m ON m.id = o.member_id
+       WHERE o.id = ? LIMIT 1`,
+      [orderId]
+    );
+    const order = orderRows?.[0];
+    if (!order) return res.status(404).json({ ok: false, message: '주문을 찾을 수 없습니다.' });
+
+    const [itemRows] = await pool.execute(
+      `SELECT oi.id, oi.menu_name_ko, oi.qty, oi.base_price, oi.option_price, oi.unit_price, oi.total_price
+       FROM order_items oi WHERE oi.order_id = ? ORDER BY oi.id ASC`,
+      [orderId]
+    );
+
+    const itemIds = (itemRows || []).map((r) => r.id);
+    let optionRows = [];
+    if (itemIds.length > 0) {
+      const placeholders = itemIds.map(() => '?').join(',');
+      const [opt] = await pool.execute(
+        `SELECT order_item_id, group_name, item_name, option_qty, extra_price
+         FROM order_item_options WHERE order_item_id IN (${placeholders}) ORDER BY order_item_id, id`,
+        itemIds
+      );
+      optionRows = opt || [];
+    }
+
+    const [paymentRows] = await pool.execute(
+      `SELECT method, amount, status FROM payments WHERE order_id = ? ORDER BY id DESC LIMIT 1`,
+      [orderId]
+    );
+    const payment = paymentRows?.[0] || null;
+
+    const items = (itemRows || []).map((oi) => ({
+      id: oi.id,
+      menu_name_ko: oi.menu_name_ko,
+      qty: oi.qty,
+      base_price: oi.base_price,
+      option_price: oi.option_price,
+      unit_price: oi.unit_price,
+      total_price: oi.total_price,
+      options: optionRows
+        .filter((op) => op.order_item_id === oi.id)
+        .map((op) => ({
+          group_name: op.group_name,
+          item_name: op.item_name,
+          option_qty: op.option_qty,
+          extra_price: op.extra_price,
+        })),
+    }));
+
+    const firstItem = items[0];
+    const itemCount = items.reduce((s, i) => s + i.qty, 0);
+    const productText =
+      itemCount > 1 && firstItem
+        ? `${firstItem.menu_name_ko} 외 ${itemCount - 1}`
+        : firstItem
+          ? `${firstItem.menu_name_ko} ${firstItem.qty}`
+          : '-';
+
+    return res.json({
+      ok: true,
+      data: {
+        id: order.id,
+        order_no: order.order_no,
+        status: order.status,
+        total_amount: Number(order.total_amount) || 0,
+        created_at: order.created_at,
+        paid_at: order.paid_at,
+        eat_type: order.eat_type || null,
+        member_id: order.member_id,
+        member_name: order.member_name || '',
+        product_text: productText,
+        items,
+        payment: payment
+          ? {
+              method: payment.method,
+              amount: Number(payment.amount) || 0,
+              status: payment.status,
+            }
+          : null,
+      },
+    });
+  } catch (err) {
+    console.error('getBoOrderDetail:', err);
+    return res.status(500).json({ ok: false, message: '주문 상세 조회 실패' });
+  }
+}
+
+/**
+ * PATCH /bo/orders/:id/confirm - 확인 중 → 픽업 완료 (status -> PAID)
+ */
+export async function patchBoOrderConfirm(req, res) {
+  const orderId = Number(req.params.id);
+  if (!orderId) return res.status(400).json({ ok: false, message: '주문 ID가 필요합니다.' });
+
+  try {
+    const [result] = await pool.execute(
+      `UPDATE orders SET status = 'PAID' WHERE id = ? AND status = 'PENDING'`,
+      [orderId]
+    );
+    if (result.affectedRows === 0) {
+      return res.status(400).json({ ok: false, message: '확인 중인 주문만 픽업 완료로 변경할 수 있습니다.' });
+    }
+    return res.json({ ok: true, message: '픽업 완료로 변경되었습니다.' });
+  } catch (err) {
+    console.error('patchBoOrderConfirm:', err);
+    return res.status(500).json({ ok: false, message: '상태 변경 실패' });
+  }
+}
+
+/**
+ * PATCH /bo/orders/:id/cancel - 주문 취소 (status -> CANCELLED)
+ * 포인트 역처리: 사용했던 포인트 반환 + 결제 시 적립된 매장 포인트(10%) 차감
+ */
+export async function patchBoOrderCancel(req, res) {
+  const orderId = Number(req.params.id);
+  if (!orderId) return res.status(400).json({ ok: false, message: '주문 ID가 필요합니다.' });
+
+  try {
+    const [orderRows] = await pool.execute(
+      `SELECT member_id, total_amount, store_point_used, toss_point_used FROM orders WHERE id = ? AND status IN ('PENDING','PAID') LIMIT 1`,
+      [orderId]
+    );
+    const order = orderRows?.[0];
+    if (!order) {
+      return res.status(400).json({ ok: false, message: '취소할 수 없는 주문입니다.' });
+    }
+
+    const memberId = Number(order.member_id);
+    const totalAmount = Number(order.total_amount) || 0;
+    const storePointUsed = Number(order.store_point_used) || 0;
+    const tossPointUsed = Number(order.toss_point_used) || 0;
+    const payAmount = Math.max(0, totalAmount - storePointUsed - tossPointUsed);
+    const pointAccumulation = Math.floor(payAmount * 0.1);
+
+    await pool.execute(
+      `UPDATE orders SET status = 'CANCELLED' WHERE id = ? AND status IN ('PENDING','PAID')`,
+      [orderId]
+    );
+
+    await pool.execute(
+      `UPDATE members SET store_point_balance = store_point_balance + ? - ?, toss_point_balance = toss_point_balance + ? WHERE id = ?`,
+      [storePointUsed, pointAccumulation, tossPointUsed, memberId]
+    );
+
+    return res.json({ ok: true, message: '주문이 취소되었습니다.' });
+  } catch (err) {
+    console.error('patchBoOrderCancel:', err);
+    return res.status(500).json({ ok: false, message: '주문 취소 실패' });
   }
 }

@@ -6,6 +6,7 @@ import crypto from 'crypto';
 import { fileURLToPath } from 'url';
 import { auth } from '../middleware/auth.js';
 import { getCategories, getOptionGroups, getOptionItems, getNutritionCategories, getUsers, getServiceTerms, createServiceTerms, getPrivacyPolicy, createPrivacyPolicy, getMenus, getMenuDetail, updateMenu, updateMenuBest, updateMenuOptionGroups, createMenu, uploadMenuImage } from '../controllers/boController.js';
+import { getBoOrders, getBoOrderDetail, patchBoOrderConfirm, patchBoOrderCancel } from '../controllers/orderController.js';
 
 const router = express.Router();
 
@@ -54,6 +55,10 @@ router.get('/privacy-policy', getPrivacyPolicy);
 router.post('/privacy-policy', createPrivacyPolicy);
 router.get('/option-groups', getOptionGroups);
 router.get('/option-groups/:id/items', getOptionItems);
+router.get('/orders', getBoOrders);
+router.get('/orders/:id', getBoOrderDetail);
+router.patch('/orders/:id/confirm', patchBoOrderConfirm);
+router.patch('/orders/:id/cancel', patchBoOrderCancel);
 router.get('/nutrition-categories', getNutritionCategories);
 router.get('/menus', getMenus);
 router.get('/menus/:id', getMenuDetail);

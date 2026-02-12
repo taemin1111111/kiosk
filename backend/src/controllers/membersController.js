@@ -133,6 +133,60 @@ export async function login(req, res) {
   }
 }
 
+/** GET /app/me - 로그인 회원 본인 정보 (id, username, name, email) */
+export async function getAppMe(req, res) {
+  const memberId = Number(req.user?.userId) || 0;
+  if (!memberId) return res.status(401).json({ ok: false, message: '로그인이 필요합니다.' });
+  try {
+    const [rows] = await pool.execute(
+      'SELECT id, username, name, email FROM members WHERE id = ? LIMIT 1',
+      [memberId]
+    );
+    if (rows.length === 0) {
+      return res.status(404).json({ ok: false, message: '회원 정보를 찾을 수 없습니다.' });
+    }
+    const m = rows[0];
+    return res.json({
+      ok: true,
+      data: {
+        id: m.id,
+        username: m.username || '',
+        name: m.name || '',
+        email: m.email || '',
+      },
+    });
+  } catch (err) {
+    console.error('getAppMe:', err);
+    return res.status(500).json({ ok: false, message: '일시적인 오류가 발생했습니다.' });
+  }
+}
+
+/** PATCH /app/me - 로그인 회원 이름 변경 */
+export async function patchAppMe(req, res) {
+  const memberId = Number(req.user?.userId) || 0;
+  if (!memberId) return res.status(401).json({ ok: false, message: '로그인이 필요합니다.' });
+  const name = typeof req.body?.name === 'string' ? req.body.name.trim() : '';
+  if (!name) {
+    return res.status(400).json({ ok: false, message: '이름을 입력해주세요.' });
+  }
+  if (name.length > 50) {
+    return res.status(400).json({ ok: false, message: '이름은 50자 이내로 입력해주세요.' });
+  }
+  try {
+    const [result] = await pool.execute(
+      'UPDATE members SET name = ? WHERE id = ?',
+      [name, memberId]
+    );
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ ok: false, message: '회원 정보를 찾을 수 없습니다.' });
+    }
+    return res.json({ ok: true, message: '이름이 변경되었습니다.', data: { name } });
+  } catch (err) {
+    console.error('patchAppMe:', err);
+    return res.status(500).json({ ok: false, message: '일시적인 오류가 발생했습니다.' });
+  }
+}
+
 /** 비밀번호 변경: username + 새 비밀번호로 DB 업데이트 */
 export async function changePassword(req, res) {
   try {

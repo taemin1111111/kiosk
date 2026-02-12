@@ -152,6 +152,22 @@ export async function getAppPrivacyPolicy() {
   return parseResJson(res);
 }
 
+/** GET /app/me - 로그인 회원 본인 정보 (id, username, name, email) */
+export async function getAppMe() {
+  const res = await fetch(`${API_BASE}/app/me`, { headers: getAuthHeaders() });
+  return parseResJson(res);
+}
+
+/** PATCH /app/me - 이름 변경. payload: { name: string } */
+export async function patchAppMe(payload) {
+  const res = await fetch(`${API_BASE}/app/me`, {
+    method: 'PATCH',
+    headers: getAuthHeaders(),
+    body: JSON.stringify(payload),
+  });
+  return parseResJson(res);
+}
+
 /** GET /app/carts/active - ACTIVE 장바구니 조회 */
 export async function getAppActiveCart() {
   const res = await fetch(`${API_BASE}/app/carts/active`, { headers: getAuthHeaders() });
@@ -272,6 +288,45 @@ export async function getBoMenuDetail(menuId) {
 /** GET /bo/users - 유저 리스트 (role=USER) */
 export async function getBoUsers() {
   const res = await fetch(`${API_BASE}/bo/users`, { headers: getAuthHeaders() });
+  return parseResJson(res);
+}
+
+/** GET /bo/orders/:id - 어드민 주문 상세 */
+export async function getBoOrderDetail(orderId) {
+  const res = await fetch(`${API_BASE}/bo/orders/${Number(orderId)}`, { headers: getAuthHeaders() });
+  return parseResJson(res);
+}
+
+/** PATCH /bo/orders/:id/cancel - 주문 취소 */
+/** PATCH /bo/orders/:id/confirm - 확인 중 → 픽업 완료 */
+export async function patchBoOrderConfirm(orderId) {
+  const res = await fetch(`${API_BASE}/bo/orders/${Number(orderId)}/confirm`, {
+    method: 'PATCH',
+    headers: getAuthHeaders(),
+  });
+  return parseResJson(res);
+}
+
+export async function patchBoOrderCancel(orderId) {
+  const res = await fetch(`${API_BASE}/bo/orders/${Number(orderId)}/cancel`, {
+    method: 'PATCH',
+    headers: getAuthHeaders(),
+  });
+  return parseResJson(res);
+}
+
+/** GET /bo/orders - 어드민 주문 내역 (전체 주문 목록 또는 memberId별) */
+export async function getBoOrders(params = {}) {
+  const q = new URLSearchParams();
+  if (params.status != null && params.status !== '') q.set('status', params.status);
+  if (params.dateFrom) q.set('dateFrom', params.dateFrom);
+  if (params.dateTo) q.set('dateTo', params.dateTo);
+  if (params.memberId != null && params.memberId !== '') q.set('memberId', String(params.memberId));
+  if (params.page) q.set('page', String(params.page));
+  if (params.limit) q.set('limit', String(params.limit));
+  const query = q.toString();
+  const url = query ? `${API_BASE}/bo/orders?${query}` : `${API_BASE}/bo/orders`;
+  const res = await fetch(url, { headers: getAuthHeaders() });
   return parseResJson(res);
 }
 

@@ -1,0 +1,734 @@
+/* 어드민 주문 내역 - Figma 189-194650 완전 복제 */
+
+.admin-order-history__breadcrumb {
+  margin: 0;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(19, 19, 19, 0.5);
+}
+
+.admin-order-history__title {
+  margin: 0;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: #131313;
+}
+
+.admin-order-history__summary {
+  margin: 0;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 140%;
+  letter-spacing: -0.4px;
+  color: #131313;
+}
+
+.admin-order-history__summaryNum {
+  margin-left: 0.15em;
+  font-size: 26px;
+  font-weight: 600;
+  letter-spacing: -0.65px;
+  color: #FFC21C;
+}
+
+/* 필터: 기간 선택 + 주문상태 드롭다운 */
+.admin-order-history__filters {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  width: 100%;
+  margin-top: 8px;
+}
+
+/* 기간 선택 - Figma 191-205005 동일 디자인: 흰색 박스, 왼쪽 "기간을 선택해주세요", 세로 구분선, 오른쪽 "기간설정" */
+.admin-order-history__dateWrap {
+  position: relative;
+  display: flex;
+  width: 313px;
+  height: 54px;
+  padding: 10px 16px;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #E0E0E0;
+  border-radius: 8px;
+  background: #FFFFFF;
+  overflow: visible;
+}
+
+.admin-order-history__dateTrigger {
+  display: flex;
+  align-items: center;
+  padding: 0;
+  border: none;
+  background: transparent;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(19, 19, 19, 0.80);
+  cursor: pointer;
+  text-align: left;
+}
+
+.admin-order-history__dateRight {
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+
+.admin-order-history__dateTrigger:hover {
+  color: rgba(19, 19, 19, 0.8);
+}
+
+.admin-order-history__dateTriggerLabel {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: rgba(19, 19, 19, 0.80);
+}
+
+.admin-order-history__dateDivider {
+  width: 1px;
+  height: 15px;
+  align-self: center;
+  background: rgba(19, 19, 19, 0.60);
+  flex-shrink: 0;
+}
+
+.admin-order-history__dateBtn {
+  padding: 0 0 0 8px;
+  border: none;
+  background: transparent;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: rgba(19, 19, 19, 0.6);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.admin-order-history__dateBtn:hover {
+  background: rgba(19, 19, 19, 0.04);
+  color: rgba(19, 19, 19, 0.8);
+}
+
+/* 기간 설정 드롭다운 - Figma 189-195168 */
+.admin-order-history__datePopoverBackdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+}
+
+.admin-order-history__dateDropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  z-index: 11;
+  width: 313px;
+  padding: 8px 0;
+  background: #FFFFFF;
+  border: 1px solid #E0E0E0;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-order-history__dateDropdownItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px 16px;
+  border: none;
+  border-bottom: 1px solid #F5F5F7;
+  background: transparent;
+  font-family: Pretendard, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  color: rgba(19, 19, 19, 0.80);
+  text-align: left;
+  cursor: pointer;
+  gap: 12px;
+}
+
+.admin-order-history__dateDropdownItem:last-child {
+  border-bottom: none;
+}
+
+.admin-order-history__dateDropdownItem:hover {
+  background: rgba(19, 19, 19, 0.04);
+}
+
+.admin-order-history__dateDropdownLabel {
+  flex: 1;
+  min-width: 0;
+  font-family: Pretendard, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  color: rgba(19, 19, 19, 0.80);
+}
+
+.admin-order-history__dateDropdownRange {
+  font-family: Pretendard, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: normal;
+  color: rgba(19, 19, 19, 0.80);
+  margin-left: 4px;
+}
+
+.admin-order-history__dateDropdownRadio {
+  width: 16px;
+  height: 16px;
+  border: none;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: #F5F5F7;
+}
+
+.admin-order-history__dateDropdownRadio--selected {
+  background: #FFC21C;
+  border: none;
+  box-shadow: none;
+}
+
+/* 주문상태 박스 - Figma 189-195232, 드롭다운은 기간설정과 동일 */
+.admin-order-history__statusSelectWrap {
+  position: relative;
+  display: flex;
+  width: 210px;
+  height: 54px;
+  padding: 10px 16px;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #E0E0E0;
+  border-radius: 8px;
+  background: #FFFFFF;
+}
+
+.admin-order-history__statusTrigger {
+  flex: 1;
+  min-width: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  font-family: Pretendard, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(19, 19, 19, 0.80);
+  text-align: left;
+  cursor: pointer;
+}
+
+.admin-order-history__statusSelectRight {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.admin-order-history__statusSelectDivider {
+  width: 1px;
+  height: 15px;
+  background: rgba(19, 19, 19, 0.60);
+  flex-shrink: 0;
+}
+
+.admin-order-history__statusSelectArrow {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%23131313' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' opacity='0.8'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat center;
+}
+
+/* 주문상태 드롭다운 - 기간설정 드롭다운과 동일 디자인 */
+.admin-order-history__statusDropdownBackdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+}
+
+.admin-order-history__statusDropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  z-index: 11;
+  width: 210px;
+  padding: 8px 0;
+  background: #FFFFFF;
+  border: 1px solid #E0E0E0;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-order-history__statusDropdownItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px 16px;
+  border: none;
+  border-bottom: 1px solid #F5F5F7;
+  background: transparent;
+  font-family: Pretendard, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  color: rgba(19, 19, 19, 0.80);
+  text-align: left;
+  cursor: pointer;
+  gap: 12px;
+}
+
+.admin-order-history__statusDropdownItem:last-child {
+  border-bottom: none;
+}
+
+.admin-order-history__statusDropdownItem:hover {
+  background: rgba(19, 19, 19, 0.04);
+}
+
+.admin-order-history__statusDropdownLabel {
+  flex: 1;
+  min-width: 0;
+  font-family: Pretendard, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  color: rgba(19, 19, 19, 0.80);
+}
+
+.admin-order-history__statusDropdownRadio {
+  width: 16px;
+  height: 16px;
+  border: none;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: #F5F5F7;
+}
+
+.admin-order-history__statusDropdownRadio--selected {
+  background: #FFC21C;
+  border: none;
+  box-shadow: none;
+}
+
+/* 테이블 (Figma 191-204829 복제) */
+.admin-order-history__tableWrap {
+  overflow-x: auto;
+  width: 100%;
+  background: #FAFAFA;
+}
+
+.admin-order-history__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  font-family: Pretendard, -apple-system, BlinkMacSystemFont, sans-serif;
+  background: #FAFAFA;
+}
+
+.admin-order-history__table th,
+.admin-order-history__table td {
+  padding: 16px 24px;
+  text-align: center;
+  color: #131313;
+}
+
+.admin-order-history__tableHeaderRow th {
+  padding: 16px 24px;
+  font-weight: 700;
+  font-size: 14px;
+  color: #131313;
+  background: #FAFAFA;
+  border: none;
+  border-bottom: 1px solid #E8E8E8;
+}
+
+.admin-order-history__tableHeaderTitle {
+  display: inline-block;
+}
+
+.admin-order-history__table tbody td {
+  font-weight: 500;
+  background: #FAFAFA;
+  border-bottom: 1px solid #E8E8E8;
+}
+
+.admin-order-history__table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.admin-order-history__table tbody tr:hover td {
+  background: #F5F5F5;
+}
+
+.admin-order-history__loadingCell,
+.admin-order-history__emptyCell {
+  padding: 24px 16px !important;
+  color: rgba(19, 19, 19, 0.6);
+  font-weight: 500;
+  border-bottom: none !important;
+}
+
+/* 상세 확인 버튼 */
+.admin-order-history__btnDetail {
+  padding: 6px 12px;
+  border: 1px solid #E0E0E0;
+  border-radius: 6px;
+  background: #FFFFFF;
+  font-family: Pretendard, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #6D6D6D;
+  cursor: pointer;
+}
+
+.admin-order-history__btnDetail:hover {
+  background: #FAFAFA;
+}
+
+/* 확인 중 상태 클릭 가능 */
+.admin-order-history__status--clickable {
+  cursor: pointer;
+  border: none;
+  font: inherit;
+}
+
+.admin-order-history__status--clickable:hover {
+  opacity: 0.9;
+}
+
+/* 픽업 완료 변경 확인 모달 */
+.admin-order-history__confirmModal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 320px;
+  padding: 24px;
+  background: #FFFFFF;
+  border-radius: 8px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
+  z-index: 1001;
+}
+
+.admin-order-history__confirmModalText {
+  margin: 0 0 20px;
+  font-family: Pretendard, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  color: #131313;
+  text-align: center;
+}
+
+.admin-order-history__confirmModalActions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.admin-order-history__confirmModalBtn {
+  min-width: 80px;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-family: Pretendard, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.admin-order-history__confirmModalBtn--yes {
+  border: none;
+  background: #FFC21C;
+  color: rgba(19, 19, 19, 0.85);
+}
+
+.admin-order-history__confirmModalBtn--yes:hover {
+  background: #e6ae19;
+}
+
+.admin-order-history__confirmModalBtn--no {
+  border: 1px solid #E0E0E0;
+  background: #FFFFFF;
+  color: #131313;
+}
+
+.admin-order-history__confirmModalBtn--no:hover {
+  background: #FAFAFA;
+}
+
+/* 상태 뱃지 */
+.admin-order-history__status {
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: Pretendard, -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* 확인 중 */
+.admin-order-history__status--default {
+  background: #FFFFFF;
+  color: #6D6D6D;
+  border: 1px solid #E0E0E0;
+}
+
+/* 픽업 완료 */
+.admin-order-history__status--complete {
+  background: #FFC21C;
+  color: rgba(19, 19, 19, 0.70);
+  border: none;
+}
+
+/* 주문 취소됨 */
+.admin-order-history__status--cancelled {
+  background: #EFEFEF;
+  color: #6D6D6D;
+  border: 1px solid #E0E0E0;
+}
+
+/* 페이지네이션 - Figma 191-199190: 박스/배경 없음, 화살표 연한 회색, 선택 페이지 볼드/진한색 */
+.admin-order-history__pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.admin-order-history__pageArrow,
+.admin-order-history__pageNum {
+  min-width: 28px;
+  height: 28px;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  font-family: Pretendard, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(19, 19, 19, 0.5);
+  cursor: pointer;
+}
+
+.admin-order-history__pageArrow {
+  min-width: 44px;
+  height: 44px;
+  font-size: 24px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.admin-order-history__pageArrow:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.admin-order-history__pageNum--current {
+  font-weight: 700;
+  color: #131313;
+}
+
+.admin-order-history__pageArrow:hover:not(:disabled),
+.admin-order-history__pageNum:hover {
+  color: #131313;
+}
+
+/* ========== 주문 상세 모달 - 사진 완전 복제 ========== */
+.admin-order-detail__backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+.admin-order-detail__modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 840px;
+  height: 747px;
+  background: #FFFFFF;
+  border-radius: 8px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 유저별 주문 내역 모달: 높이 자동, 본문 스크롤 */
+.admin-order-detail__modal--userOrders {
+  height: auto;
+  max-height: 80vh;
+}
+
+.admin-order-detail__userOrdersBody {
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+  padding: 0 24px 24px;
+}
+
+.admin-order-detail__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 20px 24px;
+}
+
+.admin-order-detail__title {
+  margin: 0;
+  color: #131313;
+  font-family: Pretendard, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 140%;
+  letter-spacing: -0.35px;
+}
+
+.admin-order-detail__close {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.admin-order-detail__close img {
+  display: block;
+  width: 24px;
+  height: 24px;
+}
+
+.admin-order-detail__close:hover {
+  opacity: 0.7;
+}
+
+.admin-order-detail__loading,
+.admin-order-detail__error {
+  padding: 40px 24px;
+  text-align: center;
+  font-size: 14px;
+  color: rgba(19, 19, 19, 0.6);
+}
+
+.admin-order-detail__sectionWrap {
+  margin: 0 24px 24px;
+}
+
+.admin-order-detail__sectionWrap:last-of-type {
+  margin-bottom: 24px;
+}
+
+.admin-order-detail__sectionTitle {
+  margin: 0 0 8px;
+  color: #131313;
+  font-family: Pretendard, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 140%;
+  letter-spacing: -0.35px;
+}
+
+.admin-order-detail__sectionBox {
+  padding: 20px 24px 24px;
+  background: #FAFAFA;
+  border-radius: 8px;
+}
+
+.admin-order-detail__list {
+  margin: 0;
+}
+
+.admin-order-detail__row {
+  margin-bottom: 16px;
+}
+
+.admin-order-detail__row:last-child {
+  margin-bottom: 0;
+}
+
+.admin-order-detail__row dt {
+  margin: 0 0 4px;
+  color: #131313;
+  font-family: Pretendard, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 140%;
+  letter-spacing: -0.35px;
+}
+
+.admin-order-detail__row dd {
+  margin: 0;
+  padding-left: 0;
+  color: #131313;
+  font-family: Pretendard, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 140%;
+  letter-spacing: -0.35px;
+}
+
+.admin-order-detail__amount {
+  color: #131313;
+  font-family: Pretendard, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-style: normal;
+  line-height: normal;
+}
+
+.admin-order-detail__amountNum {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.admin-order-detail__amountUnit {
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.admin-order-detail__cancelBtn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 170px;
+  height: 48px;
+  margin: 0 auto 24px;
+  padding: 0;
+  border: none;
+  border-radius: 6px;
+  background: #B4000A;
+  font-family: Pretendard, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: #FFFFFF;
+  cursor: pointer;
+}
+
+.admin-order-detail__cancelBtn:hover {
+  background: #9A0009;
+}

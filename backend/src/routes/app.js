@@ -2,6 +2,7 @@ import express from 'express';
 import { getAppCategories, getAppMenus, getAppMenuDetail, getAppPrivacyPolicy, getAppServiceTerms } from '../controllers/appController.js';
 import { auth } from '../middleware/auth.js';
 import { getAppActiveCart, postAppAddCartItem, deleteAppClearActiveCart, patchAppUpdateCartItemQty, deleteAppRemoveCartItem } from '../controllers/cartController.js';
+import { getAppMe, patchAppMe } from '../controllers/membersController.js';
 import { postAppCheckout, getAppOrders } from '../controllers/orderController.js';
 
 const router = express.Router();
@@ -13,6 +14,10 @@ router.get('/menus/:id', getAppMenuDetail);
 // 약관/정책 (최신 1건)
 router.get('/service-terms', getAppServiceTerms);
 router.get('/privacy-policy', getAppPrivacyPolicy);
+
+// 내 정보 (로그인 필요)
+router.get('/me', auth, getAppMe);
+router.patch('/me', auth, patchAppMe);
 
 // 장바구니(로그인 필요)
 router.get('/carts/active', auth, getAppActiveCart);
