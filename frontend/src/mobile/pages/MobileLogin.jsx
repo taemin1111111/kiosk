@@ -51,7 +51,10 @@ export default function MobileLogin() {
             </p>
           )}
 
-          <div className="login01__fields" data-node-id="834:38364">
+          <div
+            className={`login01__fields ${idValue.length > 0 ? 'login01__fields--id-filled' : ''} ${passwordValue.length > 0 ? 'login01__fields--password-filled' : ''}`}
+            data-node-id="834:38364"
+          >
             {(activeField === 'id' || idValue.length > 0 || activeField === 'password') && (
               <p className="login01__caption login01__caption--id" data-node-id="834:38384">아이디</p>
             )}
@@ -67,7 +70,8 @@ export default function MobileLogin() {
               onBlur={() => setActiveField(null)}
               autoComplete="username"
             />
-            <img className="login01__line328 login01__line328--id" alt="" src={imgLineIdle} data-node-id="834:38368" />
+            <img className="login01__line328 login01__line328--id login01__line328--idle" alt="" src={imgLineIdle} data-node-id="834:38368" />
+            <img className="login01__line328 login01__line328--id login01__line328--active" alt="" src={imgPasswordLineActive} data-node-id="834:38368" />
 
             {(activeField === 'password' || passwordValue.length > 0) && (
               <p className="login01__caption login01__caption--password" data-node-id="834:38419">비밀번호</p>
@@ -85,11 +89,8 @@ export default function MobileLogin() {
               onBlur={() => setActiveField(null)}
               autoComplete="current-password"
             />
-            {activeField === 'password' || passwordValue.length > 0 ? (
-              <img className="login01__line328 login01__line328--password" alt="" src={imgPasswordLineActive} data-node-id="834:38436" />
-            ) : (
-              <img className="login01__line328 login01__line328--password" alt="" src={imgLineIdle} data-node-id="834:38371" />
-            )}
+            <img className="login01__line328 login01__line328--password login01__line328--idle" alt="" src={imgLineIdle} data-node-id="834:38371" />
+            <img className="login01__line328 login01__line328--password login01__line328--active" alt="" src={imgPasswordLineActive} data-node-id="834:38436" />
 
             <div className="login01__links" data-node-id="834:38372">
               <Link to="/find-id" className="login01__linkText login01__linkText--findId" data-node-id="834:38373">아이디 찾기</Link>

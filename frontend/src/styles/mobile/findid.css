@@ -118,6 +118,12 @@
 .findid__line--name  { left: 16px; top: 191px; }
 .findid__line--email { left: 16px; top: 253px; }
 
+.findid .findid__line--active { display: none; }
+.findid:has(.findid__input--name:focus) .findid__line--name.findid__line--idle { display: none; }
+.findid:has(.findid__input--name:focus) .findid__line--name.findid__line--active { display: block; }
+.findid:has(.findid__input--email:focus) .findid__line--email.findid__line--idle { display: none; }
+.findid:has(.findid__input--email:focus) .findid__line--email.findid__line--active { display: block; }
+
 .findid__hit {
   position: absolute;
   left: 16px;

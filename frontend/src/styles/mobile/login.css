@@ -220,6 +220,24 @@
 .login01__line328--id { left: 16px; top: 287px; }
 .login01__line328--password { left: 16px; top: 344px; }
 
+/* 클릭(포커스)한 입력에만 노란 밑줄, 넘어가면 회색으로 */
+.login01__line328--id.login01__line328--active,
+.login01__line328--password.login01__line328--active {
+  display: none;
+}
+.login01__fields:has(.login01__input--id:focus) .login01__line328--id.login01__line328--idle {
+  display: none;
+}
+.login01__fields:has(.login01__input--id:focus) .login01__line328--id.login01__line328--active {
+  display: block;
+}
+.login01__fields:has(.login01__input--password:focus) .login01__line328--password.login01__line328--idle {
+  display: none;
+}
+.login01__fields:has(.login01__input--password:focus) .login01__line328--password.login01__line328--active {
+  display: block;
+}
+
 .login01__modalBackdrop {
   position: absolute;
   inset: 0;

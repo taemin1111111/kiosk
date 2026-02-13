@@ -50,7 +50,6 @@
   padding: 57px 16px 12px;
   box-sizing: border-box;
   background: #fff;
-  border-bottom: 1px solid rgba(19, 19, 19, 0.08);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -95,7 +94,6 @@
   padding: 0;
   overflow-x: auto;
   background: #fff;
-  border-bottom: 1px solid rgba(19, 19, 19, 0.06);
   -ms-overflow-style: none;
   scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
@@ -112,13 +110,14 @@
   align-items: center;
   flex-shrink: 0;
   width: 82px;
-  height: 34px;
-  padding: 10px 0;
+  min-width: 82px;
+  height: 40px;
+  padding: 0 12px;
   border: none;
   border-radius: 0;
   background: #EFEFF0;
   font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
   color: rgba(19, 19, 19, 0.60);
   text-align: center;
@@ -136,7 +135,7 @@
 .cart__category--active {
   background: #ffc21c;
   color: #131313;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
 }
 
@@ -455,8 +454,6 @@
   padding: 16px 16px 24px;
   padding-bottom: calc(24px + env(safe-area-inset-bottom, 0));
   background: #fff;
-  border-top: 4px solid rgba(239, 239, 240, 0.70);
-  box-shadow: 0 -4px 24px rgba(19, 19, 19, 0.25);
 }
 .cart__footerRow {
   display: flex;
@@ -488,4 +485,325 @@
   font-weight: 600;
   color: #131313;
   cursor: pointer;
+}
+
+/* 모바일: 반응형 전체 높이 채우기 (하단 흰 공간 없음) - 브라우저 767px 이하 */
+@media (max-width: 767px) {
+  .figma360-stage--cart {
+    display: flex;
+    flex-direction: column;
+    height: 100dvh;
+  }
+  .figma360-scale--cart {
+    position: relative;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    flex: 1;
+    min-height: 0;
+    transform: none;
+  }
+  .figma360-stage--cart .cart {
+    width: 100%;
+    height: 100%;
+    max-height: none;
+    min-height: 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+  .figma360-stage--cart .cart__header {
+    width: 100%;
+  }
+  /* 카테고리 버튼: 메뉴와 동일하게 조금 더 크게 */
+  .figma360-stage--cart .cart__category {
+    min-width: 100px;
+    width: auto;
+    height: 54px;
+    padding: 0 22px;
+    font-size: 17px;
+    flex-shrink: 0;
+  }
+  .figma360-stage--cart .cart__category--active {
+    font-size: 17px;
+  }
+  /* 장바구니 모바일: 콘텐츠 비율 맞춰 조금 더 크게 (이상하게 늘어나지 않게) */
+  .figma360-stage--cart .cart__header {
+    padding: 22px 22px 16px;
+  }
+  .figma360-stage--cart .cart__title {
+    font-size: 30px;
+  }
+  .figma360-stage--cart .cart__close {
+    width: 30px;
+    height: 30px;
+    top: 20px;
+    right: 20px;
+  }
+  .figma360-stage--cart .cart__close svg {
+    width: 30px;
+    height: 30px;
+  }
+  .figma360-stage--cart .cart__section {
+    padding: 22px 22px 16px;
+  }
+  .figma360-stage--cart .cart__sectionTitle {
+    font-size: 19px;
+  }
+  .figma360-stage--cart .cart__totalCount {
+    font-size: 16px;
+  }
+  .figma360-stage--cart .cart__selectAll {
+    font-size: 15px;
+    gap: 12px;
+  }
+  .figma360-stage--cart .cart__selectAll input {
+    width: 20px;
+    height: 20px;
+    background-size: 12px;
+  }
+  .figma360-stage--cart .cart__linkBtn,
+  .figma360-stage--cart .cart__divider {
+    font-size: 15px;
+  }
+  .figma360-stage--cart .cart__loading,
+  .figma360-stage--cart .cart__empty {
+    font-size: 17px;
+    padding: 32px 0;
+  }
+  .figma360-stage--cart .cart__item {
+    padding: 22px;
+    gap: 16px;
+  }
+  .figma360-stage--cart .cart__itemCheck input {
+    width: 20px;
+    height: 20px;
+    background-size: 12px;
+  }
+  .figma360-stage--cart .cart__itemImg {
+    width: 104px;
+    height: 104px;
+    padding: 12px;
+  }
+  .figma360-stage--cart .cart__itemNameKo {
+    font-size: 19px;
+  }
+  .figma360-stage--cart .cart__itemNameEn {
+    font-size: 15px;
+  }
+  .figma360-stage--cart .cart__itemOptions,
+  .figma360-stage--cart .cart__itemOptionsLine {
+    font-size: 15px;
+  }
+  .figma360-stage--cart .cart__optionChange {
+    font-size: 14px;
+  }
+  .figma360-stage--cart .cart__itemQtyBtn {
+    width: 30px;
+    height: 30px;
+    font-size: 21px;
+  }
+  .figma360-stage--cart .cart__itemQtyNum {
+    font-size: 17px;
+    min-width: 26px;
+  }
+  .figma360-stage--cart .cart__itemPrice {
+    font-size: 19px;
+  }
+  .figma360-stage--cart .cart__itemDelete {
+    width: 30px;
+    height: 30px;
+    top: 20px;
+    right: 20px;
+  }
+  .figma360-stage--cart .cart__itemDelete svg {
+    width: 26px;
+    height: 26px;
+  }
+  .figma360-stage--cart .cart__footer {
+    padding: 18px 22px 18px;
+    padding-bottom: calc(18px + env(safe-area-inset-bottom, 0));
+  }
+  .figma360-stage--cart .cart__footerCount {
+    font-size: 17px;
+  }
+  .figma360-stage--cart .cart__footerTotal {
+    font-size: 21px;
+  }
+  .figma360-stage--cart .cart__orderBtn {
+    height: 58px;
+    font-size: 19px;
+  }
+  /* 푸터를 화면 맨 아래 고정 → 아래 흰 여백 제거 */
+  .figma360-stage--cart .cart__footer {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding-bottom: calc(18px + env(safe-area-inset-bottom, 0));
+    z-index: 20;
+  }
+  .figma360-stage--cart .cart__listWrap {
+    padding-bottom: 170px;
+  }
+}
+
+/* 앱(Capacitor)에서도 동일 적용 - 뷰포트와 관계없이 장바구니만 꽉 참 */
+.is-capacitor .figma360-stage--cart {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  background: #fff;
+}
+.is-capacitor .figma360-scale--cart {
+  position: relative;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  flex: 1;
+  min-height: 0;
+  transform: none;
+}
+.is-capacitor .figma360-stage--cart .cart {
+  width: 100%;
+  height: 100%;
+  max-height: none;
+  border-radius: 0;
+  box-shadow: none;
+  min-height: 0;
+}
+.is-capacitor .figma360-stage--cart .cart__header {
+  width: 100%;
+}
+/* 카테고리 버튼: 메뉴와 맞춰 조금 더 크게 */
+.is-capacitor .figma360-stage--cart .cart__category {
+  min-width: 100px;
+  width: auto;
+  height: 54px;
+  padding: 0 22px;
+  font-size: 17px;
+  flex-shrink: 0;
+}
+.is-capacitor .figma360-stage--cart .cart__category--active {
+  font-size: 17px;
+}
+/* 앱: 장바구니 콘텐츠 비율 맞춰 조금 더 크게 */
+.is-capacitor .figma360-stage--cart .cart__header {
+  padding: 22px 22px 16px;
+}
+.is-capacitor .figma360-stage--cart .cart__title {
+  font-size: 30px;
+}
+.is-capacitor .figma360-stage--cart .cart__close {
+  width: 30px;
+  height: 30px;
+  top: 20px;
+  right: 20px;
+}
+.is-capacitor .figma360-stage--cart .cart__close svg {
+  width: 30px;
+  height: 30px;
+}
+.is-capacitor .figma360-stage--cart .cart__section {
+  padding: 22px 22px 16px;
+}
+.is-capacitor .figma360-stage--cart .cart__sectionTitle {
+  font-size: 19px;
+}
+.is-capacitor .figma360-stage--cart .cart__totalCount {
+  font-size: 16px;
+}
+.is-capacitor .figma360-stage--cart .cart__selectAll {
+  font-size: 15px;
+  gap: 12px;
+}
+.is-capacitor .figma360-stage--cart .cart__selectAll input {
+  width: 20px;
+  height: 20px;
+  background-size: 12px;
+}
+.is-capacitor .figma360-stage--cart .cart__linkBtn,
+.is-capacitor .figma360-stage--cart .cart__divider {
+  font-size: 15px;
+}
+.is-capacitor .figma360-stage--cart .cart__loading,
+.is-capacitor .figma360-stage--cart .cart__empty {
+  font-size: 17px;
+  padding: 32px 0;
+}
+.is-capacitor .figma360-stage--cart .cart__item {
+  padding: 22px;
+  gap: 16px;
+}
+.is-capacitor .figma360-stage--cart .cart__itemCheck input {
+  width: 20px;
+  height: 20px;
+  background-size: 12px;
+}
+.is-capacitor .figma360-stage--cart .cart__itemImg {
+  width: 104px;
+  height: 104px;
+  padding: 12px;
+}
+.is-capacitor .figma360-stage--cart .cart__itemNameKo {
+  font-size: 19px;
+}
+.is-capacitor .figma360-stage--cart .cart__itemNameEn {
+  font-size: 15px;
+}
+.is-capacitor .figma360-stage--cart .cart__itemOptions,
+.is-capacitor .figma360-stage--cart .cart__itemOptionsLine {
+  font-size: 15px;
+}
+.is-capacitor .figma360-stage--cart .cart__optionChange {
+  font-size: 14px;
+}
+.is-capacitor .figma360-stage--cart .cart__itemQtyBtn {
+  width: 30px;
+  height: 30px;
+  font-size: 21px;
+}
+.is-capacitor .figma360-stage--cart .cart__itemQtyNum {
+  font-size: 17px;
+  min-width: 26px;
+}
+.is-capacitor .figma360-stage--cart .cart__itemPrice {
+  font-size: 19px;
+}
+.is-capacitor .figma360-stage--cart .cart__itemDelete {
+  width: 30px;
+  height: 30px;
+  top: 20px;
+  right: 20px;
+}
+.is-capacitor .figma360-stage--cart .cart__itemDelete svg {
+  width: 26px;
+  height: 26px;
+}
+.is-capacitor .figma360-stage--cart .cart__footer {
+  padding: 18px 22px 18px;
+  padding-bottom: calc(18px + env(safe-area-inset-bottom, 0));
+}
+.is-capacitor .figma360-stage--cart .cart__footerCount {
+  font-size: 17px;
+}
+.is-capacitor .figma360-stage--cart .cart__footerTotal {
+  font-size: 21px;
+}
+.is-capacitor .figma360-stage--cart .cart__orderBtn {
+  height: 58px;
+  font-size: 19px;
+}
+/* 푸터 화면 맨 아래 고정 */
+.is-capacitor .figma360-stage--cart .cart__footer {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding-bottom: calc(18px + env(safe-area-inset-bottom, 0));
+  z-index: 20;
+}
+.is-capacitor .figma360-stage--cart .cart__listWrap {
+  padding-bottom: 170px;
 }

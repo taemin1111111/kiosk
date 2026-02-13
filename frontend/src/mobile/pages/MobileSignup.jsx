@@ -92,27 +92,32 @@ export default function MobileSignup() {
           {showCaption('name') && <p className={`signup__caption signup__caption--name${isLabelError('name') ? ' signup__caption--error' : ''}`}>성함</p>}
           {showLabel('name') && <p className={`signup__label signup__label--name${isLabelError('name') ? ' signup__label--error' : ''}`}>성함</p>}
           <input ref={nameRef} type="text" className="signup__input signup__input--name" value={nameValue} onChange={(e) => { setNameValue(e.target.value); setShowEmptyError(false); }} onFocus={() => setActiveField('name')} onBlur={() => setActiveField(null)} />
-          <img className="signup__line signup__line--name" alt="" src={activeField === 'name' ? imgPasswordLineActive : imgLineIdle} />
+          <img className="signup__line signup__line--name signup__line--idle" alt="" src={imgLineIdle} />
+          <img className="signup__line signup__line--name signup__line--active" alt="" src={imgPasswordLineActive} />
 
           {showCaption('id') && <p className={`signup__caption signup__caption--id${isLabelError('id') ? ' signup__caption--error' : ''}`}>아이디</p>}
           {showLabel('id') && <p className={`signup__label signup__label--id${isLabelError('id') ? ' signup__label--error' : ''}`}>아이디</p>}
           <input ref={idRef} type="text" className="signup__input signup__input--id" value={idValue} onChange={(e) => { setIdValue(e.target.value); setShowEmptyError(false); }} onFocus={() => setActiveField('id')} onBlur={() => setActiveField(null)} />
-          <img className="signup__line signup__line--id" alt="" src={activeField === 'id' ? imgPasswordLineActive : imgLineIdle} />
+          <img className="signup__line signup__line--id signup__line--idle" alt="" src={imgLineIdle} />
+          <img className="signup__line signup__line--id signup__line--active" alt="" src={imgPasswordLineActive} />
 
           {showCaption('email') && <p className={`signup__caption signup__caption--email${isLabelError('email') ? ' signup__caption--error' : ''}`}>메일 주소</p>}
           {showLabel('email') && <p className={`signup__label signup__label--email${isLabelError('email') ? ' signup__label--error' : ''}`}>메일 주소</p>}
           <input ref={emailRef} type="email" className="signup__input signup__input--email" value={emailValue} onChange={(e) => { setEmailValue(e.target.value); setShowEmptyError(false); }} onFocus={() => setActiveField('email')} onBlur={() => setActiveField(null)} />
-          <img className="signup__line signup__line--email" alt="" src={activeField === 'email' ? imgPasswordLineActive : imgLineIdle} />
+          <img className="signup__line signup__line--email signup__line--idle" alt="" src={imgLineIdle} />
+          <img className="signup__line signup__line--email signup__line--active" alt="" src={imgPasswordLineActive} />
 
           {showCaption('password') && <p className={`signup__caption signup__caption--password${isLabelError('password') ? ' signup__caption--error' : ''}`}>비밀번호</p>}
           {showLabel('password') && <p className={`signup__label signup__label--password${isLabelError('password') ? ' signup__label--error' : ''}`}>비밀번호</p>}
           <input ref={passwordRef} type="password" className="signup__input signup__input--password" value={passwordValue} onChange={(e) => { setPasswordValue(e.target.value); setShowEmptyError(false); }} onFocus={() => setActiveField('password')} onBlur={() => setActiveField(null)} />
-          <img className="signup__line signup__line--password" alt="" src={activeField === 'password' ? imgPasswordLineActive : imgLineIdle} />
+          <img className="signup__line signup__line--password signup__line--idle" alt="" src={imgLineIdle} />
+          <img className="signup__line signup__line--password signup__line--active" alt="" src={imgPasswordLineActive} />
 
           {showCaption('confirm') && <p className={`signup__caption signup__caption--confirm${isLabelError('confirm') ? ' signup__caption--error' : ''}`}>비밀번호 확인</p>}
           {showLabel('confirm') && <p className={`signup__label signup__label--confirm${isLabelError('confirm') ? ' signup__label--error' : ''}`}>비밀번호 확인</p>}
           <input ref={confirmRef} type="password" className="signup__input signup__input--confirm" value={confirmValue} onChange={(e) => { setConfirmValue(e.target.value); setShowEmptyError(false); }} onFocus={() => setActiveField('confirm')} onBlur={() => setActiveField(null)} />
-          <img className="signup__line signup__line--confirm" alt="" src={activeField === 'confirm' ? imgPasswordLineActive : imgLineIdle} />
+          <img className="signup__line signup__line--confirm signup__line--idle" alt="" src={imgLineIdle} />
+          <img className="signup__line signup__line--confirm signup__line--active" alt="" src={imgPasswordLineActive} />
 
           <button type="button" className="signup__hit signup__hit--name" aria-label="성함" tabIndex={-1} onMouseDown={(e) => e.preventDefault()} onClick={() => nameRef.current?.focus()} />
           <button type="button" className="signup__hit signup__hit--id" aria-label="아이디" tabIndex={-1} onMouseDown={(e) => e.preventDefault()} onClick={() => idRef.current?.focus()} />

@@ -148,6 +148,21 @@
 .signup__line--password { left: 16px; top: 372px; }
 .signup__line--confirm { left: 16px; top: 434px; }
 
+/* 포커스한 입력에만 노란 밑줄 즉시 표시 (state 지연 없음) */
+.signup .signup__line--active {
+  display: none;
+}
+.signup:has(.signup__input--name:focus) .signup__line--name.signup__line--idle { display: none; }
+.signup:has(.signup__input--name:focus) .signup__line--name.signup__line--active { display: block; }
+.signup:has(.signup__input--id:focus) .signup__line--id.signup__line--idle { display: none; }
+.signup:has(.signup__input--id:focus) .signup__line--id.signup__line--active { display: block; }
+.signup:has(.signup__input--email:focus) .signup__line--email.signup__line--idle { display: none; }
+.signup:has(.signup__input--email:focus) .signup__line--email.signup__line--active { display: block; }
+.signup:has(.signup__input--password:focus) .signup__line--password.signup__line--idle { display: none; }
+.signup:has(.signup__input--password:focus) .signup__line--password.signup__line--active { display: block; }
+.signup:has(.signup__input--confirm:focus) .signup__line--confirm.signup__line--idle { display: none; }
+.signup:has(.signup__input--confirm:focus) .signup__line--confirm.signup__line--active { display: block; }
+
 .signup__hit {
   position: absolute;
   left: 16px;
