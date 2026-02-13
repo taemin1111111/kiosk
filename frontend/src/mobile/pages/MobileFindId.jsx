@@ -6,9 +6,6 @@ import { findId as findIdApi } from '../../api';
 import logoSvg from '../../assets/Vector.svg';
 import arrowBackSvg from '../../assets/arrow_back_ios_new.svg';
 
-const imgLineIdle = 'https://www.figma.com/api/mcp/asset/4114c54b-844a-4dcb-a69c-96afd8df353b';
-const imgPasswordLineActive = 'https://www.figma.com/api/mcp/asset/ffa0ca8d-e3c7-4058-adc8-067e63cbfa20';
-
 export default function MobileFindId() {
   const [scale, setScale] = useState(1);
   const [activeField, setActiveField] = useState(null);
@@ -105,14 +102,14 @@ export default function MobileFindId() {
           {showCaption('name') && <p className={`findid__caption findid__caption--name${isLabelError('name') ? ' findid__caption--error' : ''}`}>성함</p>}
           {showLabel('name') && <p className={`findid__label findid__label--name${isLabelError('name') ? ' findid__label--error' : ''}`}>성함</p>}
           <input ref={nameRef} type="text" className="findid__input findid__input--name" value={nameValue} onChange={(e) => { setNameValue(e.target.value); setInlineError(null); }} onFocus={() => setActiveField('name')} onBlur={() => setActiveField(null)} />
-          <img className="findid__line findid__line--name findid__line--idle" alt="" src={imgLineIdle} />
-          <img className="findid__line findid__line--name findid__line--active" alt="" src={imgPasswordLineActive} />
+          <div className="findid__line findid__line--name findid__line--idle" aria-hidden />
+          <div className="findid__line findid__line--name findid__line--active" aria-hidden />
 
           {showCaption('email') && <p className={`findid__caption findid__caption--email${isLabelError('email') ? ' findid__caption--error' : ''}`}>메일 주소</p>}
           {showLabel('email') && <p className={`findid__label findid__label--email${isLabelError('email') ? ' findid__label--error' : ''}`}>메일 주소</p>}
           <input ref={emailRef} type="email" className="findid__input findid__input--email" value={emailValue} onChange={(e) => { setEmailValue(e.target.value); setInlineError(null); }} onFocus={() => setActiveField('email')} onBlur={() => setActiveField(null)} />
-          <img className="findid__line findid__line--email findid__line--idle" alt="" src={imgLineIdle} />
-          <img className="findid__line findid__line--email findid__line--active" alt="" src={imgPasswordLineActive} />
+          <div className="findid__line findid__line--email findid__line--idle" aria-hidden />
+          <div className="findid__line findid__line--email findid__line--active" aria-hidden />
 
           <button type="button" className="findid__hit findid__hit--name" aria-label="성함" tabIndex={-1} onMouseDown={(e) => e.preventDefault()} onClick={() => nameRef.current?.focus()} />
           <button type="button" className="findid__hit findid__hit--email" aria-label="메일 주소" tabIndex={-1} onMouseDown={(e) => e.preventDefault()} onClick={() => emailRef.current?.focus()} />

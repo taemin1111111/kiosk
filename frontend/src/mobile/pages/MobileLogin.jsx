@@ -4,9 +4,6 @@ import { computeScale } from '../../utils/figmaScale';
 import { login as loginApi } from '../../api';
 
 import logoSvg from '../../assets/Vector.svg';
-const imgLine45 = 'https://www.figma.com/api/mcp/asset/ddc9a3af-9a14-47f7-8a10-f05a6f2e2ea3';
-const imgLineIdle = 'https://www.figma.com/api/mcp/asset/4114c54b-844a-4dcb-a69c-96afd8df353b';
-const imgPasswordLineActive = 'https://www.figma.com/api/mcp/asset/ffa0ca8d-e3c7-4058-adc8-067e63cbfa20';
 
 export default function MobileLogin() {
   const navigate = useNavigate();
@@ -70,8 +67,8 @@ export default function MobileLogin() {
               onBlur={() => setActiveField(null)}
               autoComplete="username"
             />
-            <img className="login01__line328 login01__line328--id login01__line328--idle" alt="" src={imgLineIdle} data-node-id="834:38368" />
-            <img className="login01__line328 login01__line328--id login01__line328--active" alt="" src={imgPasswordLineActive} data-node-id="834:38368" />
+            <div className="login01__line328 login01__line328--id login01__line328--idle" aria-hidden />
+            <div className="login01__line328 login01__line328--id login01__line328--active" aria-hidden />
 
             {(activeField === 'password' || passwordValue.length > 0) && (
               <p className="login01__caption login01__caption--password" data-node-id="834:38419">비밀번호</p>
@@ -89,14 +86,14 @@ export default function MobileLogin() {
               onBlur={() => setActiveField(null)}
               autoComplete="current-password"
             />
-            <img className="login01__line328 login01__line328--password login01__line328--idle" alt="" src={imgLineIdle} data-node-id="834:38371" />
-            <img className="login01__line328 login01__line328--password login01__line328--active" alt="" src={imgPasswordLineActive} data-node-id="834:38436" />
+            <div className="login01__line328 login01__line328--password login01__line328--idle" aria-hidden />
+            <div className="login01__line328 login01__line328--password login01__line328--active" aria-hidden />
 
             <div className="login01__links" data-node-id="834:38372">
               <Link to="/find-id" className="login01__linkText login01__linkText--findId" data-node-id="834:38373">아이디 찾기</Link>
-              <img className="login01__divider login01__divider--1" alt="" src={imgLine45} data-node-id="834:38374" />
+              <span className="login01__divider login01__divider--1" aria-hidden />
               <Link to="/find-password" className="login01__linkText login01__linkText--findPassword" data-node-id="834:38375">비밀번호 찾기</Link>
-              <img className="login01__divider login01__divider--2" alt="" src={imgLine45} data-node-id="834:38376" />
+              <span className="login01__divider login01__divider--2" aria-hidden />
               <Link to="/signup" className="login01__linkText login01__linkText--signup" data-node-id="834:38377">회원가입</Link>
             </div>
 

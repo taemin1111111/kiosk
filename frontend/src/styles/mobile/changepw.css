@@ -125,12 +125,22 @@
 .changepw__line {
   position: absolute;
   width: 328px;
-  height: 2px;
+  height: 1px;
   display: block;
+  background: rgba(19, 19, 19, 0.2);
+}
+.changepw__line--active {
+  background: #FFC21C;
 }
 
 .changepw__line--password { left: 16px; top: 227px; }
 .changepw__line--confirm   { left: 16px; top: 289px; }
+
+.changepw .changepw__line--active { display: none; }
+.changepw:has(.changepw__input--password:focus) .changepw__line--password.changepw__line--idle { display: none; }
+.changepw:has(.changepw__input--password:focus) .changepw__line--password.changepw__line--active { display: block; }
+.changepw:has(.changepw__input--confirm:focus) .changepw__line--confirm.changepw__line--idle { display: none; }
+.changepw:has(.changepw__input--confirm:focus) .changepw__line--confirm.changepw__line--active { display: block; }
 
 .changepw__hit {
   position: absolute;

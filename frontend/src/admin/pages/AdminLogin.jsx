@@ -3,9 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { login as loginApi } from '../../api';
 import logoSvg from '../../assets/Vector.svg';
 
-const imgLineIdle = 'https://www.figma.com/api/mcp/asset/4114c54b-844a-4dcb-a69c-96afd8df353b';
-const imgLineActive = 'https://www.figma.com/api/mcp/asset/ffa0ca8d-e3c7-4058-adc8-067e63cbfa20';
-
 export default function AdminLogin() {
   const navigate = useNavigate();
   const [idValue, setIdValue] = useState('');
@@ -77,7 +74,8 @@ export default function AdminLogin() {
             onBlur={() => setActiveField(null)}
             autoComplete="username"
           />
-          <img className="admin-login__line admin-login__line--id" alt="" src={activeField === 'id' ? imgLineActive : imgLineIdle} />
+          <div className="admin-login__line admin-login__line--id admin-login__line--idle" aria-hidden />
+          <div className="admin-login__line admin-login__line--id admin-login__line--active" aria-hidden />
 
           {(activeField === 'password' || passwordValue.length > 0) && (
             <p className="admin-login__caption admin-login__caption--password">비밀번호</p>
@@ -95,7 +93,8 @@ export default function AdminLogin() {
             onBlur={() => setActiveField(null)}
             autoComplete="current-password"
           />
-          <img className="admin-login__line admin-login__line--password" alt="" src={activeField === 'password' ? imgLineActive : imgLineIdle} />
+          <div className="admin-login__line admin-login__line--password admin-login__line--idle" aria-hidden />
+          <div className="admin-login__line admin-login__line--password admin-login__line--active" aria-hidden />
 
           <button
             type="button"

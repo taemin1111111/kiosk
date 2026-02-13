@@ -156,8 +156,12 @@
 .admin-login__line {
   position: absolute;
   width: 328px;
-  height: 2px;
+  height: 1px;
   display: block;
+  background: rgba(19, 19, 19, 0.2);
+}
+.admin-login__line--active {
+  background: #FFC21C;
 }
 
 .admin-login__line--id {
@@ -169,6 +173,12 @@
   left: 16px;
   top: 420px;
 }
+
+.admin-login .admin-login__line--active { display: none; }
+.admin-login:has(.admin-login__input--id:focus) .admin-login__line--id.admin-login__line--idle { display: none; }
+.admin-login:has(.admin-login__input--id:focus) .admin-login__line--id.admin-login__line--active { display: block; }
+.admin-login:has(.admin-login__input--password:focus) .admin-login__line--password.admin-login__line--idle { display: none; }
+.admin-login:has(.admin-login__input--password:focus) .admin-login__line--password.admin-login__line--active { display: block; }
 
 .admin-login__hit {
   position: absolute;

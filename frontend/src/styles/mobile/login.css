@@ -87,11 +87,16 @@
   color: rgba(19, 19, 19, 0.8);
 }
 
+/* 회색선: 이미지 대신 CSS로 즉시 렌더 (로딩 지연 제거) */
 .login01__line328 {
   position: absolute;
   width: 328px;
-  height: 2px;
+  height: 1px;
   display: block;
+  background: rgba(19, 19, 19, 0.2);
+}
+.login01__line328--active {
+  background: #FFC21C;
 }
 
 .login01__links {
@@ -117,14 +122,14 @@
 .login01__linkText--findPassword { left: 79px; width: 66px; height: 14px; }
 .login01__linkText--signup { left: 169px; width: 42px; height: 14px; }
 
+/* 링크 사이 세로선: 이미지 대신 CSS로 즉시 렌더 */
 .login01__divider {
   position: absolute;
   top: 2px;
-  width: 10px;
-  height: 2px;
+  width: 1px;
+  height: 10px;
   display: block;
-  transform: rotate(90deg);
-  transform-origin: left top;
+  background: rgba(19, 19, 19, 0.3);
 }
 
 .login01__divider--1 { left: 67px; }

@@ -5,9 +5,6 @@ import { computeScale } from '../../utils/figmaScale';
 import logoSvg from '../../assets/Vector.svg';
 import arrowBackSvg from '../../assets/arrow_back_ios_new.svg';
 
-const imgLineIdle = 'https://www.figma.com/api/mcp/asset/4114c54b-844a-4dcb-a69c-96afd8df353b';
-const imgPasswordLineActive = 'https://www.figma.com/api/mcp/asset/ffa0ca8d-e3c7-4058-adc8-067e63cbfa20';
-
 export default function MobileFindPassword() {
   const [scale, setScale] = useState(1);
   const [activeField, setActiveField] = useState(null);
@@ -87,20 +84,20 @@ export default function MobileFindPassword() {
           {showCaption('name') && <p className={`findpw__caption findpw__caption--name${isLabelError('name') ? ' findpw__caption--error' : ''}`}>성함</p>}
           {showLabel('name') && <p className={`findpw__label findpw__label--name${isLabelError('name') ? ' findpw__label--error' : ''}`}>성함</p>}
           <input ref={nameRef} type="text" className="findpw__input findpw__input--name" value={nameValue} onChange={(e) => { setNameValue(e.target.value); setInlineError(null); }} onFocus={() => setActiveField('name')} onBlur={() => setActiveField(null)} />
-          <img className="findpw__line findpw__line--name findpw__line--idle" alt="" src={imgLineIdle} />
-          <img className="findpw__line findpw__line--name findpw__line--active" alt="" src={imgPasswordLineActive} />
+          <div className="findpw__line findpw__line--name findpw__line--idle" aria-hidden />
+          <div className="findpw__line findpw__line--name findpw__line--active" aria-hidden />
 
           {showCaption('id') && <p className={`findpw__caption findpw__caption--id${isLabelError('id') ? ' findpw__caption--error' : ''}`}>아이디</p>}
           {showLabel('id') && <p className={`findpw__label findpw__label--id${isLabelError('id') ? ' findpw__label--error' : ''}`}>아이디</p>}
           <input ref={idRef} type="text" className="findpw__input findpw__input--id" value={idValue} onChange={(e) => { setIdValue(e.target.value); setInlineError(null); }} onFocus={() => setActiveField('id')} onBlur={() => setActiveField(null)} />
-          <img className="findpw__line findpw__line--id findpw__line--idle" alt="" src={imgLineIdle} />
-          <img className="findpw__line findpw__line--id findpw__line--active" alt="" src={imgPasswordLineActive} />
+          <div className="findpw__line findpw__line--id findpw__line--idle" aria-hidden />
+          <div className="findpw__line findpw__line--id findpw__line--active" aria-hidden />
 
           {showCaption('email') && <p className={`findpw__caption findpw__caption--email${isLabelError('email') ? ' findpw__caption--error' : ''}`}>메일 주소</p>}
           {showLabel('email') && <p className={`findpw__label findpw__label--email${isLabelError('email') ? ' findpw__label--error' : ''}`}>메일 주소</p>}
           <input ref={emailRef} type="email" className="findpw__input findpw__input--email" value={emailValue} onChange={(e) => { setEmailValue(e.target.value); setInlineError(null); }} onFocus={() => setActiveField('email')} onBlur={() => setActiveField(null)} />
-          <img className="findpw__line findpw__line--email findpw__line--idle" alt="" src={imgLineIdle} />
-          <img className="findpw__line findpw__line--email findpw__line--active" alt="" src={imgPasswordLineActive} />
+          <div className="findpw__line findpw__line--email findpw__line--idle" aria-hidden />
+          <div className="findpw__line findpw__line--email findpw__line--active" aria-hidden />
 
           <button type="button" className="findpw__hit findpw__hit--name" aria-label="성함" tabIndex={-1} onMouseDown={(e) => e.preventDefault()} onClick={() => nameRef.current?.focus()} />
           <button type="button" className="findpw__hit findpw__hit--id" aria-label="아이디" tabIndex={-1} onMouseDown={(e) => e.preventDefault()} onClick={() => idRef.current?.focus()} />
