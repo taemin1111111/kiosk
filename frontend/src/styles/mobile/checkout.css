@@ -244,10 +244,12 @@
   position: absolute;
   left: 120px;
   right: 28px;
+  color: rgba(19, 19, 19, 0.60);
   font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 14px;
-  font-weight: 400;
-  color: rgba(19, 19, 19, 0.8);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
   text-align: left;
 }
 .checkout__diningBody {
@@ -330,14 +332,16 @@
   position: absolute;
   left: 120px;
   right: 28px;
+  color: rgba(19, 19, 19, 0.60);
   font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 14px;
-  font-weight: 400;
-  color: rgba(19, 19, 19, 0.55);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
   text-align: left;
 }
 .checkout__tossHeaderPlaceholder {
-  color: rgba(19, 19, 19, 0.4);
+  color: rgba(19, 19, 19, 0.60);
 }
 .checkout__tossBody {
   padding: 12px 0 0;
@@ -453,10 +457,12 @@
   position: absolute;
   left: 120px;
   right: 28px;
+  color: rgba(19, 19, 19, 0.60);
   font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 14px;
-  font-weight: 400;
-  color: rgba(19, 19, 19, 0.8);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
   text-align: left;
 }
 .checkout__paymentBody {

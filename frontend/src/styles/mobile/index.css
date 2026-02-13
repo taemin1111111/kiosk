@@ -2,6 +2,7 @@
 @import './mobile-common.css';
 @import './login.css';
 @import './signup.css';
+@import './signup-complete.css';
 @import './findid.css';
 @import './findpassword.css';
 @import './changepw.css';

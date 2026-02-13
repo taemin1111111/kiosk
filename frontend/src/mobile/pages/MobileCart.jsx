@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { computeScale } from '../../utils/figmaScale';
 import {
   getAppCategories,
@@ -21,7 +21,9 @@ export default function MobileCart() {
   const [selectedIds, setSelectedIds] = useState(new Set());
   const [cartBusyId, setCartBusyId] = useState(0);
   const [loading, setLoading] = useState(true);
+  const location = useLocation();
   const navigate = useNavigate();
+  const fromMypage = location.state?.from === 'mypage';
   const categoryScrollRef = useRef(null);
   const dragStateRef = useRef({
     active: false,
@@ -198,7 +200,7 @@ export default function MobileCart() {
               type="button"
               className="cart__close"
               aria-label="닫기"
-              onClick={() => navigate('/menu')}
+              onClick={() => navigate(fromMypage ? '/menu/mypage' : '/menu', { replace: true })}
             >
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M18 6L6 18M6 6l12 12" />

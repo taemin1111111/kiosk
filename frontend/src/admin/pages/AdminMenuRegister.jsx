@@ -286,7 +286,6 @@ export default function AdminMenuRegister() {
           <button
             type="submit"
             className={`admin-menu-register__submitBtn ${isFormFullyFilled ? 'admin-menu-register__submitBtn--active' : 'admin-menu-register__submitBtn--disabled'}`}
-            disabled={!isFormFullyFilled}
             aria-disabled={!isFormFullyFilled}
           >
             {isEdit ? '메뉴 수정하기' : '메뉴 등록하기'}
@@ -304,7 +303,7 @@ export default function AdminMenuRegister() {
               <section className="admin-menu-register__field">
                 <div className="admin-menu-register__labelRow">
                   <label className="admin-menu-register__label">카테고리</label>
-                  {categoryError && <span className="admin-menu-register__fieldErr">카테고리를 선택해 주세요</span>}
+                  {categoryError && <span className="admin-menu-register__fieldErr">카테고리를 선택해 주세요.</span>}
                 </div>
                 <div className="admin-menu-register__categoryDropdown" ref={categoryDropdownRef}>
                   <button

@@ -128,20 +128,18 @@
   justify-content: center;
   gap: 8px;
   padding: 16px 8px;
-  border: none;
-  border-radius: 12px;
-  background: rgba(19, 19, 19, 0.06);
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+  border-radius: 8px;
+  border: 1px solid rgba(19, 19, 19, 0.10);
+  background: #FFF;
+  box-shadow: 0 4px 24px 0 rgba(19, 19, 19, 0.10);
   cursor: pointer;
-  color: #131313;
-  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 14px;
-  font-weight: 500;
   box-sizing: border-box;
 }
 
 .mypage__gridBtn:hover {
-  background: rgba(19, 19, 19, 0.08);
+  background: #FFF;
+  border-color: rgba(19, 19, 19, 0.15);
+  box-shadow: 0 4px 24px 0 rgba(19, 19, 19, 0.15);
 }
 
 .mypage__gridIcon {
@@ -162,8 +160,13 @@
 }
 
 .mypage__gridLabel {
+  color: #131313;
   text-align: center;
-  line-height: 1.3;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
 }
 
 /* 로그아웃 - 바닥에서 65px 위 고정, 가운데, 밑줄, 회색 */

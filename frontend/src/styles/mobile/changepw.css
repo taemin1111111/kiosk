@@ -90,8 +90,37 @@
   caret-color: #131313;
 }
 
-.changepw__input--password { left: 16px; top: 202px; }
-.changepw__input--confirm   { left: 16px; top: 264px; }
+.changepw__input--password { left: 16px; top: 202px; padding-right: 40px; }
+.changepw__input--confirm   { left: 16px; top: 264px; padding-right: 40px; }
+
+/* 비밀번호/비밀번호 확인 가리기·보기 토글 (회원가입과 동일) */
+.changepw__toggle {
+  position: absolute;
+  right: 16px;
+  width: 20px;
+  height: 20px;
+  aspect-ratio: 1/1;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: rgba(19, 19, 19, 0.6);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+.changepw__toggle:hover,
+.changepw__toggle:focus-visible {
+  color: #131313;
+}
+.changepw__toggle svg {
+  display: block;
+  width: 20px;
+  height: 20px;
+}
+.changepw__toggle--password { top: 201px; }
+.changepw__toggle--confirm  { top: 263px; }
 
 .changepw__line {
   position: absolute;

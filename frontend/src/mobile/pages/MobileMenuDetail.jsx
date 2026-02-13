@@ -6,6 +6,7 @@ import { getAppMenuDetail, getAppActiveCart, getImageUrl, postAppCartItem } from
 import logoSvg from '../../assets/Vector.svg';
 import backSvg from '../../assets/arrow_back_ios_new.svg';
 import iconCartSvg from '../../assets/icon-cart.svg';
+import replaySvg from '../../assets/replay.svg';
 
 function formatWon(value) {
   const n = Number(value) || 0;
@@ -77,6 +78,13 @@ function findWhipGroup(optionGroups = []) {
   return byCode || null;
 }
 
+function findContainerGroup(optionGroups = []) {
+  const byName = optionGroups.find((g) => String(g.name_ko || '').includes('용기'));
+  if (byName) return byName;
+  const byCode = optionGroups.find((g) => String(g.code || '').toUpperCase().includes('CONTAINER'));
+  return byCode || null;
+}
+
 export default function MobileMenuDetail() {
   const { id } = useParams();
   const menuId = Number(id);
@@ -103,6 +111,10 @@ export default function MobileMenuDetail() {
   const [syrupNoneSelected, setSyrupNoneSelected] = useState(false);
   const [syrupNoneSelectedDraft, setSyrupNoneSelectedDraft] = useState(false);
   const [syrupCountsBeforeNoneDraft, setSyrupCountsBeforeNoneDraft] = useState({}); // '시럽 없이' 토글 전 상태 백업
+  const [milkInitialItemId, setMilkInitialItemId] = useState(null);
+  const [whipInitialItemId, setWhipInitialItemId] = useState(null);
+  const [syrupInitialCounts, setSyrupInitialCounts] = useState({});
+  const [syrupInitialNone, setSyrupInitialNone] = useState(false);
 
   const scrollRef = useRef(null);
   const scrollRafRef = useRef(0);
@@ -265,12 +277,16 @@ export default function MobileMenuDetail() {
   const optionGroups = menu?.option_groups || [];
   const nutritions = menu?.nutritions || [];
   const tempGroup = useMemo(() => findTempGroup(optionGroups), [optionGroups]);
+  const containerGroup = useMemo(() => findContainerGroup(optionGroups), [optionGroups]);
   const beanGroup = useMemo(() => findBeanGroup(optionGroups), [optionGroups]);
   const shotGroup = useMemo(() => findShotGroup(optionGroups), [optionGroups]);
   const milkGroup = useMemo(() => findMilkGroup(optionGroups), [optionGroups]);
   const syrupGroup = useMemo(() => findSyrupGroup(optionGroups), [optionGroups]);
   const whipGroup = useMemo(() => findWhipGroup(optionGroups), [optionGroups]);
-  const otherGroups = useMemo(() => optionGroups.filter((g) => g !== tempGroup && g !== beanGroup), [optionGroups, tempGroup, beanGroup]);
+  const otherGroups = useMemo(
+    () => optionGroups.filter((g) => g !== tempGroup && g !== containerGroup && g !== beanGroup),
+    [optionGroups, tempGroup, containerGroup, beanGroup]
+  );
 
   const servingNutrition = useMemo(() => {
     return nutritions.find((n) => String(n.code || '').toUpperCase() === 'SERVING') || null;
@@ -523,7 +539,7 @@ export default function MobileMenuDetail() {
         rows.push({
           key: String(gid),
           name: String(g.name_ko || ''),
-          value: `기본 ${selectedShotCount}샷`,
+          value: selectedShotCount === shotMeta.base ? `에스프레소 기본 ${selectedShotCount}샷` : `에스프레소 ${selectedShotCount}샷`,
           priceText: formatPlusWon(shotExtraPrice),
         });
         continue;
@@ -597,7 +613,9 @@ export default function MobileMenuDetail() {
     const gid = Number(milkGroup.group_id);
     const selectedId = Number(selectedByGroup[gid]);
     const first = (milkGroup.items || [])[0];
-    setMilkDraftItemId(selectedId || Number(first?.id) || null);
+    const initial = selectedId || Number(first?.id) || null;
+    setMilkDraftItemId(initial);
+    setMilkInitialItemId(initial);
     setActiveSheet('milk');
   };
 
@@ -606,7 +624,9 @@ export default function MobileMenuDetail() {
     const gid = Number(whipGroup.group_id);
     const selectedId = Number(selectedByGroup[gid]);
     const first = (whipGroup.items || [])[0];
-    setWhipDraftItemId(selectedId || Number(first?.id) || null);
+    const initial = selectedId || Number(first?.id) || null;
+    setWhipDraftItemId(initial);
+    setWhipInitialItemId(initial);
     setActiveSheet('whip');
   };
 
@@ -614,6 +634,8 @@ export default function MobileMenuDetail() {
     setSyrupCountsDraft({ ...syrupCounts });
     setSyrupNoneSelectedDraft(syrupNoneSelected);
     setSyrupCountsBeforeNoneDraft({ ...syrupCounts });
+    setSyrupInitialCounts({ ...syrupCounts });
+    setSyrupInitialNone(syrupNoneSelected);
     setActiveSheet('syrup');
   };
 
@@ -769,6 +791,27 @@ export default function MobileMenuDetail() {
               </div>
             )}
 
+            {/* 용기 옵션 (Figma 834-43756) - CUP/CORN 등 */}
+            {containerGroup && (
+              <div className={`menu-detail__containerPill ${compact ? 'menu-detail__containerPill--compact' : ''}`}>
+                {(containerGroup.items || []).map((it) => {
+                  const gid = Number(containerGroup.group_id);
+                  const sel = Number(selectedByGroup[gid]);
+                  const active = Number(it.id) === sel;
+                  return (
+                    <button
+                      key={it.id}
+                      type="button"
+                      className={`menu-detail__containerBtn ${active ? 'menu-detail__containerBtn--active' : ''}`}
+                      onClick={() => setGroupSelection(gid, it.id)}
+                    >
+                      {String(it.name_en || it.name_ko || '').toUpperCase()}
+                    </button>
+                  );
+                })}
+              </div>
+            )}
+
             {/* 옵션 영역(원두/기타) - 아래로 스크롤하면 자연스럽게 보이게 항상 렌더 */}
             {menu && (
               <section className={`menu-detail__options ${compact ? 'menu-detail__options--compact' : ''}`}>
@@ -832,7 +875,7 @@ export default function MobileMenuDetail() {
                   })();
 
                   const valueText = (() => {
-                    if (isShot) return `기본 ${selectedShotCount}샷`;
+                    if (isShot) return selectedShotCount === shotMeta.base ? `기본 ${selectedShotCount}샷` : `${selectedShotCount}샷`;
                     if (isSyrup) return syrupTouched ? (syrupSummaryText || (syrupNoneSelected ? '시럽 없이' : '')) : '';
                     return sel ? sel.name_ko : '';
                   })();
@@ -988,14 +1031,27 @@ export default function MobileMenuDetail() {
               }}
             >
               <div className="menu-detail__sheet menu-detail__sheet--shot">
-                <button type="button" className="menu-detail__sheetClose" aria-label="닫기" onClick={() => setActiveSheet(null)}>
-                  ×
-                </button>
+                <div className="menu-detail__sheetHeaderRight">
+                  {shotCountDraft > shotMeta.base && (
+                    <button type="button" className="menu-detail__sheetReset" onClick={() => setShotCountDraft(shotMeta.base)} aria-label="샷 초기화">
+                      <img src={replaySvg} alt="" className="menu-detail__sheetResetIcon" width="14" height="14" aria-hidden />
+                      초기화
+                    </button>
+                  )}
+                  <button type="button" className="menu-detail__sheetClose" aria-label="닫기" onClick={() => setActiveSheet(null)}>
+                    ×
+                  </button>
+                </div>
                 <p className="menu-detail__sheetTitle">샷</p>
                 <p className="menu-detail__sheetSubtitle">에스프레소를 커스텀으로 즐겨보세요!</p>
 
                 <div className="menu-detail__sheetRow">
                   <p className="menu-detail__sheetItem">에스프레소 샷</p>
+                  {shotCountDraft > shotMeta.base && (
+                    <span className="menu-detail__sheetExtraPrice">
+                      +{((shotCountDraft - shotMeta.base) * (shotMeta.extraPrice || 0)).toLocaleString('ko-KR')}원
+                    </span>
+                  )}
                   <div className="menu-detail__sheetQty">
                     <button
                       type="button"
@@ -1036,9 +1092,17 @@ export default function MobileMenuDetail() {
               }}
             >
               <div className="menu-detail__sheet menu-detail__sheet--milk">
-                <button type="button" className="menu-detail__sheetClose" aria-label="닫기" onClick={() => setActiveSheet(null)}>
-                  ×
-                </button>
+                <div className="menu-detail__sheetHeaderRight">
+                  {milkDraftItemId !== milkInitialItemId && (
+                    <button type="button" className="menu-detail__sheetReset" onClick={() => setMilkDraftItemId(milkInitialItemId)} aria-label="우유 초기화">
+                      <img src={replaySvg} alt="" className="menu-detail__sheetResetIcon" width="14" height="14" aria-hidden />
+                      초기화
+                    </button>
+                  )}
+                  <button type="button" className="menu-detail__sheetClose" aria-label="닫기" onClick={() => setActiveSheet(null)}>
+                    ×
+                  </button>
+                </div>
                 <p className="menu-detail__sheetTitle">우유</p>
 
                 <div className="menu-detail__milkGrid" aria-label="우유 선택">
@@ -1079,9 +1143,17 @@ export default function MobileMenuDetail() {
               }}
             >
               <div className="menu-detail__sheet menu-detail__sheet--whip">
-                <button type="button" className="menu-detail__sheetClose" aria-label="닫기" onClick={() => setActiveSheet(null)}>
-                  ×
-                </button>
+                <div className="menu-detail__sheetHeaderRight">
+                  {whipDraftItemId !== whipInitialItemId && (
+                    <button type="button" className="menu-detail__sheetReset" onClick={() => setWhipDraftItemId(whipInitialItemId)} aria-label="휘핑 크림 초기화">
+                      <img src={replaySvg} alt="" className="menu-detail__sheetResetIcon" width="14" height="14" aria-hidden />
+                      초기화
+                    </button>
+                  )}
+                  <button type="button" className="menu-detail__sheetClose" aria-label="닫기" onClick={() => setActiveSheet(null)}>
+                    ×
+                  </button>
+                </div>
                 <p className="menu-detail__sheetTitle">휘핑 크림</p>
 
                 <div className="menu-detail__whipBody" aria-label="휘핑 크림 선택">
@@ -1148,9 +1220,27 @@ export default function MobileMenuDetail() {
               }}
             >
               <div className="menu-detail__sheet menu-detail__sheet--syrup">
-                <button type="button" className="menu-detail__sheetClose" aria-label="닫기" onClick={() => setActiveSheet(null)}>
-                  ×
-                </button>
+                <div className="menu-detail__sheetHeaderRight">
+                  {(syrupNoneSelectedDraft !== syrupInitialNone ||
+                    JSON.stringify(syrupCountsDraft) !== JSON.stringify(syrupInitialCounts)) && (
+                    <button
+                      type="button"
+                      className="menu-detail__sheetReset"
+                      onClick={() => {
+                        setSyrupCountsDraft({ ...syrupInitialCounts });
+                        setSyrupNoneSelectedDraft(syrupInitialNone);
+                        setSyrupCountsBeforeNoneDraft({ ...syrupInitialCounts });
+                      }}
+                      aria-label="시럽 초기화"
+                    >
+                      <img src={replaySvg} alt="" className="menu-detail__sheetResetIcon" width="14" height="14" aria-hidden />
+                      초기화
+                    </button>
+                  )}
+                  <button type="button" className="menu-detail__sheetClose" aria-label="닫기" onClick={() => setActiveSheet(null)}>
+                    ×
+                  </button>
+                </div>
                 <p className="menu-detail__sheetTitle">시럽</p>
 
                 <div className="menu-detail__syrupList" aria-label="시럽 선택">

@@ -169,7 +169,7 @@
   gap: 8px;
   padding: 10px 12px;
   border: 1px solid #D3D3D3;
-  border-radius: 6px;
+  border-radius: 8px;
   font-size: 14px;
   color: #131313;
   background: #FFFFFF;
@@ -185,12 +185,14 @@
   border-color: #FFC21C;
   background: #FFFFFF;
 }
+/* Figma 191-202912: 카테고리 미선택 시 에러 상태 - 빨간 테두리, 흰 배경 */
 .admin-menu-register__categoryTrigger--err {
-  border-color: #DF6666;
-  background: #FFFFFF;
+  border: 1px solid rgba(223, 102, 102, 1);
+  background: #FFF;
+  border-radius: 8px;
 }
 .admin-menu-register__categoryTrigger--placeholder .admin-menu-register__categoryTriggerText {
-  color: #888888;
+  color: rgba(19, 19, 19, 0.4);
 }
 .admin-menu-register__categoryTriggerText {
   flex: 1;

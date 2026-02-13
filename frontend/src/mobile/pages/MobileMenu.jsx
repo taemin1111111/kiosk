@@ -425,7 +425,7 @@ export default function MobileMenu() {
                   else navigate('/menu/checkout');
                 }}
               >
-                주문하기
+                <span className="menu__orderBtnText">주문하기</span>
               </button>
             </div>
           </footer>

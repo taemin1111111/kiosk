@@ -127,15 +127,17 @@
   background: transparent;
   cursor: pointer;
   text-align: left;
-  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 16px;
-  font-weight: 400;
-  color: #131313;
   box-sizing: border-box;
 }
 
 .terms__rowLabel {
   flex: 1;
+  color: #131313;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
 }
 
 .terms__rowChevron {

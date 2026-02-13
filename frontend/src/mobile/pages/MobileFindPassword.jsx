@@ -138,7 +138,7 @@ export default function MobileFindPassword() {
                   </>
                 ) : (
                   <>
-                    <p className="findpw__modalMessage" style={{ color: '#e53935' }}>{showResultModal.message}</p>
+                    <p className="findpw__modalMessage">{showResultModal.message}</p>
                     <div className="findpw__modalDivider" />
                     <button type="button" className="findpw__modalConfirm" onClick={() => setShowResultModal(null)}>확인</button>
                   </>

@@ -4,6 +4,8 @@ import { computeScale } from '../../utils/figmaScale';
 import { getAppOrders } from '../../api';
 import notificationsSvg from '../../assets/notifications.svg';
 
+const MEMBER_NAME_CACHE_KEY = 'kiosk_member_name';
+
 const TERMS_ITEMS = [
   { key: 'service', label: '서비스 이용약관', path: '/menu/terms/service' },
   { key: 'privacy', label: '개인정보 처리방침', path: '/menu/terms/privacy' },
@@ -11,7 +13,13 @@ const TERMS_ITEMS = [
 
 export default function MobileTerms() {
   const [scale, setScale] = useState(1);
-  const [memberName, setMemberName] = useState('');
+  const [memberName, setMemberName] = useState(() => {
+    try {
+      return localStorage.getItem(MEMBER_NAME_CACHE_KEY) || '';
+    } catch {
+      return '';
+    }
+  });
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -26,7 +34,13 @@ export default function MobileTerms() {
     (async () => {
       const res = await getAppOrders({}).catch(() => ({ ok: false }));
       if (cancelled) return;
-      if (res?.ok && res.data?.member_name) setMemberName(res.data.member_name);
+      if (res?.ok && res.data?.member_name) {
+        const name = res.data.member_name;
+        setMemberName(name);
+        try {
+          localStorage.setItem(MEMBER_NAME_CACHE_KEY, name);
+        } catch (_) {}
+      }
     })();
     return () => { cancelled = true; };
   }, []);

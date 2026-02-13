@@ -39,7 +39,7 @@
 .findid__errorEmpty {
   position: absolute;
   left: 16px;
-  top: 136px;
+  top: 133px;
   width: 328px;
   margin: 0;
   font-size: 12px;
@@ -49,16 +49,16 @@
 }
 
 /* Figma 1152-6912: 일치하는 계정 없을 때 에러 문구 아래로 필드 밀기 */
-.findid--notFound .findid__caption--name  { top: 166px; }
-.findid--notFound .findid__caption--email { top: 228px; }
-.findid--notFound .findid__label--name    { top: 188px; }
-.findid--notFound .findid__label--email   { top: 250px; }
-.findid--notFound .findid__input--name    { top: 188px; }
-.findid--notFound .findid__input--email   { top: 250px; }
-.findid--notFound .findid__line--name     { top: 213px; }
-.findid--notFound .findid__line--email    { top: 275px; }
-.findid--notFound .findid__hit--name      { top: 174px; }
-.findid--notFound .findid__hit--email     { top: 236px; }
+.findid--notFound .findid__caption--name  { top: 176px; }
+.findid--notFound .findid__caption--email { top: 238px; }
+.findid--notFound .findid__label--name    { top: 198px; }
+.findid--notFound .findid__label--email   { top: 260px; }
+.findid--notFound .findid__input--name    { top: 198px; }
+.findid--notFound .findid__input--email   { top: 260px; }
+.findid--notFound .findid__line--name     { top: 223px; }
+.findid--notFound .findid__line--email    { top: 285px; }
+.findid--notFound .findid__hit--name      { top: 184px; }
+.findid--notFound .findid__hit--email     { top: 246px; }
 
 .findid__caption {
   position: absolute;
@@ -69,8 +69,8 @@
   color: rgba(19, 19, 19, 0.6);
 }
 
-.findid__caption--name  { left: 16px; top: 144px; width: 328px; height: 14px; }
-.findid__caption--email { left: 16px; top: 206px; width: 328px; height: 14px; }
+.findid__caption--name  { left: 16px; top: 154px; width: 328px; height: 14px; }
+.findid__caption--email { left: 16px; top: 216px; width: 328px; height: 14px; }
 
 .findid__caption--error,
 .findid__label--error { color: #e53935 !important; }
@@ -86,8 +86,8 @@
   color: rgba(19, 19, 19, 0.8);
 }
 
-.findid__label--name  { left: 16px; top: 166px; }
-.findid__label--email { left: 16px; top: 228px; }
+.findid__label--name  { left: 16px; top: 176px; }
+.findid__label--email { left: 16px; top: 238px; }
 
 .findid__input {
   position: absolute;
@@ -105,8 +105,8 @@
   caret-color: #131313;
 }
 
-.findid__input--name  { left: 16px; top: 166px; }
-.findid__input--email { left: 16px; top: 228px; }
+.findid__input--name  { left: 16px; top: 176px; }
+.findid__input--email { left: 16px; top: 238px; }
 
 .findid__line {
   position: absolute;
@@ -115,8 +115,8 @@
   display: block;
 }
 
-.findid__line--name  { left: 16px; top: 191px; }
-.findid__line--email { left: 16px; top: 253px; }
+.findid__line--name  { left: 16px; top: 201px; }
+.findid__line--email { left: 16px; top: 263px; }
 
 .findid .findid__line--active { display: none; }
 .findid:has(.findid__input--name:focus) .findid__line--name.findid__line--idle { display: none; }
@@ -136,8 +136,8 @@
   cursor: text;
 }
 
-.findid__hit--name  { top: 152px; }
-.findid__hit--email { top: 214px; }
+.findid__hit--name  { top: 162px; }
+.findid__hit--email { top: 224px; }
 
 .findid__button {
   position: absolute;

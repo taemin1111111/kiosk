@@ -276,9 +276,10 @@
   margin: 0 0 2px;
   font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 14px;
+  font-style: normal;
   font-weight: 700;
   color: #131313;
-  line-height: 1;
+  line-height: normal;
   letter-spacing: 0;
 }
 
@@ -388,9 +389,12 @@
   gap: 4px;
   border: none;
   background: transparent;
+  font-family: Pretendard, -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 13px;
-  font-weight: 500;
-  color: rgba(19, 19, 19, 0.7);
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  color: rgba(19, 19, 19, 0.70);
   cursor: pointer;
 }
 
@@ -406,14 +410,27 @@
 
 .menu__orderBtn {
   border: none;
+  display: flex;
   width: 206px;
   height: 46px;
+  padding: 10px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
   border-radius: 4px;
-  background: #ffc21c;
-  font-size: 15px;
-  font-weight: 700;
-  color: #131313;
+  background: #FFC21C;
   cursor: pointer;
+  box-sizing: border-box;
+}
+.menu__orderBtnText {
+  flex-shrink: 0;
+  text-align: center;
+  font-family: Pretendard, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  color: #131313;
 }
 
 .menu__cartCards {
@@ -555,8 +572,8 @@
   max-width: 320px;
   height: 118px;
   background: #ffffff;
-  border-radius: 16px;
-  padding: 28px 24px 12px;
+  border-radius: 8px;
+  padding: 28px 12px 12px;
   box-sizing: border-box;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
   display: flex;

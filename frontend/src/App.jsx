@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import MobileLayout from './mobile/layout/MobileLayout';
 import MobileLogin from './mobile/pages/MobileLogin';
 import MobileSignup from './mobile/pages/MobileSignup';
+import MobileSignupComplete from './mobile/pages/MobileSignupComplete';
 import MobileFindId from './mobile/pages/MobileFindId';
 import MobileFindPassword from './mobile/pages/MobileFindPassword';
 import MobileChangePassword from './mobile/pages/MobileChangePassword';
@@ -51,6 +52,7 @@ function App() {
       <Route path="/" element={<MobileLayout />}>
         <Route index element={<MobileLogin />} />
         <Route path="signup" element={<MobileSignup />} />
+        <Route path="signup/complete" element={<MobileSignupComplete />} />
         <Route path="find-id" element={<MobileFindId />} />
         <Route path="find-password" element={<MobileFindPassword />} />
         <Route path="change-password" element={<MobileChangePassword />} />

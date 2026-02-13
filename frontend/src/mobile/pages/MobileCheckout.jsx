@@ -21,11 +21,9 @@ export default function MobileCheckout() {
   const [pointBalances, setPointBalances] = useState({ store: 0, toss: 0 });
   const [loading, setLoading] = useState(true);
   const [diningType, setDiningType] = useState('in'); // 'in' | 'takeout'
-  const [diningOpen, setDiningOpen] = useState(true);
-  const [tossOpen, setTossOpen] = useState(false);
+  const [expandedSection, setExpandedSection] = useState('dining'); // null | 'dining' | 'toss' | 'payment' — 한 번에 하나만 펼침
   const [tossWasOpened, setTossWasOpened] = useState(false); // 한 번이라도 펼쳤으면 푸터 상세 유지
   const [pointType, setPointType] = useState(''); // '' | 'store' | 'toss'
-  const [paymentOpen, setPaymentOpen] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState('card'); // 'card' | 'simple' | 'cash' | 'transfer'
   const [paySubmitting, setPaySubmitting] = useState(false);
   const [payError, setPayError] = useState('');
@@ -183,21 +181,21 @@ export default function MobileCheckout() {
               <button
                 type="button"
                 className="checkout__diningHeader"
-                onClick={() => setDiningOpen(!diningOpen)}
-                aria-expanded={diningOpen}
+                onClick={() => setExpandedSection((prev) => (prev === 'dining' ? null : 'dining'))}
+                aria-expanded={expandedSection === 'dining'}
               >
                 <span className="checkout__diningTitle">식사 방법</span>
                 <span className="checkout__diningHeaderRight">
                   {diningType === 'in' ? '매장에서 먹어요' : '포장해가요'}
                 </span>
                 <img
-                  className={`checkout__chevronIcon ${diningOpen ? 'checkout__chevronIcon--up' : ''}`}
+                  className={`checkout__chevronIcon ${expandedSection === 'dining' ? 'checkout__chevronIcon--up' : ''}`}
                   src={chevronDownSvg}
                   alt=""
                   aria-hidden
                 />
               </button>
-              {diningOpen && (
+              {expandedSection === 'dining' && (
                 <div className="checkout__diningBody">
                   <div className="checkout__diningGrid">
                     <button
@@ -228,11 +226,11 @@ export default function MobileCheckout() {
                 type="button"
                 className="checkout__tossHeader"
                 onClick={() => {
-                  const next = !tossOpen;
-                  setTossOpen(next);
+                  const next = expandedSection !== 'toss';
+                  setExpandedSection(next ? 'toss' : null);
                   if (next) setTossWasOpened(true);
                 }}
-                aria-expanded={tossOpen}
+                aria-expanded={expandedSection === 'toss'}
               >
                 <span className="checkout__tossHeaderTitle">토스 포인트</span>
                 <span className="checkout__tossHeaderRight">
@@ -241,13 +239,13 @@ export default function MobileCheckout() {
                   {!pointType && <span className="checkout__tossHeaderPlaceholder">사용 안 함</span>}
                 </span>
                 <img
-                  className={`checkout__chevronIcon ${tossOpen ? 'checkout__chevronIcon--up' : ''}`}
+                  className={`checkout__chevronIcon ${expandedSection === 'toss' ? 'checkout__chevronIcon--up' : ''}`}
                   src={chevronDownSvg}
                   alt=""
                   aria-hidden
                 />
               </button>
-              {tossOpen && (
+              {expandedSection === 'toss' && (
                 <div className="checkout__tossBody">
                   <p className="checkout__tossInstruction">쓸 금액을 선택하세요</p>
                   <div className="checkout__tossOptions">
@@ -292,19 +290,19 @@ export default function MobileCheckout() {
               <button
                 type="button"
                 className="checkout__paymentHeader"
-                onClick={() => setPaymentOpen(!paymentOpen)}
-                aria-expanded={paymentOpen}
+                onClick={() => setExpandedSection((prev) => (prev === 'payment' ? null : 'payment'))}
+                aria-expanded={expandedSection === 'payment'}
               >
                 <span className="checkout__paymentTitle">결제수단</span>
                 <span className="checkout__paymentHeaderRight">{paymentMethodLabel[paymentMethod]}</span>
                 <img
-                  className={`checkout__chevronIcon ${paymentOpen ? 'checkout__chevronIcon--up' : ''}`}
+                  className={`checkout__chevronIcon ${expandedSection === 'payment' ? 'checkout__chevronIcon--up' : ''}`}
                   src={chevronDownSvg}
                   alt=""
                   aria-hidden
                 />
               </button>
-              {paymentOpen && (
+              {expandedSection === 'payment' && (
                 <div className="checkout__paymentBody">
                   <div className="checkout__paymentGrid">
                     <button

@@ -9,6 +9,8 @@ import iconStar from '../../assets/kid_star.svg';
 import iconAccount from '../../assets/account_circle.svg';
 import iconSettings from '../../assets/settings.svg';
 
+const MEMBER_NAME_CACHE_KEY = 'kiosk_member_name';
+
 const MENU_ITEMS = [
   { key: 'order-history', label: '주문내역', path: '/menu/order-history', icon: iconOrderHistory },
   { key: 'cart', label: '장바구니', path: '/menu/cart', icon: iconCart },
@@ -20,7 +22,13 @@ const MENU_ITEMS = [
 
 export default function MobileMyPage() {
   const [scale, setScale] = useState(1);
-  const [memberName, setMemberName] = useState('');
+  const [memberName, setMemberName] = useState(() => {
+    try {
+      return localStorage.getItem(MEMBER_NAME_CACHE_KEY) || '';
+    } catch {
+      return '';
+    }
+  });
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -35,17 +43,31 @@ export default function MobileMyPage() {
     (async () => {
       const res = await getAppOrders({}).catch(() => ({ ok: false }));
       if (cancelled) return;
-      if (res?.ok && res.data?.member_name) setMemberName(res.data.member_name);
+      if (res?.ok && res.data?.member_name) {
+        const name = res.data.member_name;
+        setMemberName(name);
+        try {
+          localStorage.setItem(MEMBER_NAME_CACHE_KEY, name);
+        } catch (_) {}
+      }
     })();
     return () => { cancelled = true; };
   }, []);
 
   const handleMenuClick = (item) => {
-    if (item.path && item.path !== '#') navigate(item.path);
+    if (!item.path || item.path === '#') return;
+    if (item.key === 'cart') {
+      navigate('/menu/cart', { state: { from: 'mypage' }, replace: true });
+    } else {
+      navigate(item.path);
+    }
   };
 
   const handleLogout = () => {
     clearStoredToken();
+    try {
+      localStorage.removeItem(MEMBER_NAME_CACHE_KEY);
+    } catch (_) {}
     navigate('/');
   };
 

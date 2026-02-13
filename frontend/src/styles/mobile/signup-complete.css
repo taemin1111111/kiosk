@@ -1,0 +1,73 @@
+/* ========== Figma 1152-6377: 회원가입 완료 화면 ========== */
+
+.signup-complete {
+  position: relative;
+  width: 360px;
+  height: 690px;
+  background: #fff;
+  overflow: hidden;
+}
+
+/* 타이틀 박스: 헤더(56px) 아래, 높이 66px */
+.signup-complete__titleBox {
+  position: absolute;
+  left: 0;
+  top: 56px;
+  width: 360px;
+  height: 66px;
+}
+
+.signup-complete__greeting {
+  position: absolute;
+  left: 16px;
+  width: 328px;
+  margin: 0;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: normal;
+  color: #131313;
+}
+
+.signup-complete__greeting--line1 {
+  top: 128px; /* 타이틀박스(56+66) 아래 */
+}
+
+.signup-complete__greeting--line2 {
+  top: 166px; /* 다음 줄 */
+}
+
+.signup-complete__desc {
+  position: absolute;
+  left: 16px;
+  top: 210px;
+  width: 328px;
+  margin: 0;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 20px;
+  color: rgba(19, 19, 19, 0.6);
+}
+
+.signup-complete__button {
+  position: absolute;
+  left: 16px;
+  top: 616px;
+  width: 328px;
+  height: 46px;
+  border-radius: 4px;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: #131313;
+  cursor: pointer;
+  background: rgba(19, 19, 19, 0.1);
+}
+
+.signup-complete__button--active {
+  background: #ffc21c;
+}

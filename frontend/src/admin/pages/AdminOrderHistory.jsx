@@ -59,7 +59,7 @@ function getStatusClass(status) {
 }
 
 const EAT_TYPE_MAP = { IN_STORE: '매장', TAKE_OUT: '포장' };
-const PAYMENT_METHOD_MAP = { CARD: '신용카드', CASH: '현금', EASY_PAY: '간편결제' };
+const PAYMENT_METHOD_MAP = { CARD: '신용카드', CASH: '현금', EASY_PAY: '간편결제', TRANSFER: '계좌이체' };
 
 const STATUS_OPTIONS = [
   { value: 'ALL', label: '주문상태(전체)' },

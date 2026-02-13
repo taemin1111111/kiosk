@@ -4,6 +4,8 @@ import { computeScale } from '../../utils/figmaScale';
 import { getAppOrders, getImageUrl } from '../../api';
 import notificationsSvg from '../../assets/notifications.svg';
 
+const MEMBER_NAME_CACHE_KEY = 'kiosk_member_name';
+
 /* orders.status ENUM: PENDING, PAID, CANCELLED, FAILED */
 const STATUS_OPTIONS = [
   { value: 'ALL', label: '전체' },
@@ -28,7 +30,13 @@ function toDisplayDate(ymd) {
 
 export default function MobileOrderHistory() {
   const [scale, setScale] = useState(1);
-  const [data, setData] = useState({ member_name: '', orders: [] });
+  const [data, setData] = useState(() => {
+    let name = '';
+    try {
+      name = localStorage.getItem(MEMBER_NAME_CACHE_KEY) || '';
+    } catch (_) {}
+    return { member_name: name, orders: [] };
+  });
   const [loading, setLoading] = useState(true);
   const [statusFilter, setStatusFilter] = useState('ALL');
   const [dateFrom, setDateFrom] = useState('');
@@ -71,8 +79,12 @@ export default function MobileOrderHistory() {
       const res = await getAppOrders(params).catch(() => ({ ok: false }));
       if (cancelled) return;
       if (res?.ok && res.data) {
+        const name = res.data.member_name || '';
+        try {
+          if (name) localStorage.setItem(MEMBER_NAME_CACHE_KEY, name);
+        } catch (_) {}
         setData({
-          member_name: res.data.member_name || '',
+          member_name: name,
           orders: Array.isArray(res.data.orders) ? res.data.orders : [],
         });
       }
